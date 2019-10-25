@@ -11,7 +11,7 @@ all: maxTester
 # Compiles program
 maxTester: maxTester.cpp storage.cpp
 	# Compiles with flags
-	$(CC) $(CFLAGS) -o maxTester.o maxTester.cpp stoarge.cpp
+	$(CC) $(CFLAGS) -o maxTester.o maxTester.cpp storage.cpp
 
 # Deletes unused files
 clean :
