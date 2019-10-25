@@ -1,8 +1,15 @@
+#include "storage.hpp"
 using namespace std;
 
-class Table;
+void initialisation(Table **test);
 
-int main() { 
-    Table test;
-    return 0; 
+int main() {
+  Table *test;
+  initialisation(&test);
+  return 0;
+}
+
+void initialisation(Table **test) { 
+    *test = new Table(1);
+    (*test)->debugTable();
 }
