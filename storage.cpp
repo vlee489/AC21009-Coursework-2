@@ -3,7 +3,7 @@ using namespace std;
 
 class Table {
 private:
-  bool *pTable;
+  void *pTable;
   int arrayWidth;
   int arrayLength;
 
@@ -15,9 +15,12 @@ public:
     pTable = table;
   }
 
-  void initTable(int arrayWidth) { bool table[arrayWidth][1]; }
+  void initTable(int arrayWidth) {
+    bool table[arrayWidth][1];
+    pTable = table;
+  }
 
-  int getVal(int x, int y) { return pTable[y][x]; }
+  bool getVal(int x, int y) { return *(bool*) pTable[y][x]; }
 
   void debugTable() {
     cout << "";
