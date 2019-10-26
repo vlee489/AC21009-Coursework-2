@@ -3,17 +3,17 @@
 
 class Table {
 private:
-  bool *pTable;
-  int arrayWidth;
-  int arrayHeight;
-  int arraySize;
+  bool *pTable = nullptr;
+  int arrayWidth = 1;
+  int arrayHeight = 1;
+  int arraySize = 1;
   void setTable();
-  void setFirstVal(bool firstVal);
-  void initTable();
+  void setFirstVal();
+  void allocTable();
 
 public:
-  Table(bool firstVal, int generations);
-  Table(int arrayWidth);
+  void initTable(int generations);
+  void initLine(int width);
   bool getVal(int x, int y);
   void setVal(int x, int y, bool val);
   void debugTable();

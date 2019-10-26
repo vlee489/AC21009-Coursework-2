@@ -11,28 +11,28 @@ void Table::setTable() {
   }
 }
 
-void Table::setFirstVal(bool firstVal) {
+void Table::setFirstVal() {
   int middleFirstLineIndex = (arrayWidth / 2) * arrayWidth;
-  pTable[middleFirstLineIndex] = firstVal;
+  pTable[middleFirstLineIndex] = true;
 }
 
-void Table::initTable() {
+void Table::allocTable() {
   arraySize = arrayWidth * arrayHeight;
-  pTable = new bool[arraySize]();
-  setTable();
+  pTable = new bool[arraySize]{false};
+  // setTable();
 }
 
-Table::Table(bool firstVal, int generations) {
+void Table::initTable(int generations) {
   arrayWidth = (2 * generations) - 1;
   arrayHeight = generations;
-  initTable();
-  setFirstVal(firstVal);
+  allocTable();
+  setFirstVal();
 }
 
-Table::Table(int width) {
+void Table::initLine(int width) {
   arrayWidth = width;
   arrayHeight = 1;
-  initTable();
+  allocTable();
 }
 
 bool Table::getVal(int x, int y) {
