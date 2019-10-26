@@ -10,6 +10,6 @@ int main() {
 }
 
 void initialisation(Table **test) { 
-    *test = new Table(10);
+    *test = new Table(true,10);
     (*test)->debugTable();
 }
