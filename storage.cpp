@@ -2,15 +2,6 @@
 #include <iostream>
 using namespace std;
 
-// void Table::setTable() {
-//   // Counts through each row
-//   for (int row = 0; row < arrayHeight; row++) {
-//     for (int col = 0; col < arrayWidth; col++) {
-//       setVal(col, row, false);
-//     }
-//   }
-// }
-
 void Table::setFirstVal() {
   int middleFirstLineIndex = arrayWidth / 2;
   pTable[middleFirstLineIndex] = true;
@@ -19,7 +10,6 @@ void Table::setFirstVal() {
 void Table::allocTable() {
   arraySize = arrayWidth * arrayHeight;
   pTable = new bool[arraySize]{false};
-  // setTable();
 }
 
 void Table::initTable(int generations) {
