@@ -18,8 +18,7 @@ using namespace std;
 
   void Table::initTable() {
     arraySize = arrayWidth * arrayHeight;
-    bool table = new bool[arraySize];
-    pTable = &table;
+    pTable = new bool[arraySize]();
     setTable();
   }
 
