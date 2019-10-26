@@ -2,17 +2,17 @@
 #include <iostream>
 using namespace std;
 
-void Table::setTable() {
-  // Counts through each row
-  for (int row = 0; row < arrayHeight; row++) {
-    for (int col = 0; col < arrayWidth; col++) {
-      setVal(col, row, false);
-    }
-  }
-}
+// void Table::setTable() {
+//   // Counts through each row
+//   for (int row = 0; row < arrayHeight; row++) {
+//     for (int col = 0; col < arrayWidth; col++) {
+//       setVal(col, row, false);
+//     }
+//   }
+// }
 
 void Table::setFirstVal() {
-  int middleFirstLineIndex = (arrayWidth / 2) * arrayWidth;
+  int middleFirstLineIndex = arrayWidth / 2;
   pTable[middleFirstLineIndex] = true;
 }
 
@@ -36,18 +36,22 @@ void Table::initLine(int width) {
 }
 
 bool Table::getVal(int x, int y) {
-  bool val = pTable[y * arrayWidth + x];
+  int index = y * arrayHeight + x;
+  bool val = pTable[index];
   return val;
 }
 
-void Table::setVal(int x, int y, bool val) { pTable[y * arrayWidth + x] = val; }
+void Table::setVal(int x, int y, bool val) {
+  int index = y * arrayHeight + x;
+  pTable[index] = val;
+}
 
 void Table::debugTable() {
   cout << "\n";
   // Counts through each row
   for (int row = 0; row < arrayHeight; row++) {
     for (int col = 0; col < arrayWidth; col++) {
-      cout << getVal(row, col) << " ";
+      cout << getVal(col, row) << " ";
     }
     cout << "\n";
   }

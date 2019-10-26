@@ -7,7 +7,7 @@ private:
   int arrayWidth = 1;
   int arrayHeight = 1;
   int arraySize = 1;
-  void setTable();
+  // void setTable();
   void setFirstVal();
   void allocTable();
 
