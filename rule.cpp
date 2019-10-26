@@ -2,9 +2,8 @@
 #include <iostream>
 using namespace std;
 
-void toBinary(int decimal)
+void toBinary(int binary[], int decimal)
 {
-    bool binary[8];
     int binaryComp[8];
     binaryComp[0] = 1;
 
@@ -34,8 +33,26 @@ void toBinary(int decimal)
     cout << "" << endl;
 }
 
+int toDecimal(int binary[])
+{
+    int decimal = 0;
+    for (int i = 7; i >= 0; i--)
+    {
+        if (binary[i] == 1)
+        {
+            decimal += pow(2, i);
+        }
+    }
+    return decimal;
+}
+
+void setRule(int ruleNum)
+{
+    int ruleset[8];
+    toBinary(ruleset, ruleNum);
+}
+
 int main()
 {
-    toBinary(157);
     return 0;
 }
