@@ -9,6 +9,7 @@ class Table {
   int arraySize = 1;
   void allocTable();
   void setFirstVal();
+  int properMod(int a, int b);
 
  public:
   void initTable(int generations);

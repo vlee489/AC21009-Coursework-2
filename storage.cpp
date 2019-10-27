@@ -22,6 +22,10 @@ void Table::setFirstVal() {
   pTable[arrayWidth / 2] = true;
 }
 
+int Table::properMod(int a, int b) {
+  return (b + (a % b)) % b;
+}
+
 // Creates a table to store all autonoma data
 void Table::initTable(int generations) {
   // Calculates the width of the table required to display all the generations
@@ -50,8 +54,8 @@ bool Table::getVal(int x, int y) {
 
 bool* Table::getNeighbourhood(int x, int y) {
   bool* neighbourhood = new bool[3];
-  for (int i = -1; i < 2; i++) {
-    neighbourhood[i + 1] = getVal((x + i) % arrayWidth, y);
+  for (int i = 0; i < 3; i++) {
+    neighbourhood[i] = getVal(properMod(x + i - 1, arrayWidth), y);
   }
   return neighbourhood;
 }
