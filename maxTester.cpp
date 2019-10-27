@@ -61,9 +61,16 @@ void neighbourhood(Table* test) {
        << " generations:" << endl;
   cout << "Pass Conditions: 1 1 0 " << endl;
   test->setVal(0, 0, true);
-  test->setVal(arrayWidth - 1, 0, true);
   displayTableVal(test);
   test->debugTable();
   neighbourhood = test->getNeighbourhood(0, 0);
+  printArray<bool*>(neighbourhood, 3);
+
+  cout << "Right Side Element Neighbourhood Test for " << generations
+       << " generations:" << endl;
+  cout << "Pass Conditions: 0 1 1 " << endl;
+  test->setVal(arrayWidth - 1, 0, true);
+  test->debugTable();
+  neighbourhood = test->getNeighbourhood(arrayWidth - 1, 0);
   printArray<bool*>(neighbourhood, 3);
 }
