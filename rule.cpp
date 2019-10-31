@@ -15,6 +15,7 @@ int Rule::toDecimal(bool binary[]) {
 }
 
 void Rule::setRule(int ruleNum) {
+  this->ruleNum = ruleNum;
   toBinary(ruleSet, ruleNum);
 }
 

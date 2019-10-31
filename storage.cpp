@@ -1,5 +1,6 @@
 // Imports the header file for this individual source file
 #include "storage.hpp"
+
 #include "error.hpp"
 // Used to print to the console
 #include <iostream>
@@ -19,11 +20,11 @@ Table::Table() {
 
 // Destructor to delete the table
 Table::~Table() {
-  delete(pTable);
+  delete (pTable);
 }
 
 // Copy constructor
-Table::Table(Table &ogTable) {
+Table::Table(Table& ogTable) {
   // Stores the pointer to the table we're copying
   bool* ogPTable = ogTable.getPTable();
   // Copies the array width and height variables
@@ -32,7 +33,7 @@ Table::Table(Table &ogTable) {
   // Creates the array to store the table
   allocTable();
   // Performs a deep copy by copying the value of each element of the array
-  for (int i=0;i<arraySize;i++) {
+  for (int i = 0; i < arraySize; i++) {
     pTable[i] = ogPTable[i];
   }
 }
@@ -87,8 +88,8 @@ bool Table::getVal(int x, int y) {
 }
 
 // Returns the neighbourhood of a position in the table as an array in order of
-// Left, Centre and Right With Centre being the position x, y passed in as
-// parameters
+// Left, Centre and Right with the point we are getting the position for
+// being the position x, y passed in as parameters
 bool* Table::getNeighbourhood(int x, int y) {
   bool* neighbourhood = new bool[3];
   for (int i = 0; i < 3; i++) {
@@ -110,7 +111,6 @@ void Table::saveTable(string filename) {
   ofstream saveFile;
   saveFile.open(filename);
   if (!saveFile.is_open()) {
-
   }
 
   saveFile << endl;
@@ -129,7 +129,6 @@ void Table::saveTable(string filename) {
 
 void Table::loadTable(string filename) {
   if (filename == "") {
-
   }
 }
 
@@ -142,6 +141,25 @@ void Table::debugTable() {
     for (int col = 0; col < arrayWidth; col++) {
       // Prints the individual value to the screen
       cout << getVal(col, row) << " ";
+    }
+    cout << endl;
+  }
+  cout << endl;
+}
+
+void Table::printTable() {
+  int middleIndex = arrayWidth/2;
+  cout << endl;
+  // Counts through each row
+  for (int row = 0; row < arrayHeight; row++) {
+    int fieldsActive = arrayWidth - 2*(arrayHeight - 1 - row);
+    int side = (fieldsActive) / 2;
+    for (int col = 0; col < arrayWidth; col++) {
+      if (col < (middleIndex - side) || col > (middleIndex + side)) {
+        cout << "  ";
+      } else {
+        cout << getVal(col, row) << " ";
+      }
     }
     cout << endl;
   }

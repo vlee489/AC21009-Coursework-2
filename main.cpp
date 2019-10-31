@@ -24,6 +24,15 @@ int userNumberInput(int min, int max, string message) {
   return UserInput;
 }
 
+template <typename T>
+void printArray(T array, int length) {
+  for (int i = 0; i < length; i++) {
+    cout << array[i] << " ";
+  }
+  cout << endl;
+  cout << endl;
+}
+
 int runProgram() {
   int rule = userNumberInput(0, 256, "Please enter the desired rule you want to use");
   int generations = userNumberInput(0, 101, "Please enter the desired generations you want");
@@ -37,8 +46,12 @@ int runProgram() {
       bool* neighbourhood = fullTable.getNeighbourhood(col, row);
       bool cell = ruleObj.generateCell(neighbourhood);
       fullTable.setVal(col, row, cell);
+      delete neighbourhood;
     }
   }
-  fullTable.debugTable();
+  cout << endl;
+  cout << "Debug Table Check: ";
+  printArray(fullTable.getPTable(), fullTable.getArraySize());
+  fullTable.printTable();
   return 0;
 }

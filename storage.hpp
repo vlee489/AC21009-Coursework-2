@@ -25,6 +25,7 @@ class Table {
   void saveTable(std::string filename);
   void loadTable(std::string filename);
   void debugTable();
+  void printTable();
   bool* getPTable();
   int getArrayWidth();
   int getArrayHeight();
