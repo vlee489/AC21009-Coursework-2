@@ -89,7 +89,8 @@ bool* Table::getNeighbourhood(int x, int y) {
   bool* neighbourhood = new bool[3];
   for (int i = 0; i < 3; i++) {
     int xPoint = properMod(x + i - 1, arrayWidth);
-    neighbourhood[i] = getVal(xPoint, y - 1);
+    int yPoint = y - 1;
+    neighbourhood[i] = getVal(xPoint, yPoint);
   }
   return neighbourhood;
 }
