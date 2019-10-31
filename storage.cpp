@@ -28,7 +28,7 @@ Table::Table(Table &ogTable) {
   // Creates the array to store the table
   allocTable();
   // Performs a deep copy by copying the value of each element of the array
-  for (size_t i=0;i<arraySize;i++) {
+  for (int i=0;i<arraySize;i++) {
     pTable[i] = ogPTable[i];
   }
 }
@@ -79,25 +79,27 @@ void Table::initLine(int units) {
 
 // Returns the value of the appropriate index of the table
 bool Table::getVal(int x, int y) {
-  return pTable[y * arrayHeight + x];
+  return pTable[y * arrayWidth + x];
 }
 
-// Returns the nneighbourhood of a position in the table as an array in order of
+// Returns the neighbourhood of a position in the table as an array in order of
 // Left, Centre and Right With Centre being the position x, y passed in as
 // parameters
 bool* Table::getNeighbourhood(int x, int y) {
   bool* neighbourhood = new bool[3];
   for (int i = 0; i < 3; i++) {
-    neighbourhood[i] = getVal(properMod(x + i - 1, arrayWidth), y);
+    int xPoint = properMod(x + i - 1, arrayWidth);
+    neighbourhood[i] = getVal(xPoint, y - 1);
   }
   return neighbourhood;
 }
 
 // Sets the value of the appropriate index of the table
 void Table::setVal(int x, int y, bool val) {
-  pTable[y * arrayHeight + x] = val;
+  pTable[y * arrayWidth + x] = val;
 }
 
+// Saves the contents of the table to a file
 void Table::saveTable() {
   
 }
