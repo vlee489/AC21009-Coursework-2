@@ -5,6 +5,33 @@
 using namespace std;
 
 // Table class: Store values of a table for processing and output
+// Constructors to set values to defaults
+Table::Table() {
+  pTable = nullptr;
+  arrayWidth = 1;
+  arrayHeight = 1;
+  arraySize = 1;
+}
+
+// Destructor to delete the table
+Table::~Table() {
+  delete(pTable);
+}
+
+// Copy constructor
+Table::Table(Table &ogTable) {
+  // Stores the pointer to the table we're copying
+  bool* ogPTable = ogTable.getPTable();
+  // Copies the array width and height variables
+  arrayWidth = ogTable.getArrayWidth();
+  arrayHeight = ogTable.getArrayHeight();
+  // Creates the array to store the table
+  allocTable();
+  // Performs a deep copy by copying the value of each element of the array
+  for (int i=0;i<arraySize;i++) {
+    pTable[i] = ogPTable[i];
+  }
+}
 
 // Creates and initialises an array of appropriate length to store the table
 void Table::allocTable() {
@@ -22,6 +49,9 @@ void Table::setFirstVal() {
   pTable[arrayWidth / 2] = true;
 }
 
+// x86 has a design flaw where the mod operator doesn't work for negative
+// numbers This method addresses that to make it akin to what's found in  other
+// higher level languages like Java or Python
 int Table::properMod(int a, int b) {
   return (b + (a % b)) % b;
 }
@@ -49,20 +79,29 @@ void Table::initLine(int units) {
 
 // Returns the value of the appropriate index of the table
 bool Table::getVal(int x, int y) {
-  return pTable[y * arrayHeight + x];
+  return pTable[y * arrayWidth + x];
 }
 
+// Returns the neighbourhood of a position in the table as an array in order of
+// Left, Centre and Right With Centre being the position x, y passed in as
+// parameters
 bool* Table::getNeighbourhood(int x, int y) {
   bool* neighbourhood = new bool[3];
   for (int i = 0; i < 3; i++) {
-    neighbourhood[i] = getVal(properMod(x + i - 1, arrayWidth), y);
+    int xPoint = properMod(x + i - 1, arrayWidth);
+    neighbourhood[i] = getVal(xPoint, y - 1);
   }
   return neighbourhood;
 }
 
 // Sets the value of the appropriate index of the table
 void Table::setVal(int x, int y, bool val) {
-  pTable[y * arrayHeight + x] = val;
+  pTable[y * arrayWidth + x] = val;
+}
+
+// Saves the contents of the table to a file
+void Table::saveTable() {
+  
 }
 
 // Prints out the values of the table in a basic manner for debugging
@@ -78,6 +117,10 @@ void Table::debugTable() {
     cout << endl;
   }
   cout << endl;
+}
+
+bool* Table::getPTable() {
+  return pTable;
 }
 
 int Table::getArrayWidth() {
