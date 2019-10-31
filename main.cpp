@@ -14,17 +14,12 @@ int main() {
 
 int userNumberInput(int min, int max, string message) {
   int UserInput;
-  bool valid = false;
-  while (!valid) {
-    cout << "\n" + message + ":";
-    cin >> UserInput;
-    if (UserInput < max && UserInput > min) {
-      valid = true;
-    } else {
-      cout << "\nInvalid input\n";
-      cout << "Please enter a whole number between" << min << " and " << max;
-      cout << endl;
-    }
+  // bool valid = false;
+  cout << "\n" + message + ":";
+  while (!(cin >> UserInput) || UserInput < min || UserInput > max) {
+    cout << "\nInvalid input\n";
+    cout << "Please enter a whole number between " << min << " and " << max;
+    cout << endl;
   }
   return UserInput;
 }
