@@ -1,7 +1,11 @@
 // Imports the header file for this individual source file
 #include "storage.hpp"
+#include "error.hpp"
 // Used to print to the console
 #include <iostream>
+//
+#include <fstream>
+#include <string>
 using namespace std;
 
 // Table class: Store values of a table for processing and output
@@ -101,8 +105,32 @@ void Table::setVal(int x, int y, bool val) {
 }
 
 // Saves the contents of the table to a file
-void Table::saveTable() {
-  
+void Table::saveTable(string filename) {
+  // Creates the save file's object for writing
+  ofstream saveFile;
+  saveFile.open(filename);
+  if (!saveFile.is_open()) {
+
+  }
+
+  saveFile << endl;
+  // Counts through each row
+  for (int row = 0; row < arrayHeight; row++) {
+    // Counts through each column
+    for (int col = 0; col < arrayWidth; col++) {
+      // Prints the individual value to the screen
+      saveFile << getVal(col, row) << " ";
+    }
+    saveFile << endl;
+  }
+  saveFile << endl;
+  saveFile.close();
+}
+
+void Table::loadTable(string filename) {
+  if (filename == "") {
+
+  }
 }
 
 // Prints out the values of the table in a basic manner for debugging

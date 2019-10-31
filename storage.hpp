@@ -1,5 +1,6 @@
 #ifndef TABLE_H
 #define TABLE_H
+#include <string>
 
 class Table {
  private:
@@ -13,7 +14,6 @@ class Table {
 
  public:
   Table();
-  Table(bool* pTable, int arrayWidth, int arrayHeight, int arraySize);
   ~Table();
   // Copy Constructor
   Table(Table& table);
@@ -22,7 +22,8 @@ class Table {
   bool getVal(int x, int y);
   bool* getNeighbourhood(int x, int y);
   void setVal(int x, int y, bool val);
-  void saveTable();
+  void saveTable(std::string filename);
+  void loadTable(std::string filename);
   void debugTable();
   bool* getPTable();
   int getArrayWidth();
