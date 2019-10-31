@@ -7,6 +7,7 @@ class Rule {
         int toDecimal(bool binary[]);
         void setRule(int ruleset[], int ruleNum);
         bool generateCell(int ruleset[], bool neighbourhood[]);
+        bool ruleset[8]{0,0,0,0,0,0,0,0};
 };
 
 

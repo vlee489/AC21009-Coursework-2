@@ -1,4 +1,5 @@
 #include "rule.hpp"
+#include <iostream>
 #include <cmath>
 using namespace std;
 
@@ -28,14 +29,16 @@ bool Rule::generateCell(int ruleset[], bool neighbourhood[])
 
 void Rule::toBinary(int binary[], int decimal)
         {
+            int testingDecimal = decimal;
             int binaryComp[8];
-            binaryComp[0] = 1;
-
-            for (int i = 1; i < 8; i++)
+            binaryComp[0] = 0;
+            for (int i = 0; i < 8; i++)
             {
                 binary[i] = 0;
                 binaryComp[i] = pow(2, i);
             }
+
+            printf("Rule %d: ", testingDecimal);
 
             for (int i = 7; i >= 0; i--)
             {
@@ -43,11 +46,11 @@ void Rule::toBinary(int binary[], int decimal)
                 {
                     decimal = decimal - binaryComp[i];
                     binary[i] = 1;
-                }
-                else
+                } else
                 {
                     binary[i] = 0;
                 }
+                printf("%d  ", binary[i]);
             }
         }
 
