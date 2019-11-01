@@ -9,14 +9,14 @@ CFLAGS_LESSER = -Wall -Werror
 all: maxTester main
 
 # Compiles program
-maxTester: maxTester.cpp storage.cpp
+maxTester: maxTester.cpp table.cpp
 	# Compiles with flags
-	$(CC) $(CFLAGS) -o maxTester.o maxTester.cpp storage.cpp
+	$(CC) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp
 
 # Compiles main program
-main: main.cpp storage.cpp rule.cpp
+main: main.cpp table.cpp rule.cpp
 	# Compiles with flags
-	$(CC) $(CFLAGS) -o main.o main.cpp storage.cpp rule.cpp
+	$(CC) $(CFLAGS) -o main.o main.cpp table.cpp rule.cpp
 
 # Deletes unused files
 clean :

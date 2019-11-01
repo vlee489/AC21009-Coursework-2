@@ -1,5 +1,5 @@
 #include "error.hpp"
-#include "storage.hpp"
+#include "table.hpp"
 #include <iostream>
 
 using namespace std;
@@ -9,12 +9,14 @@ const int generations = 6;
 
 void initialisation(Table** test);
 void neighbourhood(Table* test);
+void file(Table* test);
 void error(Table** test);
 
 int main() {
   Table* testP = new Table();
   initialisation(&testP);
   neighbourhood(testP);
+  file(testP);
   delete testP;
 
   testP = new Table();
@@ -83,6 +85,12 @@ void neighbourhood(Table* test) {
   cout << "Pass Conditions: 0 1 1 " << endl;
   neighbourhood = test->getNeighbourhood(arrayWidth - 1, 1);
   printArray<bool*>(neighbourhood, 3);
+}
+
+void file(Table* test) {
+  string loc = "files/out.txt";
+  test->saveTable(loc);
+  test->loadTable(loc);
 }
 
 void error(Table** test) {

@@ -4,7 +4,7 @@
 
 #include "error.hpp"
 #include "rule.hpp"
-#include "storage.hpp"
+#include "table.hpp"
 
 using namespace std;
 
