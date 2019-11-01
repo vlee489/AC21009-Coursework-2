@@ -5,7 +5,9 @@
 // Used to print to the console
 #include <iostream>
 //
+#include <filesystem>
 #include <fstream>
+#include <sstream>
 #include <string>
 using namespace std;
 
@@ -38,8 +40,7 @@ Table::Table(Table& ogTable) {
     pTable[i] = ogPTable[i];
   }
 }
-// can you take a look at the return value errors in my terminal please
-// ON it
+
 // Creates and initialises an array of appropriate length to store the table
 int Table::allocTable() {
   if (arrayHeight < 1 || arrayWidth < 1) {
@@ -139,6 +140,10 @@ int Table::saveTable(string filename) {
     return TABLE_NOT_INITIALISED;
   }
 
+  if (filename.length() == 0) {
+    return INVALID_FILENAME;
+  }
+
   // Creates the save file's object for writing
   ofstream saveFile;
   saveFile.open(filename);
@@ -164,8 +169,54 @@ int Table::saveTable(string filename) {
 }
 
 int Table::loadTable(string filename) {
-  if (filename == "") {
+  if (filename.length() == 0) {
+    return INVALID_FILENAME;
   }
+
+  if (filesystem::exists(filename)) {
+    return FILE_NOT_FOUND;
+  }
+
+  ifstream loadFile;
+  loadFile.open(filename);
+
+  if (!loadFile.is_open()) {
+    return FILE_NOT_ACCESSIBLE;
+  }
+
+  int numbersInLine = 0;
+  string line, temp;
+  stringstream lineStream;
+
+  getline(loadFile, line);
+  lineStream << line;
+
+  while (!lineStream.eof()) {
+    lineStream >> temp;
+    if (stringstream(temp)) {
+      numbersInLine++;
+    }
+  }
+
+  int generations = (numbersInLine / 2) + 1;
+  initTable(generations);
+
+  int x = 0;
+  int y = 0;
+  bool tempBool;
+
+  while (getline(loadFile, line)) {
+    while (!lineStream.eof()) {
+      lineStream >> temp;
+      if (stringstream(temp) >> tempBool) {
+        setVal(x, y, tempBool);
+      }
+      y++;
+    }
+    x++;
+  }
+
+  loadFile.close();
   return SUCCESS;
 }
 
@@ -186,7 +237,8 @@ int Table::debugTable() {
     cout << endl;
   }
   cout << endl;
-  return false;
+
+  return SUCCESS;
 }
 
 int Table::printTable() {

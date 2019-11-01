@@ -19,8 +19,8 @@ int main() {
   file(testP);
   delete testP;
 
-  testP = new Table();
-  error(&testP);
+  // testP = new Table();
+  // error(&testP);
 
   return 0;
 }
@@ -88,9 +88,16 @@ void neighbourhood(Table* test) {
 }
 
 void file(Table* test) {
+  cout << "Save File Test" << endl;
+  cout << "Pass Conditions: Look at the file if it matches this it's passed" << endl;
   string loc = "files/out.txt";
   test->saveTable(loc);
+  test->debugTable();
+
+  cout << "Load File Test" << endl;
+  cout << "Pass Conditions: The table matches the table above" << endl;
   test->loadTable(loc);
+  test->debugTable();
 }
 
 void error(Table** test) {

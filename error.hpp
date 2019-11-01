@@ -8,12 +8,15 @@
 
 // 
 #define TABLE_NOT_INITIALISED -101
-#define INVALID_TABLE_PARAMETER -2
-#define Y_INDEX_OUT_OF_BOUNDS -300
+#define INVALID_TABLE_PARAMETER -102
+#define Y_INDEX_OUT_OF_BOUNDS -103
 
 // Saving and Loading tables
-#define FILE_NOT_FOUND -102
-#define FILE_NOT_SAVED -103
+#define INVALID_FILE -200
+#define INVALID_FILENAME -201
+#define FILE_NOT_ACCESSIBLE -202
+#define FILE_NOT_FOUND -203
+#define FILE_NOT_SAVED -204
 
 // Rule File
 #define RULE_NUM_OUT_RANGE -501
