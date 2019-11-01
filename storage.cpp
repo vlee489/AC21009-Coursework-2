@@ -1,5 +1,6 @@
 // Imports the header file for this individual source file
 #include "storage.hpp"
+
 #include "error.hpp"
 // Used to print to the console
 #include <iostream>
@@ -12,6 +13,7 @@ using namespace std;
 // Constructors to set values to defaults
 Table::Table() {
   pTable = nullptr;
+  init = false;
   arrayWidth = 1;
   arrayHeight = 1;
   arraySize = 1;
@@ -19,11 +21,11 @@ Table::Table() {
 
 // Destructor to delete the table
 Table::~Table() {
-  delete(pTable);
+  delete (pTable);
 }
 
 // Copy constructor
-Table::Table(Table &ogTable) {
+Table::Table(Table& ogTable) {
   // Stores the pointer to the table we're copying
   bool* ogPTable = ogTable.getPTable();
   // Copies the array width and height variables
@@ -32,19 +34,27 @@ Table::Table(Table &ogTable) {
   // Creates the array to store the table
   allocTable();
   // Performs a deep copy by copying the value of each element of the array
-  for (int i=0;i<arraySize;i++) {
+  for (int i = 0; i < arraySize; i++) {
     pTable[i] = ogPTable[i];
   }
 }
-
+// can you take a look at the return value errors in my terminal please
+// ON it
 // Creates and initialises an array of appropriate length to store the table
-void Table::allocTable() {
+int Table::allocTable() {
+  if (arrayHeight < 1 || arrayWidth < 1) {
+    return INVALID_TABLE_PARAMETER;
+  }
   // Calculates the number of cells in the table
   arraySize = arrayWidth * arrayHeight;
   // Creates a single dynamic array which will stores all cells in
   // and initialises them to false.
   // This increases efficiency over a traditional 2D Array.
   pTable = new bool[arraySize]{false};
+  //
+  init = true;
+
+  return SUCCESS;
 }
 
 // Sets the starting value of the cellular automaton
@@ -61,56 +71,80 @@ int Table::properMod(int a, int b) {
 }
 
 // Creates a table to store all autonoma data
-void Table::initTable(int generations) {
+int Table::initTable(int generations) {
   // Calculates the width of the table required to display all the generations
   arrayWidth = (2 * generations) - 1;
   // Stores the the height of the table
   arrayHeight = generations;
   // Creates the array to store the table
-  allocTable();
-  // Sets the starting value of the cellular automaton
-  setFirstVal();
+  int valid = allocTable();
+  if (valid == SUCCESS) {
+    // Sets the starting value of the cellular automaton
+    setFirstVal();
+  }
+  return valid;
 }
 
 // Creates a table to store a line of data during processing
-void Table::initLine(int units) {
+int Table::initLine(int units) {
   // Assigns the tables width and height appropriately
   arrayWidth = units;
   arrayHeight = 1;
   // Creates the array to store the table
-  allocTable();
+  return allocTable();
 }
 
 // Returns the value of the appropriate index of the table
 bool Table::getVal(int x, int y) {
-  return pTable[y * arrayWidth + x];
+  if (init == 1) {
+    return pTable[y * arrayWidth + x];
+  }
+  return false;
 }
 
 // Returns the neighbourhood of a position in the table as an array in order of
-// Left, Centre and Right With Centre being the position x, y passed in as
-// parameters
+// Left, Centre and Right with the point we are getting the position for
+// being the position x, y passed in as parameters
 bool* Table::getNeighbourhood(int x, int y) {
-  bool* neighbourhood = new bool[3];
-  for (int i = 0; i < 3; i++) {
-    int xPoint = properMod(x + i - 1, arrayWidth);
-    int yPoint = y - 1;
-    neighbourhood[i] = getVal(xPoint, yPoint);
+  int yPoint = y - 1;
+  if (init == 1 && yPoint <= arrayHeight && yPoint >= 0) {
+    bool* neighbourhood = new bool[3];
+    for (int i = 0; i < 3; i++) {
+      int xPoint = properMod(x + i - 1, arrayWidth);
+      neighbourhood[i] = getVal(xPoint, yPoint);
+    }
+    return neighbourhood;
   }
-  return neighbourhood;
+  return nullptr;
 }
 
 // Sets the value of the appropriate index of the table
-void Table::setVal(int x, int y, bool val) {
+int Table::setVal(int x, int y, bool val) {
+  if (init == 0) {
+    return TABLE_NOT_INITIALISED;
+  }
+
+  if (y > arrayHeight || y < 0) {
+    return Y_INDEX_OUT_OF_BOUNDS;
+  }
+
   pTable[y * arrayWidth + x] = val;
+
+  return SUCCESS;
 }
 
 // Saves the contents of the table to a file
-void Table::saveTable(string filename) {
+int Table::saveTable(string filename) {
+  if (init == 0) {
+    return TABLE_NOT_INITIALISED;
+  }
+
   // Creates the save file's object for writing
   ofstream saveFile;
   saveFile.open(filename);
-  if (!saveFile.is_open()) {
 
+  if (!saveFile.is_open()) {
+    return FILE_NOT_SAVED;
   }
 
   saveFile << endl;
@@ -125,16 +159,22 @@ void Table::saveTable(string filename) {
   }
   saveFile << endl;
   saveFile.close();
+
+  return SUCCESS;
 }
 
-void Table::loadTable(string filename) {
+int Table::loadTable(string filename) {
   if (filename == "") {
-
   }
+  return SUCCESS;
 }
 
 // Prints out the values of the table in a basic manner for debugging
-void Table::debugTable() {
+int Table::debugTable() {
+  if (init == 0) {
+    return TABLE_NOT_INITIALISED;
+  }
+
   cout << endl;
   // Counts through each row
   for (int row = 0; row < arrayHeight; row++) {
@@ -146,6 +186,32 @@ void Table::debugTable() {
     cout << endl;
   }
   cout << endl;
+  return false;
+}
+
+int Table::printTable() {
+  if (init == 0) {
+    return TABLE_NOT_INITIALISED;
+  }
+
+  int middleIndex = arrayWidth / 2;
+  cout << endl;
+  // Counts through each row
+  for (int row = 0; row < arrayHeight; row++) {
+    int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - row);
+    int side = (fieldsActive) / 2;
+    for (int col = 0; col < arrayWidth; col++) {
+      if (col < (middleIndex - side) || col > (middleIndex + side)) {
+        cout << "  ";
+      } else {
+        cout << getVal(col, row) << " ";
+      }
+    }
+    cout << endl;
+  }
+  cout << endl;
+
+  return SUCCESS;
 }
 
 bool* Table::getPTable() {

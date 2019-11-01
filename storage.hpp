@@ -5,10 +5,11 @@
 class Table {
  private:
   bool* pTable;
+  bool init;
   int arrayWidth;
   int arrayHeight;
   int arraySize;
-  void allocTable();
+  int allocTable();
   void setFirstVal();
   int properMod(int a, int b);
 
@@ -17,14 +18,15 @@ class Table {
   ~Table();
   // Copy Constructor
   Table(Table& table);
-  void initTable(int generations);
-  void initLine(int width);
+  int initTable(int generations);
+  int initLine(int width);
   bool getVal(int x, int y);
   bool* getNeighbourhood(int x, int y);
-  void setVal(int x, int y, bool val);
-  void saveTable(std::string filename);
-  void loadTable(std::string filename);
-  void debugTable();
+  int setVal(int x, int y, bool val);
+  int saveTable(std::string filename);
+  int loadTable(std::string filename);
+  int debugTable();
+  int printTable();
   bool* getPTable();
   int getArrayWidth();
   int getArrayHeight();

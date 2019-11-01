@@ -1,6 +1,7 @@
+#include "error.hpp"
+#include "storage.hpp"
 #include <iostream>
 
-#include "storage.hpp"
 using namespace std;
 
 const int units = 8;
@@ -8,14 +9,23 @@ const int generations = 6;
 
 void initialisation(Table** test);
 void neighbourhood(Table* test);
+void error(Table** test);
 
 int main() {
-  Table* test;
-  initialisation(&test);
-  neighbourhood(test);
+  Table* testP = new Table();
+  initialisation(&testP);
+  neighbourhood(testP);
+  delete testP;
+
+  testP = new Table();
+  error(&testP);
+
   return 0;
 }
-
+// let me know when you're done with main, think I've got it working but need
+// one (I hope) more test What's the test running the program, think I've got it
+// flipped correctly Oh right I'll fix the makefile You should be able to run
+// main now
 template <typename T>
 void printArray(T array, int length) {
   for (int i = 0; i < length; i++) {
@@ -42,8 +52,9 @@ void initialisation(Table** test) {
 
   cout << "Generation Table Initialisation Test for " << generations
        << " generations:" << endl;
-  cout << "Pass Conditions: all values 0 apart from middle element in first row; table is " << generations
-       << " across and enough generations high" << endl;
+  cout << "Pass Conditions: all values 0 apart from middle element in first "
+          "row; table is "
+       << generations << " across and enough generations high" << endl;
   (*test)->initTable(generations);
   (*test)->debugTable();
 }
@@ -73,3 +84,14 @@ void neighbourhood(Table* test) {
   neighbourhood = test->getNeighbourhood(arrayWidth - 1, 1);
   printArray<bool*>(neighbourhood, 3);
 }
+
+void error(Table** test) {
+  cout << "Print Uninitialised Table Test: ";
+  if ((*test)->printTable() == TABLE_NOT_INITIALISED) {
+    cout << "Test passed";
+  }
+  cout << "Test failed";
+  cout << endl;
+}
+
+// can we make sure that the ruleset is boolean and not integers
