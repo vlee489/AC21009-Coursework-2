@@ -65,24 +65,26 @@ void checkValidity(int valid) {
 }
 
 void runProgram() {
+  Table *fullTable = new Table();
+  Rule *ruleObj = new Rule();
+
   int rule = userNumberInput(0, 256, "Please enter the desired rule you want to use");
   int generations = userNumberInput(0, 101, "Please enter the desired generations you want");
-  Table fullTable;
-  checkValidity(fullTable.initTable(generations));
-  Rule ruleObj;
-  checkValidity(ruleObj.setRule(rule));
+  
+  checkValidity(fullTable->initTable(generations));
+  checkValidity(ruleObj->setRule(rule));
 
-  int arrayWidth = fullTable.getArrayWidth();
+  int arrayWidth = fullTable->getArrayWidth();
   for (int row = 1; row < generations; row++) {
     for (int col = 0; col < arrayWidth; col++) {
-      bool* neighbourhood = fullTable.getNeighbourhood(col, row);
-      bool cell = ruleObj.generateCell(neighbourhood);
-      checkValidity(fullTable.setVal(col, row, cell));
+      bool* neighbourhood = fullTable->getNeighbourhood(col, row);
+      bool cell = ruleObj->generateCell(neighbourhood);
+      checkValidity(fullTable->setVal(col, row, cell));
       delete neighbourhood;
     }
   }
   cout << endl;
   // cout << "Debug Table Check: ";
-  // printArray(fullTable.getPTable(), fullTable.getArraySize());
-  fullTable.printTable();
+  // printArray(fullTable->getPTable(), fullTable->getArraySize());
+  fullTable->printTable();
 }
