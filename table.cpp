@@ -1,5 +1,5 @@
 // Imports the header file for this individual source file
-#include "storage.hpp"
+#include "table.hpp"
 
 #include "error.hpp"
 // Used to print to the console
