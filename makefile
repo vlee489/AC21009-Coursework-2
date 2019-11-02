@@ -10,14 +10,14 @@ CVERSION = -std=c++17
 all: maxTester main
 
 # Compiles program
-maxTester: maxTester.cpp table.cpp
+maxTester: maxTester.cpp table.cpp firstGen.cpp inputOutput.cpp 
 	# Compiles with flags
-	$(CC) $(CVERSION) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp
+	$(CC) $(CVERSION) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp firstGen.cpp inputOutput.cpp -lcurses 
 
 # Compiles main program
-main: main.cpp table.cpp rule.cpp
+main: main.cpp table.cpp rule.cpp inputOutput.cpp firstGen.cpp error.cpp
 	# Compiles with flags
-	$(CC) $(CVERSION) $(CFLAGS) -o main.o main.cpp table.cpp rule.cpp
+	$(CC) $(CVERSION) $(CFLAGS) -o main.o main.cpp table.cpp rule.cpp inputOutput.cpp firstGen.cpp error.cpp -lcurses
 
 # Deletes unused files
 clean :

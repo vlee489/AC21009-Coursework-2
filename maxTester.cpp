@@ -1,6 +1,9 @@
-#include "error.hpp"
-#include "table.hpp"
 #include <iostream>
+#include <vector>
+
+#include "error.hpp"
+#include "firstGen.hpp"
+#include "table.hpp"
 
 using namespace std;
 
@@ -11,23 +14,22 @@ void initialisation(Table** test);
 void neighbourhood(Table* test);
 void file(Table* test);
 void error(Table** test);
+void firstGenTest();
 
 int main() {
-  Table* testP = new Table();
-  initialisation(&testP);
-  neighbourhood(testP);
-  file(testP);
-  delete testP;
+  // Table *testP = new Table();
+  // initialisation(&testP);
+  // neighbourhood(testP);
+  // file(testP);
+  // delete testP;
 
   // testP = new Table();
   // error(&testP);
+  firstGenTest();
 
   return 0;
 }
-// let me know when you're done with main, think I've got it working but need
-// one (I hope) more test What's the test running the program, think I've got it
-// flipped correctly Oh right I'll fix the makefile You should be able to run
-// main now
+
 template <typename T>
 void printArray(T array, int length) {
   for (int i = 0; i < length; i++) {
@@ -89,7 +91,8 @@ void neighbourhood(Table* test) {
 
 void file(Table* test) {
   cout << "Save File Test" << endl;
-  cout << "Pass Conditions: Look at the file if it matches this it's passed" << endl;
+  cout << "Pass Conditions: Look at the file if it matches this it's passed"
+       << endl;
   string loc = "files/out.txt";
   test->saveTable(loc);
   test->debugTable();
@@ -109,4 +112,7 @@ void error(Table** test) {
   cout << endl;
 }
 
-// can we make sure that the ruleset is boolean and not integers
+void firstGenTest() {
+  vector<bool> firstGen;
+  firstGenerator(&firstGen);
+}
