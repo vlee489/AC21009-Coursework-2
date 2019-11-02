@@ -16,7 +16,6 @@ class Table {
  public:
   Table();
   ~Table();
-  // Copy Constructor
   Table(Table& table);
   int initTable(int generations);
   int initLine(int width);

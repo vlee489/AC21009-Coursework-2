@@ -1,8 +1,10 @@
 
-#include "error.hpp"
 #include "rule.hpp"
+
 #include <cmath>
 #include <iostream>
+
+#include "error.hpp"
 
 using namespace std;
 
@@ -71,6 +73,6 @@ int Rule::toBinary(bool binary[], int decimal) {
     }
   }
 
-  printf("END");
+  printf("END\n\n");
   return SUCCESS;
 }
