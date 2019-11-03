@@ -5,7 +5,9 @@
 // Used to print to the console
 #include <iostream>
 //
+#include <filesystem>
 #include <fstream>
+#include <sstream>
 #include <string>
 using namespace std;
 
@@ -19,15 +21,12 @@ Table::Table() {
   arraySize = 1;
 }
 
-// Destructor to delete the table
-Table::~Table() {
-  delete (pTable);
-}
-
 // Copy constructor
 Table::Table(Table& ogTable) {
   // Stores the pointer to the table we're copying
   bool* ogPTable = ogTable.getPTable();
+  //
+  init = ogTable.getPTable();
   // Copies the array width and height variables
   arrayWidth = ogTable.getArrayWidth();
   arrayHeight = ogTable.getArrayHeight();
@@ -38,8 +37,12 @@ Table::Table(Table& ogTable) {
     pTable[i] = ogPTable[i];
   }
 }
-// can you take a look at the return value errors in my terminal please
-// ON it
+
+// Destructor to delete the table
+Table::~Table() {
+  delete (pTable);
+}
+
 // Creates and initialises an array of appropriate length to store the table
 int Table::allocTable() {
   if (arrayHeight < 1 || arrayWidth < 1) {
@@ -63,13 +66,6 @@ void Table::setFirstVal() {
   pTable[arrayWidth / 2] = true;
 }
 
-// x86 has a design flaw where the mod operator doesn't work for negative
-// numbers This method addresses that to make it akin to what's found in  other
-// higher level languages like Java or Python
-int Table::properMod(int a, int b) {
-  return (b + (a % b)) % b;
-}
-
 // Creates a table to store all autonoma data
 int Table::initTable(int generations) {
   // Calculates the width of the table required to display all the generations
@@ -82,6 +78,31 @@ int Table::initTable(int generations) {
     // Sets the starting value of the cellular automaton
     setFirstVal();
   }
+  return valid;
+}
+
+// Creates a table to store all autonoma data incorporating the first generation
+// from a vector
+int Table::initTable(vector<bool> importVector, int generations) {
+  // Calculates the width of the table required to display all the generations
+  arrayWidth = (2 * generations) + importVector.size() - 2;
+  // Stores the the height of the table
+  arrayHeight = generations;
+  //
+  int firstGenLength = (int) importVector.size();
+  // Creates the array to store the table
+  int valid = allocTable();
+
+  if (valid == SUCCESS) {
+    int counter = 0;
+    int middleIndex = arrayWidth / 2;
+    int side = (firstGenLength) / 2;
+    for (int col = middleIndex - side; col <= middleIndex + side; col++) {
+      setVal(col, 0, importVector.at(counter));
+      counter++;
+    }
+  }
+
   return valid;
 }
 
@@ -139,6 +160,10 @@ int Table::saveTable(string filename) {
     return TABLE_NOT_INITIALISED;
   }
 
+  if (filename.length() == 0) {
+    return INVALID_FILENAME;
+  }
+
   // Creates the save file's object for writing
   ofstream saveFile;
   saveFile.open(filename);
@@ -164,8 +189,54 @@ int Table::saveTable(string filename) {
 }
 
 int Table::loadTable(string filename) {
-  if (filename == "") {
+  if (filename.length() == 0) {
+    return INVALID_FILENAME;
   }
+
+  if (filesystem::exists(filename)) {
+    return FILE_NOT_FOUND;
+  }
+
+  ifstream loadFile;
+  loadFile.open(filename);
+
+  if (!loadFile.is_open()) {
+    return FILE_NOT_ACCESSIBLE;
+  }
+
+  int numbersInLine = 0;
+  string line, temp;
+  stringstream lineStream;
+
+  getline(loadFile, line);
+  lineStream << line;
+
+  while (!lineStream.eof()) {
+    lineStream >> temp;
+    if (stringstream(temp)) {
+      numbersInLine++;
+    }
+  }
+
+  int generations = (numbersInLine / 2) + 1;
+  initTable(generations);
+
+  int x = 0;
+  int y = 0;
+  bool tempBool;
+
+  while (getline(loadFile, line)) {
+    while (!lineStream.eof()) {
+      lineStream >> temp;
+      if (stringstream(temp) >> tempBool) {
+        setVal(x, y, tempBool);
+      }
+      y++;
+    }
+    x++;
+  }
+
+  loadFile.close();
   return SUCCESS;
 }
 
@@ -186,7 +257,8 @@ int Table::debugTable() {
     cout << endl;
   }
   cout << endl;
-  return false;
+
+  return SUCCESS;
 }
 
 int Table::printTable() {
@@ -201,10 +273,10 @@ int Table::printTable() {
     int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - row);
     int side = (fieldsActive) / 2;
     for (int col = 0; col < arrayWidth; col++) {
-      if (col < (middleIndex - side) || col > (middleIndex + side)) {
-        cout << "  ";
-      } else {
+      if (col >= (middleIndex - side) && col <= (middleIndex + side)) {
         cout << getVal(col, row) << " ";
+      } else {
+        cout << "  ";
       }
     }
     cout << endl;
@@ -212,6 +284,13 @@ int Table::printTable() {
   cout << endl;
 
   return SUCCESS;
+}
+
+// x86 has a design flaw where the mod operator doesn't work for negative
+// numbers This method addresses that to make it akin to what's found in  other
+// higher level languages like Java or Python
+int Table::properMod(int a, int b) {
+  return (b + (a % b)) % b;
 }
 
 bool* Table::getPTable() {

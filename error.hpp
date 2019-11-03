@@ -1,20 +1,28 @@
-// Thought it might be a good idea to have an error code system
-// Sounds good, we can add to it as the project goes on
+#ifndef ERROR_H
+#define ERROR_H
 
+// Everything is awesome
 #define SUCCESS 0
 
-// Pointer is unexpectedly Null
+// Pointer is unexpectedly null
 #define UNEXPECTED_NULL_POINTER -1
 
-// 
-#define TABLE_NOT_INITIALISED -101
-#define INVALID_TABLE_PARAMETER -2
-#define Y_INDEX_OUT_OF_BOUNDS -300
+// General table class trrors 
+#define TABLE_NOT_INITIALISED -100
+#define INVALID_TABLE_PARAMETER -101
+#define Y_INDEX_OUT_OF_BOUNDS -102
 
-// Saving and Loading tables
-#define FILE_NOT_FOUND -102
-#define FILE_NOT_SAVED -103
+// Saving and loading file errors
+#define INVALID_FILE -200
+#define INVALID_FILENAME -201
+#define FILE_NOT_ACCESSIBLE -202
+#define FILE_NOT_FOUND -203
+#define FILE_NOT_SAVED -204
 
-// Rule File
-#define RULE_NUM_OUT_RANGE -501
-#define DECIMAL_VAL_OUT_OF_RANGE -502
+// Rule class errors
+#define RULE_NUM_OUT_RANGE -300
+#define DECIMAL_VAL_OUT_OF_RANGE -301
+
+void checkValidity(int valid);
+
+#endif
