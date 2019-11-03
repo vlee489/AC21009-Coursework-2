@@ -114,8 +114,6 @@ void error(Table** test) {
 }
 
 void firstGenTest() {
-  // vector<bool> firstGen;
-  // firstGenerator(&firstGen);
   Generation* generationObj = new Generation();
   generationObj->firstGenerator();
   vector<bool>* firstGen = generationObj->returnGen();

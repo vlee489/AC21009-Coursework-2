@@ -29,8 +29,6 @@ void runProgram() {
   int generations =
       promptIntRange("Please enter the desired generations you want", 0, 100);
 
-  // vector<bool> firstGen;
-  // firstGenerator(&firstGen);
   generationObj->firstGenerator();
   vector<bool>* firstGen = generationObj->returnGen();
 
