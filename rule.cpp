@@ -45,25 +45,21 @@ bool Rule::generateCell(bool neighbourhood[]) {
 }
 
 int Rule::toBinary(bool binary[], int decimal) {
+
   if (binary == NULL) {
     return UNEXPECTED_NULL_POINTER;
   }
   if (decimal < 0 || decimal > 255) {
     return DECIMAL_VAL_OUT_OF_RANGE;
   }
-  int testingDecimal = decimal;
+
   int binaryComp[8];
   binaryComp[0] = 0;
 
-  printf("binComp");
   for (int i = 0; i < 8; i++) {
     binary[i] = 0;
     binaryComp[i] = pow(2, i);
-    printf("%d   \n", binaryComp[i]);
   }
-  printf("END\n");
-
-  printf("Rule %d: ", testingDecimal);
   for (int i = 7; i >= 0; i--) {
     if (decimal >= binaryComp[i]) {
       decimal = decimal - binaryComp[i];
@@ -73,6 +69,5 @@ int Rule::toBinary(bool binary[], int decimal) {
     }
   }
 
-  printf("END\n\n");
   return SUCCESS;
 }
