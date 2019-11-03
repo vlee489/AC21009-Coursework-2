@@ -18,14 +18,14 @@ int getInt() {
 
 // Gets an integer from the user and uses a process function pointer to
 // interpret it
-void* getInt(void* process(int)) {
+bool getInt(bool process(int)) {
   int choice = getInt();
   return process(choice);
 }
 
 // Prompts the user for an integer using a process function pointer and strings
 // for prompt and fail messages
-void promptInt(string prompt, void* process(int), string failMessage) {
+void promptInt(string prompt, bool process(int), string failMessage) {
   bool valid;
   do {
     cout << prompt << ": ";
@@ -54,7 +54,7 @@ int promptIntRange(string prompt, int min, int max) {
   return input;
 }
 
-void menuInt(void* displayPrompt(), void* process(int)) {
+void menuInt(void displayPrompt(), bool process(int)) {
   bool valid;
   do {
     displayPrompt();

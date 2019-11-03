@@ -98,8 +98,10 @@ int Table::initTable(vector<bool> importVector, int generations) {
     int middleIndex = arrayWidth / 2;
     int side = (firstGenLength) / 2;
     for (int col = middleIndex - side; col <= middleIndex + side; col++) {
-      setVal(col, 0, importVector.at(counter));
-      counter++;
+      if (firstGenLength % 2 == 1 || col != middleIndex + side) {
+        setVal(col, 0, importVector.at(counter));
+        counter++;
+      }
     }
   }
 

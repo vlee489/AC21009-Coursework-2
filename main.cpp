@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "error.hpp"
-#include "firstGen.hpp"
+#include "generation.hpp"
 #include "inputOutput.hpp"
 #include "rule.hpp"
 #include "table.hpp"
@@ -21,6 +21,7 @@ int main() {
 void runProgram() {
   Table* fullTable = new Table();
   Rule* ruleObj = new Rule();
+  Generation* generationObj = new Generation();
 
   clearScreen();
   int rule =
@@ -28,9 +29,12 @@ void runProgram() {
   int generations =
       promptIntRange("Please enter the desired generations you want", 0, 100);
 
-  vector<bool> firstGen;
-  firstGenerator(&firstGen);
-  checkValidity(fullTable->initTable(firstGen, generations));
+  // vector<bool> firstGen;
+  // firstGenerator(&firstGen);
+  generationObj->firstGenerator();
+  vector<bool>* firstGen = generationObj->returnGen();
+
+  checkValidity(fullTable->initTable(*firstGen, generations));
   checkValidity(ruleObj->setRule(rule));
 
   int arrayWidth = fullTable->getArrayWidth();
@@ -45,5 +49,5 @@ void runProgram() {
   cout << endl;
   // cout << "Debug Table Check: ";
   // printArray(fullTable->getPTable(), fullTable->getArraySize());
-  fullTable->printTable();
+  fullTable->debugTable();
 }
