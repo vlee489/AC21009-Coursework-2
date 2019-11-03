@@ -1,20 +1,25 @@
-#include "firstGen.hpp"
-#include "error.hpp"
-#include "inputOutput.hpp"
+#include "generation.hpp"
+
 #include <iostream>
 #include <string>
 #include <vector>
 
+#include "error.hpp"
+#include "inputOutput.hpp"
+
 using namespace std;
 
-void firstGenerator(vector<bool>* firstGen) {
+Generation::Generation() {
+  gen = new vector<bool>();
+  errorBuffer = "";
+}
+
+void Generation::firstGenerator() {
   bool valid = false;
   do {
     firstGenMenu();
-    int choice;
-    cin >> choice;
-    cout << endl;
-    valid = processFirstGen(firstGen, choice);
+    int choice = getInt();
+    valid = processFirstGen(choice);
     if (!valid) {
       cout << "Invalid Input entered" << endl
            << "Please try again" << endl
@@ -34,13 +39,13 @@ void firstGenMenu() {
   cout << "Choose an option from the list: ";
 }
 
-bool processFirstGen(vector<bool>* firstGen, int choice) {
+bool Generation::processFirstGen(int choice) {
   switch (choice) {
     case 1:
-      firstGen->push_back(true);
+      gen->push_back(true);
       return true;
     case 2:
-      custom(firstGen);
+      custom();
       return true;
     case 3:
       return true;
@@ -54,19 +59,21 @@ bool processFirstGen(vector<bool>* firstGen, int choice) {
   }
 }
 
-void custom(vector<bool>* firstGen) {
+void Generation::custom() {
   bool finished;
   do {
     clearScreen();
+    if (errorBuffer.compare("") != 0) {
+      cout << errorBuffer << endl;
+      errorBuffer = "";
+    }
     cout << endl << "Elements:  ";
-    printVector(firstGen);
+    printVector(gen);
     customMenu();
-    int choice;
-    cin >> choice;
-    finished = processCustom(choice, firstGen);
+    int choice = getInt();
+    finished = processCustom(choice);
   } while (finished == false);
 }
-
 
 void customMenu() {
   cout << endl;
@@ -78,14 +85,13 @@ void customMenu() {
   cout << "Choose an option from the list: ";
 }
 
-bool processCustom(int choice, vector<bool>* firstGen) {
-  cout << endl;
+bool Generation::processCustom(int choice) {
   switch (choice) {
     case 1:
-      addToVector(firstGen);
+      addToVector();
       break;
     case 2:
-      removeFromVector(firstGen);
+      removeFromVector();
       break;
     case 3:
       return true;
@@ -99,52 +105,61 @@ bool processCustom(int choice, vector<bool>* firstGen) {
   return false;
 }
 
-int addToVector(vector<bool>* firstGen) {
-  bool valid = false;
-  do {
-    cout << "Type in a 1 or 0 to indicate whether the next element is true or "
-            "false: ";
-    int choice = getInt();
-    if (choice == 0) {
-      firstGen->push_back(false);
-      valid = true;
-    } else if (choice == 1) {
-      firstGen->push_back(true);
-      valid = true;
-    } else {
-      cout << "Invalid Input entered" << endl;
-      cout << "Please try again" << endl << endl;
-    }
-  } while (valid == false);
+int Generation::addToVector() {
+  if (gen->size() <= 20) {
+    bool valid = false;
+    do {
+      cout
+          << "Type in a 1 or 0 to indicate whether the next element is true or "
+             "false: ";
+      int choice = getInt();
+      if (choice == 0) {
+        gen->push_back(false);
+        valid = true;
+      } else if (choice == 1) {
+        gen->push_back(true);
+        valid = true;
+      } else {
+        cout << "Invalid Input entered" << endl;
+        cout << "Please try again" << endl << endl;
+      }
+    } while (valid == false);
+  } else {
+    errorBuffer =
+        "You can only have first generation up to 20 numbers in length";
+  }
   return SUCCESS;
 }
 
-int removeFromVector(vector<bool>* firstGen) {
-  bool valid;
-  do {
-    displayRemoval(firstGen);
-    int choice;
-    cin >> choice;
-    valid = processRemoval(firstGen, choice);
-  } while (valid == false);
+int Generation::removeFromVector() {
+  if (!gen->empty()) {
+    bool valid;
+    do {
+      displayRemoval();
+      int choice = getInt();
+      valid = processRemoval(choice);
+    } while (valid == false);
+  } else {
+    errorBuffer = "You can't delete from an empty function";
+  }
   return SUCCESS;
 }
 
-void displayRemoval(vector<bool>* firstGen) {
+void Generation::displayRemoval() {
   cout << "Elements: ";
-  printVector(firstGen);
+  printVector(gen);
   cout << "Numbers:  ";
-  for (int i = 0; i < int(firstGen->size()); i++) {
+  for (int i = 0; i < int(gen->size()); i++) {
     cout << i << " ";
   }
   cout << endl;
   cout << "Select the number of the element to remove: ";
 }
 
-int processRemoval(vector<bool>* firstGen, int choice) {
-  if (choice < int(firstGen->size())) {
+int Generation::processRemoval(int choice) {
+  if (choice < int(gen->size())) {
     cout << "Element " << choice << " removed" << endl;
-    firstGen->erase(firstGen->begin() + choice);
+    gen->erase(gen->begin() + choice);
     return true;
   }
   cout << "Invalid Input entered" << endl;
@@ -152,6 +167,6 @@ int processRemoval(vector<bool>* firstGen, int choice) {
   return false;
 }
 
-
-
-
+vector<bool>* Generation::returnGen() {
+  return gen;
+}
