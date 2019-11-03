@@ -18,27 +18,9 @@ int main() {
   return 0;
 }
 
-// int userNumberInput(int min, int max, string message) {
-//   int UserInput;
-//   cout << "\n" + message + ": ";
-//   while (!(cin >> UserInput) || UserInput < min || UserInput > max) {
-//     cout << "\nInvalid input\n";
-//     cout << "Please enter a whole number between " << min << " and " << max;
-//     cout << endl;
-//   }
-//   return UserInput;
-// }
-
 void runProgram() {
   Table* fullTable = new Table();
   Rule* ruleObj = new Rule();
-
-  // int rule =
-  //     userNumberInput(0, 256, "Please enter the desired rule you want to
-  //     use");
-  // int generations =
-  //     userNumberInput(0, 101, "Please enter the desired generations you
-  //     want");
 
   clearScreen();
   int rule =
@@ -46,10 +28,10 @@ void runProgram() {
   int generations =
       promptIntRange("Please enter the desired generations you want", 0, 100);
 
-  checkValidity(fullTable->initTable(generations));
-  checkValidity(ruleObj->setRule(rule));
   vector<bool> firstGen;
   firstGenerator(&firstGen);
+  checkValidity(fullTable->initTable(firstGen, generations));
+  checkValidity(ruleObj->setRule(rule));
 
   int arrayWidth = fullTable->getArrayWidth();
   for (int row = 1; row < generations; row++) {

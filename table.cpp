@@ -21,15 +21,12 @@ Table::Table() {
   arraySize = 1;
 }
 
-// Destructor to delete the table
-Table::~Table() {
-  delete (pTable);
-}
-
 // Copy constructor
 Table::Table(Table& ogTable) {
   // Stores the pointer to the table we're copying
   bool* ogPTable = ogTable.getPTable();
+  //
+  init = ogTable.getPTable();
   // Copies the array width and height variables
   arrayWidth = ogTable.getArrayWidth();
   arrayHeight = ogTable.getArrayHeight();
@@ -39,6 +36,11 @@ Table::Table(Table& ogTable) {
   for (int i = 0; i < arraySize; i++) {
     pTable[i] = ogPTable[i];
   }
+}
+
+// Destructor to delete the table
+Table::~Table() {
+  delete (pTable);
 }
 
 // Creates and initialises an array of appropriate length to store the table
@@ -64,13 +66,6 @@ void Table::setFirstVal() {
   pTable[arrayWidth / 2] = true;
 }
 
-// x86 has a design flaw where the mod operator doesn't work for negative
-// numbers This method addresses that to make it akin to what's found in  other
-// higher level languages like Java or Python
-int Table::properMod(int a, int b) {
-  return (b + (a % b)) % b;
-}
-
 // Creates a table to store all autonoma data
 int Table::initTable(int generations) {
   // Calculates the width of the table required to display all the generations
@@ -83,6 +78,31 @@ int Table::initTable(int generations) {
     // Sets the starting value of the cellular automaton
     setFirstVal();
   }
+  return valid;
+}
+
+// Creates a table to store all autonoma data incorporating the first generation
+// from a vector
+int Table::initTable(vector<bool> importVector, int generations) {
+  // Calculates the width of the table required to display all the generations
+  arrayWidth = (2 * generations) + importVector.size() - 2;
+  // Stores the the height of the table
+  arrayHeight = generations;
+  //
+  int firstGenLength = (int) importVector.size();
+  // Creates the array to store the table
+  int valid = allocTable();
+
+  if (valid == SUCCESS) {
+    int counter = 0;
+    int middleIndex = arrayWidth / 2;
+    int side = (firstGenLength) / 2;
+    for (int col = middleIndex - side; col <= middleIndex + side; col++) {
+      setVal(col, 0, importVector.at(counter));
+      counter++;
+    }
+  }
+
   return valid;
 }
 
@@ -253,10 +273,10 @@ int Table::printTable() {
     int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - row);
     int side = (fieldsActive) / 2;
     for (int col = 0; col < arrayWidth; col++) {
-      if (col < (middleIndex - side) || col > (middleIndex + side)) {
-        cout << "  ";
-      } else {
+      if (col >= (middleIndex - side) && col <= (middleIndex + side)) {
         cout << getVal(col, row) << " ";
+      } else {
+        cout << "  ";
       }
     }
     cout << endl;
@@ -264,6 +284,13 @@ int Table::printTable() {
   cout << endl;
 
   return SUCCESS;
+}
+
+// x86 has a design flaw where the mod operator doesn't work for negative
+// numbers This method addresses that to make it akin to what's found in  other
+// higher level languages like Java or Python
+int Table::properMod(int a, int b) {
+  return (b + (a % b)) % b;
 }
 
 bool* Table::getPTable() {
