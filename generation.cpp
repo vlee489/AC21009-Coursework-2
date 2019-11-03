@@ -34,7 +34,7 @@ void firstGenMenu() {
   cout << "1. Start using a single true element as the first generation"
        << endl;
   cout << "2. Create a custom generation to start from" << endl;
-  cout << "3. Load the first generation from a saved table" << endl;
+  // cout << "3. Load the first generation from a saved table" << endl;
   cout << "0. Exit" << endl;
   cout << "Choose an option from the list: ";
 }
@@ -47,8 +47,8 @@ bool Generation::processFirstGen(int choice) {
     case 2:
       custom();
       return true;
-    case 3:
-      return true;
+    // case 3:
+    //   return true;
     case 0:
       exit(0);
     default:
@@ -94,7 +94,12 @@ bool Generation::processCustom(int choice) {
       removeFromVector();
       break;
     case 3:
-      return true;
+      if (gen->empty()) {
+        errorBuffer = "You cannot have a first generation with no values";
+        break;
+      } else {
+        return true;
+      }
     case 0:
       exit(0);
     default:
