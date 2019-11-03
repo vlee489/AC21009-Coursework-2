@@ -10,10 +10,21 @@
 using namespace std;
 
 int getInt() {
-  int choice;
-  cin >> choice;
-  cout << endl;
-  return choice;
+  int input;
+  bool valid = false;
+  do {
+    if (!(cin >> input)) {
+      cin.clear();
+      cin.ignore();
+      cout << endl;
+      cout << "Please enter an interger: ";
+    }
+    else {
+      valid = true;
+      cout << endl;
+    }
+  } while (!valid);
+  return input;
 }
 
 // Gets an integer from the user and uses a process function pointer to
@@ -26,7 +37,7 @@ bool getInt(bool process(int)) {
 // Prompts the user for an integer using a process function pointer and strings
 // for prompt and fail messages
 void promptInt(string prompt, bool process(int), string failMessage) {
-  bool valid;
+  bool valid = false;
   do {
     cout << prompt << ": ";
     valid = getInt(process);
@@ -38,24 +49,24 @@ void promptInt(string prompt, bool process(int), string failMessage) {
 
 //
 int promptIntRange(string prompt, int min, int max) {
-  bool valid;
+  bool valid = false;
   int input;
   do {
     cout << prompt << ": ";
-    cin >> input;
-    cout << endl;
+    input = getInt();
     if (input >= min && input <= max) {
       valid = true;
     } else {
-      cout << "Invalid input" << endl;
-      cout << "Please enter a whole number between " << min << " and " << max << endl;
+      cout << "Invalid Input" << endl;
+      cout << "Please enter a whole number between " << min << " and " << max
+           << endl << endl;
     }
   } while (!valid);
   return input;
 }
 
 void menuInt(void displayPrompt(), bool process(int)) {
-  bool valid;
+  bool valid = false;
   do {
     displayPrompt();
     valid = getInt(process);

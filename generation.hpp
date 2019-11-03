@@ -1,6 +1,7 @@
 #ifndef START_GEN
 #define START_GEN
 
+#include <string>
 #include <vector>
 
 void firstGenMenu();
@@ -9,6 +10,7 @@ void customMenu();
 class Generation {
  private:
   std::vector<bool>* gen;
+  std::string errorBuffer;
 
  public:
   Generation();

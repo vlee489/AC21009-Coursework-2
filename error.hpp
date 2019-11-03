@@ -23,6 +23,9 @@
 #define RULE_NUM_OUT_RANGE -300
 #define DECIMAL_VAL_OUT_OF_RANGE -301
 
+//
+#define INVALID_VECTOR_OPERATION -400
+
 void checkValidity(int valid);
 
 #endif
