@@ -275,7 +275,9 @@ int Table::printTable() {
     int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - row);
     int side = (fieldsActive) / 2;
     for (int col = 0; col < arrayWidth; col++) {
-      if (col >= (middleIndex - side) && col <= (middleIndex + side)) {
+      if (col >= (middleIndex - side) && col < (middleIndex + side)) {
+        cout << getVal(col, row) << " ";
+      } else if (col == (middleIndex + side) && fieldsActive % 2 == 1) {
         cout << getVal(col, row) << " ";
       } else {
         cout << "  ";

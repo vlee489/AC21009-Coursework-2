@@ -47,5 +47,5 @@ void runProgram() {
   cout << endl;
   // cout << "Debug Table Check: ";
   // printArray(fullTable->getPTable(), fullTable->getArraySize());
-  fullTable->debugTable();
+  fullTable->printTable();
 }
