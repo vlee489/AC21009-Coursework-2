@@ -110,6 +110,6 @@ void printVector(vector<bool>* vector) {
 
 // Source: http://www.cplusplus.com/articles/4z18T05o/
 void clearScreen() {
-  if (system("CLS"))
-    system("clear");
+  if (system("clear"))
+    system("CLS");
 }
