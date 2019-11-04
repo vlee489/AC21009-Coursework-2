@@ -31,7 +31,13 @@ int runGameOfLife(){
         for (int col = 0; col < arrayWidth; col++) {
             int neighbors = fullTable->getNeighbourhood(col, row);
             int state = 1;
-
+            if(state == 0 && neighbors  == 3){
+                //setstate to 1
+            }else if(state == 1 && (neighbors < 2 || neighbors > 3)){
+                //setstate to 0
+            }else{
+                // keep same
+            }
         }
 
     }
