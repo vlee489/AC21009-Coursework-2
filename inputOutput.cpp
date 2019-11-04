@@ -1,9 +1,13 @@
 #include <iostream>
 #include <string>
+
 // Used to clear the screen
 #include <stdlib.h>
 #include <term.h>
 #include <unistd.h>
+
+// Used for suboptimal clear screen
+#include <cstdlib>
 
 #include "inputOutput.hpp"
 
@@ -93,13 +97,19 @@ void printVector(vector<bool>* vector) {
   cout << endl;
 }
 
+// // Source: http://www.cplusplus.com/articles/4z18T05o/
+// void clearScreen() {
+//   if (!cur_term) {
+//     int result;
+//     setupterm(NULL, STDOUT_FILENO, &result);
+//     if (result <= 0)
+//       return;
+//   }
+//   putp(tigetstr("clear"));
+// }
+
 // Source: http://www.cplusplus.com/articles/4z18T05o/
 void clearScreen() {
-  if (!cur_term) {
-    int result;
-    setupterm(NULL, STDOUT_FILENO, &result);
-    if (result <= 0)
-      return;
-  }
-  putp(tigetstr("clear"));
+  if (system("CLS"))
+    system("clear");
 }
