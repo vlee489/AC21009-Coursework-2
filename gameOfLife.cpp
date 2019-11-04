@@ -1,5 +1,6 @@
 //
 // Created by Vincent Lee on 03/11/2019.
+// Note to self: grid starts at top left
 //
 
 #include <iostream>
@@ -14,34 +15,46 @@
 #include "table.hpp"
 
 //Variables
-int x = 10;
-int y = 10;
+int x = 50;
+int y = 50;
+Table* fullTable = new Table();
 
-char box = "█";
-char blankSpace = " ";
+void setupGameOfLife(){
+    checkValidity(fullTable->initTable(x, y));
 
-int runGameOfLife(){
-    Table* fullTable = new Table();
-    clearScreen();
-    vector<bool>* firstGen = generationObj->returnGen();
-    checkValidity(fullTable->initTable(*firstGen, 10));
+    // Following sets up starting items
+    fullTable->setVal(3, 2 true);
+    fullTable->setVal(5, 2, true);
+    fullTable->setVal(4, 3, true);
+    fullTable->setVal(5, 3, true);
+    fullTable->setVal(4, 4, true);
 
+    fullTable->setVal(4, 5, true);
+    fullTable->setVal(3, 10, true);
+    fullTable->setVal(5, 10, true);
+    fullTable->setVal(3, 11, true);
+    fullTable->setVal(4, 11, true);
+
+}
+
+void runGameOfLife(){
     int arrayWidth = fullTable->getArrayWidth();
     for (int row = 1; row < generations; row++) {
         for (int col = 0; col < arrayWidth; col++) {
             int neighbors = fullTable->getNeighbourhood(col, row);
-            int state = 1;
-            if(state == 0 && neighbors  == 3){
-                //setstate to 1
-            }else if(state == 1 && (neighbors < 2 || neighbors > 3)){
-                //setstate to 0
-            }else{
-                // keep same
+            bool state = fullTable->getVal(col, row);
+            if(!state && neighbors  == 3){
+                fullTable->setVal(col, row, true)
+            }else if(state && (neighbors < 2 || neighbors > 3)){
+               fullTable->setVal(col, row, false)
             }
         }
 
     }
+    fullTable->debugTable()
+}
 
-
+void main(){
+    
 }
 
