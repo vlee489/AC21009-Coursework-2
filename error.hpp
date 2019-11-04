@@ -24,7 +24,7 @@
 #define DECIMAL_VAL_OUT_OF_RANGE -301
 
 //
-#define INVALID_VECTOR_OPERATION -400
+// #define INVALID_VECTOR_OPERATION -400
 
 void checkValidity(int valid);
 
