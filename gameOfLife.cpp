@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 #include <cstdlib>
-#include "gameOfLife.h"
+#include "gameOfLife.hpp"
 
 #include "error.hpp"
 #include "inputOutput.hpp"
@@ -17,9 +17,10 @@
 //Variables
 int x = 50;
 int y = 50;
-Table* fullTable = new Table();
+Table* fullTable = nullptr;
 
 void setupGameOfLife(){
+    fullTable = new Table();
     checkValidity(fullTable->initTable(x, y));
 
     // Following sets up starting items
@@ -38,23 +39,36 @@ void setupGameOfLife(){
 }
 
 void runGameOfLife(){
+    clearScreen()
+    // Create a table for the working calculations
+    Table* workingTable = new Table();
     int arrayWidth = fullTable->getArrayWidth();
+    int generations = fullTable->getArrayHeight();
+
+    // for each x and y value
     for (int row = 1; row < generations; row++) {
         for (int col = 0; col < arrayWidth; col++) {
+            // get the Number of neighbors around the cord
             int neighbors = fullTable->getNeighbourhood(col, row);
+            // get it's state
             bool state = fullTable->getVal(col, row);
+
+            // Cell is born as conditions are right
             if(!state && neighbors  == 3){
-                fullTable->setVal(col, row, true)
-            }else if(state && (neighbors < 2 || neighbors > 3)){
-               fullTable->setVal(col, row, false)
+                workingTable->setVal(col, row, true)
+            }
+            // Cell dies due to underpopulation || over population
+            else if(state && (neighbors < 2 || neighbors > 3)){
+                workingTable->setVal(col, row, false)
+            }
+            // Keep the state the same
+            else{
+                workingTable->setVal(col, row, state);
             }
         }
-
     }
+    // sets the working table as the new active table.
+    fullTable = new Table(workingTable);
     fullTable->debugTable()
-}
-
-void main(){
-    
 }
 

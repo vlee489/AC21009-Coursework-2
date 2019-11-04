@@ -20,6 +20,10 @@ maxTester: maxTester.cpp table.cpp generation.cpp inputOutput.cpp
 	# Compiles with flags
 	$(CC) $(CVERSION) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp generation.cpp inputOutput.cpp -lcurses 
 
+gameOfLife: vincentTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
+	# Compiles with flags
+    	$(CC) $(CVERSION) $(CFLAGS) -o vincentTester.o vincentTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
+
 # Deletes unused files
 clean:
 	-rm $(objects) *.o
