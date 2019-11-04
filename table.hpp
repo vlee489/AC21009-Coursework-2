@@ -35,6 +35,8 @@ class Table {
 
   // Creates a table to store all autonoma data using a number of generations
   int initTable(int generations);
+  // Creates a table using fixed axises of x and y
+  int initTable(int x, int y);
   // Creates a table to store all autonoma data incorporating the first
   // generation from a vector
   int initTable(std::vector<bool> importVector, int generations);
