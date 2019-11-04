@@ -5,7 +5,8 @@
 
 using namespace std;
 
-// Displays an error message based on the apppropriate error code imported
+// Displays an error message to the user based on the apppropriate error code
+// imported
 void checkValidity(int valid) {
   switch (valid) {
     case SUCCESS:
@@ -72,6 +73,7 @@ void checkValidity(int valid) {
       break;
   }
 
+  // Quits if an error code has occured
   if (valid != SUCCESS) {
     exit(0);
   }
