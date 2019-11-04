@@ -7,7 +7,7 @@
 // Pointer is unexpectedly null
 #define UNEXPECTED_NULL_POINTER -1
 
-// General table class trrors
+// General table class errors
 #define TABLE_NOT_INITIALISED -100
 #define INVALID_TABLE_PARAMETER -101
 #define Y_INDEX_OUT_OF_BOUNDS -102

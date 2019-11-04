@@ -81,20 +81,27 @@ void Generation::customGenerator() {
   bool finished;
   do {
     clearScreen();
+    // Checks if the error buffer isn't blank
     if (errorBuffer.compare("") != 0) {
+      // Prints the error message to the user
       cout << errorBuffer << endl;
+      // Clears the error buffer
       errorBuffer = "";
     }
     cout << endl << "Elements:  ";
+    // Prints the current elements in the generation
     printVector(gen);
+    // Displays the menu to the user
     customMenu();
     // Gets user input and validates it as an integer
     int choice = getInt();
+    // Processes user input
     finished = processCustom(choice);
   // Loops until we have finished inputting
   } while (finished == false);
 }
 
+// Displays a menu for editing a custom generation we should use
 void Generation::customMenu() {
   cout << endl;
   cout << "Custom Generator Commands: " << endl;
@@ -105,16 +112,21 @@ void Generation::customMenu() {
   cout << "Choose an option from the list: ";
 }
 
+// Processes the user's chosen operation on their custom generation
 bool Generation::processCustom(int choice) {
   switch (choice) {
     case 1:
+      // Allows the user to add an element to the generation
       addToVector();
       break;
     case 2:
+      // Allows the user to remove an element from the generation
       removeFromVector();
       break;
     case 3:
+      // Checks if the generation is empty
       if (gen->empty()) {
+        // Sets an error message in the error buffer
         errorBuffer = "You cannot have a first generation with no values";
         break;
       } else {
@@ -130,8 +142,11 @@ bool Generation::processCustom(int choice) {
   return false;
 }
 
+// Allows the user to add to their custom generation
 int Generation::addToVector() {
+  // Checks if the generation is not already full
   if (gen->size() <= 20) {
+    // Assumes the user's input to be invalid
     bool valid = false;
     do {
       cout
@@ -139,62 +154,91 @@ int Generation::addToVector() {
              "false: ";
       // Gets user input and validates it as an integer
       int choice = getInt();
+      // Checks if the user has entered the new element to be false
       if (choice == 0) {
+        // Adds a false element to the end of the generation
         gen->push_back(false);
         valid = true;
-      } else if (choice == 1) {
+      }
+      // Checks if the user has entered the new element to be true
+      else if (choice == 1) {
+        // Adds a true element to the end of the generation
         gen->push_back(true);
         valid = true;
-      } else {
+      } 
+      else {
         cout << "Invalid Input entered" << endl;
         cout << "Please try again" << endl << endl;
       }
-    } while (valid == false);
+    } 
+    // Runs while the user's input is false
+    while (valid == false);
   } else {
+    // Sets an error message in the error buffer
     errorBuffer = "You can only have a generation up to 20 numbers in length";
     return VECTOR_AT_MAX_SIZE;
   }
   return SUCCESS;
 }
 
+// Allows the user to remove items from their custom generation
 int Generation::removeFromVector() {
+  // Checks if the generation is not empty
   if (!gen->empty()) {
-    bool valid;
+    // Assumes the user's input to be false
+    bool valid = false;
     do {
+      // Displays the removal menu
       displayRemoval();
       // Gets user input and validates it as an integer
       int choice = getInt();
+      // Processes the user's input
       valid = processRemoval(choice);
-    } while (valid == false);
+    }
+    // Runs while the user's input is false
+    while (valid == false);
   } else {
+    // Sets an error message in the error buffer
     errorBuffer = "You can't delete from an empty generation";
     return INVALID_VECTOR_OPERATION;
   }
   return SUCCESS;
 }
 
+// Displays a menu for removing an element from a custom generation
 void Generation::displayRemoval() {
   cout << "Elements: ";
+  // Displays all the elements
   printVector(gen);
   cout << "Numbers:  ";
+  // Prints an index for the elements displayed
   for (int i = 0; i < int(gen->size()); i++) {
     cout << i << " ";
   }
   cout << endl;
-  cout << "Select the number of the element to remove: ";
+  cout << "Select the number of the element to remove or type -1 to cancel: ";
 }
 
+// Removes the user's chosen element or skips the process if the user types in -1
 int Generation::processRemoval(int choice) {
-  if (choice < int(gen->size())) {
-    cout << "Element " << choice << " removed" << endl;
+  // Checks if the user's input is a valid index
+  if (choice < int(gen->size()) && choice >= 0) {
+    // Removes the user's chosen element
     gen->erase(gen->begin() + choice);
     return true;
   }
-  cout << "Invalid Input entered" << endl;
-  cout << "Please try again" << endl << endl;
-  return false;
+  // Skips this process if the user has entered -1
+  else if (choice == -1) {
+    return true;
+  }
+  else {
+    cout << "Invalid Input entered" << endl;
+    cout << "Please try again" << endl << endl;
+    return false;
+  }
 }
 
+// Returns the generation pointer
 vector<bool>* Generation::returnGen() {
   return gen;
 }
