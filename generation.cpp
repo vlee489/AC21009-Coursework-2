@@ -1,19 +1,26 @@
+// Imports the header file for this individual source file
 #include "generation.hpp"
+// Imports error codes
+#include "error.hpp"
+// Imports methods to handle user input and output
+#include "inputOutput.hpp"
 
+// Used to print to the console
 #include <iostream>
 #include <string>
 #include <vector>
 
-#include "error.hpp"
-#include "inputOutput.hpp"
-
 using namespace std;
 
+// Constructor to set values to defaults
 Generation::Generation() {
+  // Inititalises a generation pointer
   gen = new vector<bool>();
+  // Inititalises an error buffer which will be used to store a message to the user if an error occurs
   errorBuffer = "";
 }
 
+// Allows the user to set a first generatiom
 void Generation::firstGenerator() {
   bool valid = false;
   do {

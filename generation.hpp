@@ -7,13 +7,16 @@
 void firstGenMenu();
 void customMenu();
 
+// Store values of a genertation
 class Generation {
  private:
   std::vector<bool>* gen;
   std::string errorBuffer;
 
  public:
+  // Constructor to set values to defaults
   Generation();
+  // Allows the user to set a first generatiom
   void firstGenerator();
   bool processFirstGen(int choice);
   void custom();
