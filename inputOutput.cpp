@@ -110,7 +110,35 @@ void menuInt(void displayPrompt(), bool process(int)) {
   while (!valid);
 }
 
-// Defines T as a template to be replaced with the type from the parameter 
+// Gets input from the user as a string
+string getStr() {
+  // Stores the user's input as a string
+  string input;
+  //
+  getline(cin, input);
+  //
+  return input;
+}
+
+// Gets a string from the user and uses a process function pointer to
+// interpret it
+bool getStr(bool process(string)) {
+  // Gets input from the user
+  string choice = getStr();
+  // Returns the output of the process function
+  return process(choice);
+}
+
+//
+void promptStr(string prompt, bool process(string)) {
+  // Prints the prompt to the console
+  cout << prompt << ": ";
+  // Gets a string from the user and uses a process function pointer to
+  // interpret it
+  getStr(process);
+}
+
+// Defines T as a template to be replaced with the type from the parameter
 // e.g. int, string
 template <typename T>
 // Prints an array of any type to the screen
