@@ -7,7 +7,7 @@
 // Pointer is unexpectedly null
 #define UNEXPECTED_NULL_POINTER -1
 
-// General table class trrors 
+// General table class errors
 #define TABLE_NOT_INITIALISED -100
 #define INVALID_TABLE_PARAMETER -101
 #define Y_INDEX_OUT_OF_BOUNDS -102
@@ -23,6 +23,12 @@
 #define RULE_NUM_OUT_RANGE -300
 #define DECIMAL_VAL_OUT_OF_RANGE -301
 
+// Vector errors
+#define INVALID_VECTOR_OPERATION -400
+#define VECTOR_AT_MAX_SIZE -401
+
+// Displays an error message to the user based on the apppropriate error code
+// imported
 void checkValidity(int valid);
 
 #endif

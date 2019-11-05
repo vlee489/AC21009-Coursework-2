@@ -2,7 +2,8 @@
 #include <vector>
 
 #include "error.hpp"
-#include "firstGen.hpp"
+#include "generation.hpp"
+#include "inputOutput.hpp"
 #include "table.hpp"
 
 using namespace std;
@@ -113,6 +114,8 @@ void error(Table** test) {
 }
 
 void firstGenTest() {
-  vector<bool> firstGen;
-  firstGenerator(&firstGen);
+  Generation* generationObj = new Generation();
+  generationObj->firstGenerator();
+  vector<bool>* firstGen = generationObj->returnGen();
+  printVector(firstGen);
 }
