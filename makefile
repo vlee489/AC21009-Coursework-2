@@ -7,7 +7,7 @@ CFLAGS_LESSER = -Wall -Werror
 CVERSION = -std=c++17
 
 # Main 
-all: maxTester main
+all: maxTester main gameOfLife
 
 # Compiles main program
 main: main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp

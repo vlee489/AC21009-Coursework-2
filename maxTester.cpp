@@ -157,6 +157,7 @@ void numAround() {
   test->setVal(3, 1, true);
   test->setVal(2, 1, true);
 
+
   cout << "Number Around Test" << endl;
   cout << "Pass Conditions: Numbers Around (2,1): 4" << endl;
   test->debugTable();

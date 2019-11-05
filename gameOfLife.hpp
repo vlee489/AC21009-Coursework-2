@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-void setupGameOfLife();
-void runGameOfLife();
+int setupGameOfLife(int xSize, int ySize);
+void runGameOfLife(int xSize, int ySize);
 
 #endif //AC21009_COURSEWORK_2_GAMEOFLIFE_H

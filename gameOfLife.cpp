@@ -15,36 +15,35 @@
 #include "table.hpp"
 
 //Variables
-int x = 50;
-int y = 50;
 Table* fullTable = nullptr;
 Table* workingTable = nullptr;
 
-void setupGameOfLife(){
-    printf("Setup Done\n");
+int setupGameOfLife(int xSize, int ySize){
+
     fullTable = new Table();
-    checkValidity(fullTable->initTable(x, y));
+    checkValidity(fullTable->initTable(xSize, ySize));
 
-    // Following sets up starting items
-    fullTable->setVal(3, 2, true);
-    fullTable->setVal(5, 2, true);
-    fullTable->setVal(4, 3, true);
-    fullTable->setVal(5, 3, true);
-    fullTable->setVal(4, 4, true);
-
-    fullTable->setVal(4, 5, true);
-    fullTable->setVal(3, 10, true);
-    fullTable->setVal(5, 10, true);
-    fullTable->setVal(3, 11, true);
-    fullTable->setVal(4, 11, true);
-
+    // The following sets the initial table with random true values
+    // For each item in the grid
+    for (int row = 1; row < ySize; row++) {
+        for (int col = 0; col < xSize; col++) {
+            // random num generator
+            // Should use the C++11 implementation of the random number gen
+            int randomNum = rand() % 2;
+            // If number is 1 then turn the box to true
+            if(randomNum == 1){
+                fullTable->setVal(col, row, true);
+            }
+        }
+    }
+    return SUCCESS;
 }
 
-void runGameOfLife(){
-    printf("run Done\n");
+void runGameOfLife(int xSize, int ySize){
     clearScreen();
     // Create a table for the working calculations
     workingTable = new Table();
+    checkValidity(workingTable->initTable(xSize, ySize));
     int arrayWidth = fullTable->getArrayWidth();
     int generations = fullTable->getArrayHeight();
 
@@ -52,9 +51,21 @@ void runGameOfLife(){
     for (int row = 1; row < generations; row++) {
         for (int col = 0; col < arrayWidth; col++) {
             // get the Number of neighbors around the cord
-            int neighbors = fullTable->getNumAround(col, row);
+            int neighbors = fullTable->getNumAroundVin(col, row);
             // get it's state
             bool state = fullTable->getVal(col, row);
+
+            /*
+            if(state && neighbors < 2){
+                workingTable->setVal(col, row, false);
+            }else if(state && (neighbors == 2 || neighbors == 3)){
+                workingTable->setVal(col, row, true);
+            }else if(state && neighbors > 3){
+                workingTable->setVal(col, row, false);
+            }else if(!state && neighbors == 3){
+                workingTable->setVal(col, row, true);
+            }
+             */
 
             // Cell is born as conditions are right
             if(!state && neighbors  == 3){
@@ -68,10 +79,11 @@ void runGameOfLife(){
             else{
                 workingTable->setVal(col, row, state);
             }
+
         }
     }
     // sets the working table as the new active table.
     fullTable = new Table(*workingTable);
-    fullTable->printTable();
+    fullTable->debugTable();
 }
 
