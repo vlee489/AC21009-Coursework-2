@@ -21,6 +21,7 @@ Table* fullTable = nullptr;
 Table* workingTable = nullptr;
 
 void setupGameOfLife(){
+    printf("Setup Done\n");
     fullTable = new Table();
     checkValidity(fullTable->initTable(x, y));
 
@@ -40,6 +41,7 @@ void setupGameOfLife(){
 }
 
 void runGameOfLife(){
+    printf("run Done\n");
     clearScreen();
     // Create a table for the working calculations
     workingTable = new Table();
@@ -69,7 +71,7 @@ void runGameOfLife(){
         }
     }
     // sets the working table as the new active table.
-    fullTable = new Table(workingTable);
-    fullTable->debugTable();
+    fullTable = new Table(*workingTable);
+    fullTable->printTable();
 }
 
