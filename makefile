@@ -16,9 +16,9 @@ main: main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp
 
 
 # Compiles program
-maxTester: maxTester.cpp table.cpp generation.cpp inputOutput.cpp 
+maxTester: maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp
 	# Compiles with flags
-	$(CC) $(CVERSION) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp generation.cpp inputOutput.cpp -lcurses 
+	$(CC) $(CVERSION) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp -lcurses 
 
 # Deletes unused files
 clean:
