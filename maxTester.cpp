@@ -18,10 +18,11 @@ void error(Table** test);
 vector<bool>* firstGenTest();
 void customFileTest();
 void numAround();
+void printTest(Table* test);
 
 int main() {
-  // Table *testP = new Table();
-  // initialisation(&testP);
+  Table* testP = new Table();
+  initialisation(&testP);
   // neighbourhood(testP);
   // file(testP);
   // delete testP;
@@ -32,6 +33,7 @@ int main() {
 
   // customFileTest();
   numAround();
+  // printTest(testP);
   return 0;
 }
 
@@ -150,13 +152,21 @@ void numAround() {
   Table* test = new Table();
   // test->initTable(*firstGen, 3);
   test->initTable(3);
-  test->setVal(1,1,true);
-  test->setVal(2,2,true);
-  test->setVal(3,1,true);
+  test->setVal(1, 1, true);
+  test->setVal(2, 2, true);
+  test->setVal(3, 1, true);
+  test->setVal(2, 1, true);
 
   cout << "Number Around Test" << endl;
-  cout << "Pass Conditions: Number Around (2,1): 4" << endl;
+  cout << "Pass Conditions: Numbers Around (2,1): 4" << endl;
   test->debugTable();
-  int numAround = test->getNumAround(x,y);
+  int numAround = test->getNumAround(x, y);
   cout << "Numbers Around (" << x << "," << y << "): " << numAround << endl;
+}
+
+void printTest(Table* test) {
+  cout << "Print Test" << endl;
+  cout << "Pass Conditions: Both Table Methods have similar output" << endl;
+  test->debugTable();
+  test->printTable();
 }

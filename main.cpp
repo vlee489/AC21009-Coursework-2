@@ -27,6 +27,7 @@ void displayMenu();
 bool processMenu(int choice);
 void createAutomaton();
 void loadAutomaton();
+bool processLoad(string filename);
 
 // Main Function
 int main() {
@@ -60,7 +61,7 @@ bool processMenu(int choice) {
       createAutomaton();
       break;
     case 2:
-      loadAutomaton();
+      // loadAutomaton();
       break;
     default:
       return false;
@@ -71,14 +72,15 @@ bool processMenu(int choice) {
 
 void createAutomaton() {
   // Creates the objects of the global object pointers
-  Table* fullTable = new Table();
-  Rule* ruleObj = new Rule();
-  Generation* generationObj = new Generation();
+  fullTable = new Table();
+  ruleObj = new Rule();
+  generationObj = new Generation();
 
   clearScreen();
   // Gets the rule number from the user
   int rule =
       promptIntRange("Please enter the desired rule you want to use", 0, 255);
+  // Gets the number of generations from the user
   int generations =
       promptIntRange("Please enter the desired generations you want", 0, 100);
 
@@ -104,6 +106,21 @@ void createAutomaton() {
 }
 
 void loadAutomaton() {
+  // Creates the objects of the global object pointers
+  fullTable = new Table();
+  ruleObj = new Rule();
+  generationObj = new Generation();
 
+  clearScreen();
+  // Asks the user what file we should load
+  promptStr("What is the path of the file you'd like to load?", processLoad);
+}
+
+bool processLoad(string filename) {
+  int valid = fullTable->loadTable(filename);
+  if (valid) {
+    cout << "";
+  }
+  return false;
 }
 
