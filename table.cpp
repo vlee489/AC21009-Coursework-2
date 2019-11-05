@@ -201,13 +201,19 @@ bool* Table::getNeighbourhood(int x, int y) {
   return nullptr;
 }
 
-//
+// Returns the number of true elements that are around a position
 int Table::getNumAround(int x, int y) {
+  // Stores the number of true elements that are around a position
   int counter = 0;
+  // Runs through each element's y co-ordinate
   for (int yPoint = y - 1; yPoint <= y + 1; yPoint++) {
+    // Runs through each element's y co-ordinate
     for (int xPoint = x - 1; xPoint <= x + 1; xPoint++) {
+      // Gets the value of the appropriate point
       bool val = getVal(xPoint, yPoint);
+      // Checks if the value is true and not the value we are getting the elements for
       if (val && (xPoint != 0 || yPoint != 0)) {
+        // Increments the counter
         counter++;
       }
     }
