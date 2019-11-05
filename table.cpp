@@ -201,13 +201,20 @@ bool* Table::getNeighbourhood(int x, int y) {
   return nullptr;
 }
 
-//
+// Returns the number of true elements that are around a position
 int Table::getNumAround(int x, int y) {
+  // Stores the number of true elements that are around a position
   int counter = 0;
+  // Runs through each element's y co-ordinate
   for (int yPoint = y - 1; yPoint <= y + 1; yPoint++) {
+    // Runs through each element's y co-ordinate
     for (int xPoint = x - 1; xPoint <= x + 1; xPoint++) {
+      // Gets the value of the appropriate point
       bool val = getVal(xPoint, yPoint);
-      if (val && (xPoint != 0 || yPoint != 0)) {
+      // Checks if the value is true and not the value we are getting the
+      // elements for
+      if (val && (xPoint != 0 && yPoint != 0)) {
+        // Increments the counter
         counter++;
       }
     }
@@ -369,8 +376,15 @@ int Table::debugTable() {
   for (int row = 0; row < arrayHeight; row++) {
     // Counts through each column
     for (int col = 0; col < arrayWidth; col++) {
-      // Prints the individual value to the screen
-      cout << getVal(col, row) << " ";
+      if (getVal(col, row)) {
+        // Prints the element to the screen
+        cout << "■"
+             << " ";
+      } else {
+        // Prints the element to the screen
+        cout << "□"
+             << " ";
+      }
     }
     cout << endl;
   }
@@ -400,14 +414,28 @@ int Table::printTable() {
     for (int col = 0; col < arrayWidth; col++) {
       // Checks if the column is within the active fields
       if (col >= (middleIndex - side) && col < (middleIndex + side)) {
-        // Prints the element to the screen
-        cout << getVal(col, row) << " ";
+        if (getVal(col, row)) {
+          // Prints the element to the screen
+          cout << "■"
+               << " ";
+        } else {
+          // Prints the element to the screen
+          cout << "□"
+               << " ";
+        }
       }
       // Adds one extra active field if the number of elements we're displaying
       // is odd
       else if (col == (middleIndex + side) && fieldsActive % 2 == 1) {
-        // Prints the element to the screen
-        cout << getVal(col, row) << " ";
+        if (getVal(col, row)) {
+          // Prints the element to the screen
+          cout << "■"
+               << " ";
+        } else {
+          // Prints the element to the screen
+          cout << "□"
+               << " ";
+        }
       }
       // Runs if the number is outside the active fields
       else {

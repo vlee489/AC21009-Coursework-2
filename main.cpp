@@ -3,29 +3,84 @@
 #include <string>
 #include <vector>
 
+// Imports error codes
 #include "error.hpp"
+// Imports methods which allows the user to set their own generation
 #include "generation.hpp"
+// Imports methods to handle user input and output
 #include "inputOutput.hpp"
+// Imports methods to generate rules and convert numbers to binary and decimal
 #include "rule.hpp"
+// Imports merthods for storing a table of values
 #include "table.hpp"
 
 using namespace std;
 
-void runProgram();
+// Stores pointers for objects of classes
+Table* fullTable;
+Rule* ruleObj;
+Generation* generationObj;
 
+// Headers for the methods in this file
+void initObjects();
+void displayMenu();
+bool processMenu(int choice);
+void createAutomaton();
+void loadAutomaton();
+bool processLoad(string filename);
+
+// Main Function
 int main() {
-  runProgram();
+  initObjects();
+  menuInt(displayMenu, processMenu);
   return 0;
 }
 
-void runProgram() {
-  Table* fullTable = new Table();
-  Rule* ruleObj = new Rule();
-  Generation* generationObj = new Generation();
+// Initialises objects 
+void initObjects() {
+  fullTable = new Table();
+  ruleObj = new Rule();
+  generationObj = new Generation();
+}
+
+void displayMenu() {
+  cout << "Cellular Automaton Program" << endl;
+  cout << "Module Code: AC210009" << endl;
+  cout << "Assignment 2";
+  cout << endl;
+  cout << "" << endl;
+  cout << "1. Create your own cellular automaton" << endl;
+  cout << "2. Load a cellular automaton from a file" << endl;
+  cout << "0. Exit" << endl;
+  cout << "Choose an option from the list: ";
+}
+
+bool processMenu(int choice) {
+  switch(choice) {
+    case 1:
+      createAutomaton();
+      break;
+    case 2:
+      // loadAutomaton();
+      break;
+    default:
+      return false;
+
+  }
+  return true;
+}
+
+void createAutomaton() {
+  // Creates the objects of the global object pointers
+  fullTable = new Table();
+  ruleObj = new Rule();
+  generationObj = new Generation();
 
   clearScreen();
+  // Gets the rule number from the user
   int rule =
       promptIntRange("Please enter the desired rule you want to use", 0, 255);
+  // Gets the number of generations from the user
   int generations =
       promptIntRange("Please enter the desired generations you want", 0, 100);
 
@@ -49,3 +104,23 @@ void runProgram() {
   // printArray(fullTable->getPTable(), fullTable->getArraySize());
   fullTable->printTable();
 }
+
+void loadAutomaton() {
+  // Creates the objects of the global object pointers
+  fullTable = new Table();
+  ruleObj = new Rule();
+  generationObj = new Generation();
+
+  clearScreen();
+  // Asks the user what file we should load
+  promptStr("What is the path of the file you'd like to load?", processLoad);
+}
+
+bool processLoad(string filename) {
+  int valid = fullTable->loadTable(filename);
+  if (valid) {
+    cout << "";
+  }
+  return false;
+}
+
