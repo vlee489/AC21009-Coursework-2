@@ -10,7 +10,8 @@
 // General table class errors
 #define TABLE_NOT_INITIALISED -100
 #define INVALID_TABLE_PARAMETER -101
-#define Y_INDEX_OUT_OF_BOUNDS -102
+#define X_INDEX_OUT_OF_BOUNDS - 102
+#define Y_INDEX_OUT_OF_BOUNDS -103
 
 // Saving and loading file errors
 #define INVALID_FILE -200
