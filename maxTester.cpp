@@ -157,9 +157,13 @@ void numAround() {
   test->setVal(3, 1, true);
   test->setVal(2, 1, true);
 
+  test->setVal(1, 0, true);
+  // test->setVal(1, 2, true);
+  // test->setVal(3, 0, true);
+  // test->setVal(3, 2, true);
 
   cout << "Number Around Test" << endl;
-  cout << "Pass Conditions: Numbers Around (2,1): 4" << endl;
+  cout << "Pass Conditions: Numbers Around (2,1): 8" << endl;
   test->debugTable();
   int numAround = test->getNumAround(x, y);
   cout << "Numbers Around (" << x << "," << y << "): " << numAround << endl;
