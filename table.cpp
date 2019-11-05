@@ -213,7 +213,7 @@ int Table::getNumAround(int x, int y) {
       bool val = getVal(xPoint, yPoint);
       // Checks if the value is true and not the value we are getting the
       // elements for
-      if (val && (xPoint != 0 && yPoint != 0)) {
+      if (val && !(xPoint == x && yPoint == y)) {
         // Increments the counter
         counter++;
       }
