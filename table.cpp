@@ -98,6 +98,17 @@ int Table::initTable(int generations) {
   return valid;
 }
 
+// Creates a table using fixed axises of x and y
+int Table::initTable(int x, int y) {
+  // Stores the width of the table
+  arrayWidth = x;
+  // Stores the height of the table
+  arrayHeight = y;
+  // Creates the array to store the table
+  int valid = allocTable();
+  return valid;
+}
+
 // Creates a table to store all autonoma data incorporating the first generation
 // from a vector
 int Table::initTable(vector<bool> importVector, int generations) {
