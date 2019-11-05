@@ -17,23 +17,23 @@ void file(Table* test);
 void error(Table** test);
 vector<bool>* firstGenTest();
 void customFileTest();
-void numAround();
+void numAround(Table* test);
 void printTest(Table* test);
 
 int main() {
   Table* testP = new Table();
   initialisation(&testP);
-  // neighbourhood(testP);
-  // file(testP);
-  // delete testP;
+  neighbourhood(testP);
+  file(testP);
+  delete testP;
 
-  // testP = new Table();
-  // error(&testP);
-  // firstGenTest();
+  testP = new Table();
+  error(&testP);
+  firstGenTest();
 
-  // customFileTest();
-  numAround();
-  // printTest(testP);
+  customFileTest();
+  numAround(testP);
+  printTest(testP);
   return 0;
 }
 
@@ -113,17 +113,23 @@ void file(Table* test) {
 void error(Table** test) {
   cout << "Print Uninitialised Table Test: ";
   if ((*test)->printTable() == TABLE_NOT_INITIALISED) {
-    cout << "Test passed";
+    cout << "Passed";
+  } else {
+    cout << "Failed";
   }
-  cout << "Test failed";
-  cout << endl;
+  cout << endl << endl;
 }
 
 vector<bool>* firstGenTest() {
+  cout << "First Generation Test" << endl;
+  cout << "Pass Conditions: Printed Vector is custom generation or middle "
+          "element in first row is true"
+       << endl << endl;
   Generation* generationObj = new Generation();
   generationObj->firstGenerator();
   vector<bool>* firstGen = generationObj->returnGen();
   printVector(firstGen);
+  cout << endl;
   return firstGen;
 }
 
@@ -145,11 +151,10 @@ void customFileTest() {
   test->debugTable();
 }
 
-void numAround() {
+void numAround(Table* test) {
   int x = 2;
   int y = 1;
   // vector<bool>* firstGen = firstGenTest();
-  Table* test = new Table();
   // test->initTable(*firstGen, 3);
   test->initTable(3);
   test->setVal(1, 1, true);
@@ -158,9 +163,10 @@ void numAround() {
   test->setVal(2, 1, true);
 
   test->setVal(1, 0, true);
-  // test->setVal(1, 2, true);
-  // test->setVal(3, 0, true);
-  // test->setVal(3, 2, true);
+  test->setVal(1, 2, true);
+  test->setVal(3, 0, true);
+  test->setVal(3, 2, true);
+  // test->setVal(2, 0, false);
 
   cout << "Number Around Test" << endl;
   cout << "Pass Conditions: Numbers Around (2,1): 8" << endl;
