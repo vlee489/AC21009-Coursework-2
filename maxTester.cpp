@@ -15,7 +15,8 @@ void initialisation(Table** test);
 void neighbourhood(Table* test);
 void file(Table* test);
 void error(Table** test);
-void firstGenTest();
+vector<bool>* firstGenTest();
+void customFileTest();
 
 int main() {
   // Table *testP = new Table();
@@ -26,8 +27,9 @@ int main() {
 
   // testP = new Table();
   // error(&testP);
-  firstGenTest();
+  // firstGenTest();
 
+  customFileTest();
   return 0;
 }
 
@@ -113,9 +115,28 @@ void error(Table** test) {
   cout << endl;
 }
 
-void firstGenTest() {
+vector<bool>* firstGenTest() {
   Generation* generationObj = new Generation();
   generationObj->firstGenerator();
   vector<bool>* firstGen = generationObj->returnGen();
   printVector(firstGen);
+  return firstGen;
+}
+
+void customFileTest() {
+  vector<bool>* firstGen = firstGenTest();
+  Table* test = new Table();
+  test->initTable(*firstGen, generations);
+
+  cout << "Save File Test" << endl;
+  cout << "Pass Conditions: Look at the file if it matches this it's passed"
+       << endl;
+  string loc = "files/out.txt";
+  test->saveTable(loc);
+  test->debugTable();
+
+  cout << "Load File Test" << endl;
+  cout << "Pass Conditions: The table matches the table above" << endl;
+  test->loadTable(loc);
+  test->debugTable();
 }

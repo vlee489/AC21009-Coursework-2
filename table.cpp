@@ -290,13 +290,21 @@ int Table::loadTable(string filename) {
   getline(loadFile, line);
   // Stores the top line in a stream
   lineStream << line;
+  //
+  vector<bool> firstGen;
 
-  // Counts the number of numbers in the top line
+  // Loops through the numbers in the top line
   while (!lineStream.eof()) {
     // Stores the next number as temp
     lineStream >> temp;
     // Checks if temp is a valid number
     if (stringstream(temp)) {
+      // 
+      bool tempBool;
+      // 
+      stringstream(temp) >> tempBool;
+      // 
+      firstGen.push_back(tempBool);
       // Increments the numbers in the top line
       numbersInLine++;
     }
@@ -305,7 +313,7 @@ int Table::loadTable(string filename) {
   // Calculates the number of generations required from the top line
   int generations = (numbersInLine / 2) + 1;
   // 
-  initTable(generations);
+  initTable(firstGen, generations);
 
   int x = 0;
   int y = 0;
@@ -372,8 +380,9 @@ int Table::printTable() {
       if (col >= (middleIndex - side) && col < (middleIndex + side)) {
         // Prints the element to the screen
         cout << getVal(col, row) << " ";
-      } 
-      // Adds one extra active field if the number of elements we're displaying is odd
+      }
+      // Adds one extra active field if the number of elements we're displaying
+      // is odd
       else if (col == (middleIndex + side) && fieldsActive % 2 == 1) {
         // Prints the element to the screen
         cout << getVal(col, row) << " ";
