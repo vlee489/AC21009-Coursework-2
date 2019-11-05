@@ -171,7 +171,7 @@ int Table::initLine(int units) {
 
 // Returns the value of the appropriate index of the table
 bool Table::getVal(int x, int y) {
-  if (init) {
+  if (!init) {
     checkValidity(TABLE_NOT_INITIALISED);
     return false;
   }
