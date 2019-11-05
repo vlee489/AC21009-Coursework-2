@@ -171,8 +171,8 @@ int Table::initLine(int units) {
 
 // Returns the value of the appropriate index of the table
 bool Table::getVal(int x, int y) {
-  // Checks if the table is initialised
-  if (init) {
+  // Checks if the table is initialised and the point is valid
+  if (init && x < arrayWidth && y < arrayHeight) {
     // Returns the element
     return pTable[y * arrayWidth + x];
   }
@@ -199,6 +199,20 @@ bool* Table::getNeighbourhood(int x, int y) {
     return neighbourhood;
   }
   return nullptr;
+}
+
+//
+int Table::getNumAround(int x, int y) {
+  int counter = 0;
+  for (int yPoint = y - 1; yPoint <= y + 1; yPoint++) {
+    for (int xPoint = x - 1; xPoint <= x + 1; xPoint++) {
+      bool val = getVal(xPoint, yPoint);
+      if (val && (xPoint != 0 || yPoint != 0)) {
+        counter++;
+      }
+    }
+  }
+  return counter;
 }
 
 // Sets the value of the appropriate index of the table
@@ -281,6 +295,8 @@ int Table::loadTable(string filename) {
 
   // Stores the number of numbers in the top line
   int numbersInLine = 0;
+  //
+  bool valid = false;
   // Creates strings to store the top line and a number being processed
   string line, temp;
   // Creates a stream for the top line
@@ -299,20 +315,26 @@ int Table::loadTable(string filename) {
     lineStream >> temp;
     // Checks if temp is a valid number
     if (stringstream(temp)) {
-      // 
+      //
       bool tempBool;
-      // 
+      //
       stringstream(temp) >> tempBool;
-      // 
+      //
       firstGen.push_back(tempBool);
       // Increments the numbers in the top line
       numbersInLine++;
+      //
+      valid = true;
     }
+  }
+
+  if (valid != SUCCESS) {
+    return valid;
   }
 
   // Calculates the number of generations required from the top line
   int generations = (numbersInLine / 2) + 1;
-  // 
+  //
   initTable(firstGen, generations);
 
   int x = 0;
