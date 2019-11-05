@@ -9,13 +9,15 @@
 using namespace std;
 
 const int units = 8;
-const int generations = 6;
+const int generations = 3;
 
 void initialisation(Table** test);
 void neighbourhood(Table* test);
 void file(Table* test);
 void error(Table** test);
-void firstGenTest();
+vector<bool>* firstGenTest();
+void customFileTest();
+void numAround();
 
 int main() {
   // Table *testP = new Table();
@@ -26,8 +28,10 @@ int main() {
 
   // testP = new Table();
   // error(&testP);
-  firstGenTest();
+  // firstGenTest();
 
+  // customFileTest();
+  numAround();
   return 0;
 }
 
@@ -113,9 +117,46 @@ void error(Table** test) {
   cout << endl;
 }
 
-void firstGenTest() {
+vector<bool>* firstGenTest() {
   Generation* generationObj = new Generation();
   generationObj->firstGenerator();
   vector<bool>* firstGen = generationObj->returnGen();
   printVector(firstGen);
+  return firstGen;
+}
+
+void customFileTest() {
+  vector<bool>* firstGen = firstGenTest();
+  Table* test = new Table();
+  test->initTable(*firstGen, generations);
+
+  cout << "Save File Test" << endl;
+  cout << "Pass Conditions: Look at the file if it matches this it's passed"
+       << endl;
+  string loc = "files/out.txt";
+  test->saveTable(loc);
+  test->debugTable();
+
+  cout << "Load File Test" << endl;
+  cout << "Pass Conditions: The table matches the table above" << endl;
+  test->loadTable(loc);
+  test->debugTable();
+}
+
+void numAround() {
+  int x = 2;
+  int y = 1;
+  // vector<bool>* firstGen = firstGenTest();
+  Table* test = new Table();
+  // test->initTable(*firstGen, 3);
+  test->initTable(3);
+  test->setVal(1,1,true);
+  test->setVal(2,2,true);
+  test->setVal(3,1,true);
+
+  cout << "Number Around Test" << endl;
+  cout << "Pass Conditions: Number Around (2,1): 4" << endl;
+  test->debugTable();
+  int numAround = test->getNumAround(x,y);
+  cout << "Numbers Around (" << x << "," << y << "): " << numAround << endl;
 }
