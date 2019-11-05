@@ -49,6 +49,8 @@ class Table {
   // of Left, Centre and Right with the point we are getting the position for
   // being the position x, y passed in as parameters
   bool* getNeighbourhood(int x, int y);
+  //
+  int getNumAround(int x, int y);
   // Sets the value of the appropriate index of the table
   int setVal(int x, int y, bool val);
 
