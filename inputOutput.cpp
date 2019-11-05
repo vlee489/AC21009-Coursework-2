@@ -10,6 +10,8 @@
 #include <cstdlib>
 // Imports the header file for this individual source file
 #include "inputOutput.hpp"
+// Imports error codes
+#include "error.hpp"
 
 using namespace std;
 
@@ -131,11 +133,16 @@ bool getStr(bool process(string)) {
 
 //
 void promptStr(string prompt, bool process(string)) {
-  // Prints the prompt to the console
-  cout << prompt << ": ";
-  // Gets a string from the user and uses a process function pointer to
-  // interpret it
-  getStr(process);
+  int valid;
+  do {
+    // Prints the prompt to the console
+    cout << prompt << ": ";
+    // Gets a string from the user and uses a process function pointer to
+    // interpret it
+    valid = getStr(process);
+  }  
+  // Loops until the user's input is valid
+  while (valid != SUCCESS);
 }
 
 // Defines T as a template to be replaced with the type from the parameter
@@ -174,9 +181,8 @@ void printVector(vector<bool>* vector) {
 //   putp(tigetstr("clear"));
 // }
 
-// Clears the terminal screen in a non-OS specific way
+// Clears the terminal screen in an another Unix specific way
 // Source: http://www.cplusplus.com/articles/4z18T05o/
 void clearScreen() {
-  if (system("clear"))
-    system("CLS");
+  system("clear");
 }

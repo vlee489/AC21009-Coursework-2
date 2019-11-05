@@ -18,6 +18,13 @@ int promptIntRange(std::string prompt, int min, int max);
 // Displays a menu and processes the user's input using function pointers
 void menuInt(void displayPrompt(), bool process(int));
 
+// Gets input from the user as a string
+std::string getStr();
+//
+bool getStr(bool process(std::string));
+//
+void promptStr(std::string prompt, bool process(std::string));
+
 // Defines T as a template to be replaced with the type from the parameter
 // e.g. int, string
 template <typename T>
