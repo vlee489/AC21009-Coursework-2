@@ -22,7 +22,7 @@ maxTester: maxTester.cpp table.cpp generation.cpp inputOutput.cpp
 
 gameOfLife: vincentTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
 	# Compiles with flags
-    	$(CC) $(CVERSION) $(CFLAGS) -o vincentTester.o vincentTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
+	$(CC) $(CVERSION) $(CFLAGS) -o vincentTester.o vincentTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp -lcurses
 
 # Deletes unused files
 clean:

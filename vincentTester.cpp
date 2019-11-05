@@ -9,9 +9,10 @@
 #include "table.hpp"
 #include "gameOfLife.hpp"
 
-void main(){
+int main(){
     setupGameOfLife();
     while(true){
         runGameOfLife();
     }
+    return 1;
 }
