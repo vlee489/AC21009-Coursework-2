@@ -51,7 +51,7 @@ void runGameOfLife(int xSize, int ySize){
     for (int row = 1; row < generations; row++) {
         for (int col = 0; col < arrayWidth; col++) {
             // get the Number of neighbors around the cord
-            int neighbors = fullTable->getNumAroundVin(col, row);
+            int neighbors = fullTable->getNumAround(col, row);
             // get it's state
             bool state = fullTable->getVal(col, row);
 
@@ -67,6 +67,7 @@ void runGameOfLife(int xSize, int ySize){
             }
              */
 
+
             // Cell is born as conditions are right
             if(!state && neighbors  == 3){
                 workingTable->setVal(col, row, true);
@@ -79,6 +80,7 @@ void runGameOfLife(int xSize, int ySize){
             else{
                 workingTable->setVal(col, row, state);
             }
+             
 
         }
     }
