@@ -57,21 +57,24 @@ int setupGameOfLife(int xSize, int ySize){
  * @return error code
  */
 int runGameOfLife(){
-    Table* workingTable = nullptr;
+    clearScreen();
+
+    // checks the table is setup
     if(fullTable == nullptr){
         return TABLE_NOT_INITIALISED;
     }
 
-    clearScreen();
     // Create a table for the working calculations
-    workingTable = new Table();
-    int arrayWidth = fullTable->getArrayWidth();
-    int generations = fullTable->getArrayHeight();
-
-    checkValidity(workingTable->initTable(arrayWidth, generations));
+    Table* workingTable = new Table();
     if(workingTable == nullptr){
         return TABLE_NOT_INITIALISED;
     }
+
+    // Sets the size of the grid for the working table based on the main fullTable
+    int arrayWidth = fullTable->getArrayWidth();
+    int generations = fullTable->getArrayHeight();
+    checkValidity(workingTable->initTable(arrayWidth, generations));
+
 
     // for each x and y value
     for (int row = 1; row < generations; row++) {
@@ -99,7 +102,9 @@ int runGameOfLife(){
     }
     // sets the working table as the new active table.
     fullTable = new Table(*workingTable);
+    // Displays table
     fullTable->debugTable();
+    //removes the working table
     delete(workingTable);
     return SUCCESS;
 }
