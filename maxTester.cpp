@@ -25,15 +25,15 @@ int main() {
   initialisation(&testP);
   neighbourhood(testP);
   file(testP);
-  // delete testP;
+  delete testP;
 
-  // testP = new Table();
-  // error(&testP);
-  // firstGenTest();
+  testP = new Table();
+  error(&testP);
+  firstGenTest();
 
-  // customFileTest();
-  // numAround(testP);
-  // printTest(testP);
+  customFileTest();
+  numAround(testP);
+  printTest(testP);
   return 0;
 }
 
