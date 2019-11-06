@@ -31,12 +31,15 @@ bool processLoad(string filename);
 
 // Main Function
 int main() {
+  clearScreen();
   initObjects();
-  menuInt(displayMenu, processMenu);
+  while (true) {
+    menuInt(displayMenu, processMenu);
+  }
   return 0;
 }
 
-// Initialises objects 
+// Initialises objects
 void initObjects() {
   fullTable = new Table();
   ruleObj = new Rule();
@@ -46,6 +49,7 @@ void initObjects() {
 void displayMenu() {
   cout << "Cellular Automaton Program" << endl;
   cout << "Module Code: AC210009" << endl;
+  cout << "Authors: Max Kelly, Vincent Lo and Ramsay Sewell" << endl;
   cout << "Assignment 2";
   cout << endl;
   cout << "" << endl;
@@ -56,16 +60,17 @@ void displayMenu() {
 }
 
 bool processMenu(int choice) {
-  switch(choice) {
+  switch (choice) {
     case 1:
       createAutomaton();
       break;
     case 2:
-      // loadAutomaton();
+      loadAutomaton();
       break;
+    case 0:
+      exit(0);
     default:
       return false;
-
   }
   return true;
 }
@@ -112,15 +117,17 @@ void loadAutomaton() {
   generationObj = new Generation();
 
   clearScreen();
-  // Asks the user what file we should load
+  // Asks the user what file we should load and loads it
   promptStr("What is the path of the file you'd like to load?", processLoad);
 }
 
 bool processLoad(string filename) {
   int valid = fullTable->loadTable(filename);
-  if (valid) {
-    cout << "";
-  }
-  return false;
+  checkValidity(valid);
+  // if (valid != SUCCESS) {
+  //   return false;
+  // } else {
+    cout << "Loading file successful";
+  // }
+  return true;
 }
-
