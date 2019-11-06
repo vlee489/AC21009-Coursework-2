@@ -466,47 +466,6 @@ int Table::printTable() {
   return SUCCESS;
 }
 
-int Table::getNumAroundVin(int x, int y) {
-    int counter = 0;
-    try{
-        if(getVal(x-1, y+1))
-            counter++;
-    }catch(...){}
-    try{
-        if(getVal(x, y+1))
-            counter++;
-    }catch(...){}
-    try{
-        if(getVal(x+1, y+1))
-            counter++;
-    }catch(...){}
-
-    try{
-        if(getVal(x, y-1))
-            counter++;
-    }catch(...){}
-    try{
-        if(getVal(x, y+1))
-            counter++;
-    }catch(...){}
-
-    try{
-        if(getVal(x-1, y-1))
-            counter++;
-    }catch(...){}
-    try{
-        if(getVal(x, y-1))
-            counter++;
-    }catch(...){}
-    try{
-        if(getVal(x+1, y-1))
-            counter++;
-    }catch(...){}
-
-
-    return counter;
-}
-
 // x86 has a design flaw where the mod operator doesn't work for negative
 // numbers This method addresses that to make it akin to what's found in  other
 // higher level languages like Java or Python
