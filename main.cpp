@@ -28,6 +28,10 @@ bool processMenu(int choice);
 void createAutomaton();
 void loadAutomaton();
 bool processLoad(string filename);
+void saveAutomaton();
+void gameOfLife();
+
+// revert last time and I'm going to work on it offline, please
 
 // Main Function
 int main() {
@@ -60,9 +64,12 @@ void displayMenu() {
   cout << "Authors: Max Kelly, Vincent Lo and Ramsay Sewell" << endl;
   cout << "Assignment 2";
   cout << endl;
-  cout << "" << endl;
+  cout << endl;
   cout << "1. Create your own cellular automaton" << endl;
   cout << "2. Load a cellular automaton from a file" << endl;
+  cout << "3. Save a cellular automaton to a file" << endl;
+  cout << "4. Conway's Game of Life" << endl;
+  cout << "5. Other 2D Automaton" << endl;
   cout << "0. Exit" << endl;
   cout << "Choose an option from the list: ";
 }
@@ -74,6 +81,14 @@ bool processMenu(int choice) {
       break;
     case 2:
       loadAutomaton();
+      break;
+    case 3:
+      saveAutomaton();
+      break;
+    case 4:
+      gameOfLife();
+      break;
+    case 5:
       break;
     case 0:
       exit(0);
@@ -98,6 +113,8 @@ void createAutomaton() {
 
   checkValidity(fullTable->initTable(*firstGen, generations));
   checkValidity(ruleObj->setRule(rule));
+
+  ruleObj->printRule();
 
   int arrayWidth = fullTable->getArrayWidth();
   for (int row = 1; row < generations; row++) {
@@ -131,4 +148,12 @@ bool processLoad(string filename) {
   cout << "Loading file successful" << endl;
   // }
   return valid;
+}
+
+void saveAutomaton() {
+
+}
+
+void gameOfLife() {
+
 }
