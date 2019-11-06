@@ -41,7 +41,6 @@ bool Rule::generateCell(bool neighbourhood[]) {
 }
 
 int Rule::toBinary(bool binary[], int decimal) {
-
   if (binary == NULL) {
     return UNEXPECTED_NULL_POINTER;
   }
@@ -58,7 +57,7 @@ int Rule::toBinary(bool binary[], int decimal) {
     index++;
   }
   printf("binComp\n");
-  for (int i = 0; i < 8; i ++) {
+  for (int i = 0; i < 8; i++) {
     printf("%d  ", binaryComp[i]);
   }
   printf("binComp\n");

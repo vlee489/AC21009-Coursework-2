@@ -98,7 +98,7 @@ void neighbourhood(Table* test) {
 
 void file(Table* test) {
   string loc = "files/out.txt";
-  
+
   // cout << "Save File Test" << endl;
   // cout << "Pass Conditions: Look at the file if it matches this it's passed"
   //      << endl;
@@ -125,7 +125,8 @@ vector<bool>* firstGenTest() {
   cout << "First Generation Test" << endl;
   cout << "Pass Conditions: Printed Vector is custom generation or middle "
           "element in first row is true"
-       << endl << endl;
+       << endl
+       << endl;
   Generation* generationObj = new Generation();
   generationObj->firstGenerator();
   vector<bool>* firstGen = generationObj->returnGen();

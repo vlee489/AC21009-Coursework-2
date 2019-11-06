@@ -29,7 +29,9 @@ void createAutomaton();
 void loadAutomaton();
 bool processLoad(string filename);
 void saveAutomaton();
+bool processSave(string filename);
 void gameOfLife();
+void langtonsAnt();
 
 // revert last time and I'm going to work on it offline, please
 
@@ -69,7 +71,7 @@ void displayMenu() {
   cout << "2. Load a cellular automaton from a file" << endl;
   cout << "3. Save a cellular automaton to a file" << endl;
   cout << "4. Conway's Game of Life" << endl;
-  cout << "5. Other 2D Automaton" << endl;
+  cout << "5. Langton's Ant" << endl;
   cout << "0. Exit" << endl;
   cout << "Choose an option from the list: ";
 }
@@ -89,6 +91,7 @@ bool processMenu(int choice) {
       gameOfLife();
       break;
     case 5:
+      langtonsAnt();
       break;
     case 0:
       exit(0);
@@ -140,20 +143,27 @@ void loadAutomaton() {
 }
 
 bool processLoad(string filename) {
-  int valid = fullTable->loadTable(filename);
-  checkValidity(valid);
+  checkValidity(fullTable->loadTable(filename));
   // if (valid != SUCCESS) {
   //   return false;
   // } else {
   cout << "Loading file successful" << endl;
   // }
-  return valid;
+  return true;
 }
 
 void saveAutomaton() {
-
+  clearScreen();
+  // Asks the user what file we should load and loads it
+  promptStr("Where would you like to save?", processSave);
 }
 
-void gameOfLife() {
-
+bool processSave(string filename) {
+  checkValidity(fullTable->saveTable(filename));
+  cout << "Saving file successful" << endl;
+  return true;
 }
+
+void gameOfLife() {}
+
+void langtonsAnt() {}

@@ -4,8 +4,8 @@
 #include "error.hpp"
 // Used to print to the console
 #include <iostream>
-// Used to check if a file exists
-#include <filesystem>
+// // Used to check if a file exists
+// #include <filesystem>
 // Used to save and load files
 #include <fstream>
 // Used to deal with string streams
@@ -185,7 +185,8 @@ bool Table::getVal(int x, int y) {
   // }
   // Returns the element
   // return pTable[y * arrayWidth + x];
-  return pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)];
+  return pTable[(properMod(y, arrayHeight) * arrayWidth) +
+                properMod(x, arrayWidth)];
 }
 
 // Returns the neighbourhood of a position in the table as an array in order of
@@ -250,7 +251,8 @@ int Table::setVal(int x, int y, bool val) {
 
   // // Sets the appropriate value
   // pTable[y * arrayWidth + x] = val;
-  pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)] = val;
+  pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)] =
+      val;
   return SUCCESS;
 }
 
@@ -300,10 +302,10 @@ int Table::loadTable(string filename) {
     return INVALID_FILENAME;
   }
 
-  // Checks if the file exists
-  if (filesystem::exists(filename)) {
-    return FILE_NOT_FOUND;
-  }
+  // // Checks if the file exists
+  // if (filesystem::exists(filename)) {
+  //   return FILE_NOT_FOUND;
+  // }
 
   // Creates the file's object for writing
   ifstream loadFile;
@@ -312,7 +314,7 @@ int Table::loadTable(string filename) {
 
   // Checks if the file is accessible
   if (!loadFile.is_open()) {
-    return FILE_NOT_ACCESSIBLE;
+    return FILE_NOT_FOUND;
   }
 
   // Stores the number of numbers in the top line
