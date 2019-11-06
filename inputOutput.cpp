@@ -117,7 +117,7 @@ string getStr() {
   // Stores the user's input as a string
   string input;
   //
-  getline(cin, input);
+  cin >> input;
   //
   return input;
 }
