@@ -16,9 +16,9 @@ main: main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp
 
 
 # Compiles program
-maxTester: maxTester.cpp table.cpp generation.cpp inputOutput.cpp 
+maxTester: maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp
 	# Compiles with flags
-	$(CC) $(CVERSION) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp generation.cpp inputOutput.cpp -lcurses 
+	$(CC) $(CVERSION) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp -lcurses 
 
 gameOfLife: vincentTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
 	# Compiles with flags

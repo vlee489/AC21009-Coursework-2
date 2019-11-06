@@ -50,7 +50,7 @@ Table::Table(Table& ogTable) {
 
 // Destructor to delete the table
 Table::~Table() {
-  delete (pTable);
+  delete pTable;
 }
 
 // Creates and initialises an array of appropriate length to store the table
@@ -171,12 +171,21 @@ int Table::initLine(int units) {
 
 // Returns the value of the appropriate index of the table
 bool Table::getVal(int x, int y) {
-  // Checks if the table is initialised and the point is valid
-  if (init && x < arrayWidth && y < arrayHeight) {
-    // Returns the element
-    return pTable[y * arrayWidth + x];
+  if (!init) {
+    checkValidity(TABLE_NOT_INITIALISED);
+    return false;
   }
-  return false;
+  // if (x >= arrayWidth || x < 0) {
+  //   checkValidity(X_INDEX_OUT_OF_BOUNDS);
+  //   return false;
+  // }
+  // if (y >= arrayHeight || y < 0) {
+  //   checkValidity(Y_INDEX_OUT_OF_BOUNDS);
+  //   return false;
+  // }
+  // Returns the element
+  // return pTable[y * arrayWidth + x];
+  return pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)];
 }
 
 // Returns the neighbourhood of a position in the table as an array in order of
@@ -229,13 +238,19 @@ int Table::setVal(int x, int y, bool val) {
     return TABLE_NOT_INITIALISED;
   }
 
-  // Checks if the y index is valid
-  if (y > arrayHeight || y < 0) {
-    return Y_INDEX_OUT_OF_BOUNDS;
-  }
+  // // Checks if the x index is valid
+  // if (x >= arrayWidth || x < 0) {
+  //   return X_INDEX_OUT_OF_BOUNDS;
+  // }
 
-  // Sets the appropriate value
-  pTable[y * arrayWidth + x] = val;
+  // // Checks if the y index is valid
+  // if (y >= arrayHeight || y < 0) {
+  //   return Y_INDEX_OUT_OF_BOUNDS;
+  // }
+
+  // // Sets the appropriate value
+  // pTable[y * arrayWidth + x] = val;
+  pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)] = val;
   return SUCCESS;
 }
 
@@ -309,6 +324,8 @@ int Table::loadTable(string filename) {
   // Creates a stream for the top line
   stringstream lineStream;
 
+  // Clears previous stream
+  loadFile.ignore();
   // Gets the top line from the file
   getline(loadFile, line);
   // Stores the top line in a stream
@@ -335,8 +352,8 @@ int Table::loadTable(string filename) {
     }
   }
 
-  if (valid != SUCCESS) {
-    return valid;
+  if (valid == false) {
+    return INVALID_FILE;
   }
 
   // Calculates the number of generations required from the top line

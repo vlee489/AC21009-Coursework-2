@@ -22,7 +22,7 @@ Rule* ruleObj;
 Generation* generationObj;
 
 // Headers for the methods in this file
-void initObjects();
+void initObjects(bool erase);
 void displayMenu();
 bool processMenu(int choice);
 void createAutomaton();
@@ -31,21 +31,33 @@ bool processLoad(string filename);
 
 // Main Function
 int main() {
-  initObjects();
-  menuInt(displayMenu, processMenu);
+  clearScreen();
+  while (true) {
+    initObjects(false);
+    menuInt(displayMenu, processMenu);
+  }
   return 0;
 }
 
-// Initialises objects 
-void initObjects() {
-  fullTable = new Table();
-  ruleObj = new Rule();
-  generationObj = new Generation();
+// Initialises objects
+void initObjects(bool erase) {
+  if (fullTable == nullptr || erase) {
+    fullTable = new Table();
+  }
+
+  if (ruleObj == nullptr || erase) {
+    ruleObj = new Rule();
+  }
+
+  if (generationObj == nullptr || erase) {
+    generationObj = new Generation();
+  }
 }
 
 void displayMenu() {
   cout << "Cellular Automaton Program" << endl;
   cout << "Module Code: AC210009" << endl;
+  cout << "Authors: Max Kelly, Vincent Lo and Ramsay Sewell" << endl;
   cout << "Assignment 2";
   cout << endl;
   cout << "" << endl;
@@ -56,26 +68,23 @@ void displayMenu() {
 }
 
 bool processMenu(int choice) {
-  switch(choice) {
+  switch (choice) {
     case 1:
       createAutomaton();
       break;
     case 2:
-      // loadAutomaton();
+      loadAutomaton();
       break;
+    case 0:
+      exit(0);
     default:
       return false;
-
   }
   return true;
 }
 
 void createAutomaton() {
-  // Creates the objects of the global object pointers
-  fullTable = new Table();
-  ruleObj = new Rule();
-  generationObj = new Generation();
-
+  initObjects(true);
   clearScreen();
   // Gets the rule number from the user
   int rule =
@@ -106,21 +115,20 @@ void createAutomaton() {
 }
 
 void loadAutomaton() {
-  // Creates the objects of the global object pointers
-  fullTable = new Table();
-  ruleObj = new Rule();
-  generationObj = new Generation();
-
   clearScreen();
-  // Asks the user what file we should load
+  // Asks the user what file we should load and loads it
   promptStr("What is the path of the file you'd like to load?", processLoad);
+  //
+  fullTable->printTable();
 }
 
 bool processLoad(string filename) {
   int valid = fullTable->loadTable(filename);
-  if (valid) {
-    cout << "";
-  }
-  return false;
+  checkValidity(valid);
+  // if (valid != SUCCESS) {
+  //   return false;
+  // } else {
+  cout << "Loading file successful" << endl;
+  // }
+  return valid;
 }
-
