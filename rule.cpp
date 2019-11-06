@@ -72,10 +72,10 @@ int Rule::toBinary(bool binary[], int decimal) {
     }
   }
   return SUCCESS;
+}
 
 void Rule::printRule() {
   for (int i = 0; i < 8; i++) {
     printf("%d  ", this->ruleSet[i]);
   }
-}
 }
