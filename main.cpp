@@ -161,7 +161,7 @@ void gameOfLife(){
     while(true){
         //If Escape is held, then exits game of life
         runGameOfLife();
-        usleep(1000000);
+        usleep(500000);
     }
 }
 void saveAutomaton() {
