@@ -55,30 +55,17 @@ void runGameOfLife(int xSize, int ySize){
             // get it's state
             bool state = fullTable->getVal(col, row);
 
-            /*
-            if(state && neighbors < 2){
-                workingTable->setVal(col, row, false);
-            }else if(state && (neighbors == 2 || neighbors == 3)){
-                workingTable->setVal(col, row, true);
-            }else if(state && neighbors > 3){
-                workingTable->setVal(col, row, false);
-            }else if(!state && neighbors == 3){
-                workingTable->setVal(col, row, true);
-            }
-             */
-
-
             // Cell is born as conditions are right
             if(!state && neighbors  == 3){
-                workingTable->setVal(col, row, true);
+                checkValidity(workingTable->setVal(col, row, true));
             }
             // Cell dies due to underpopulation || over population
             else if(state && (neighbors < 2 || neighbors > 3)){
-                workingTable->setVal(col, row, false);
+                checkValidity(workingTable->setVal(col, row, false));
             }
             // Keep the state the same
             else{
-                workingTable->setVal(col, row, state);
+                checkValidity(workingTable->setVal(col, row, state));
             }
              
 
@@ -87,5 +74,6 @@ void runGameOfLife(int xSize, int ySize){
     // sets the working table as the new active table.
     fullTable = new Table(*workingTable);
     fullTable->debugTable();
+    free(workingTable);
 }
 
