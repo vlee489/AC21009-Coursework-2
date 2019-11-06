@@ -26,13 +26,9 @@ int Rule::setRule(int ruleNum) {
     return RULE_NUM_OUT_RANGE;
   }
   this->ruleNum = ruleNum;
-  // bool temp[8] = {0};
+
   int valid = toBinary(ruleSet, ruleNum);
-  // int index = 0;
-  // for (int i = 7; i >= 0; i--) {
-  //   ruleSet[index] = temp[i];
-  //   printf("%d  ", ruleSet[index]);
-  // }
+
   return valid;
 }
 
@@ -55,11 +51,18 @@ int Rule::toBinary(bool binary[], int decimal) {
 
   int binaryComp[8];
   binaryComp[0] = 0;
-
-  for (int i = 0; i < 8; i++) {
+  int index = 0;
+  for (int i = 7; i >= 0; i--) {
     binary[i] = 0;
-    binaryComp[i] = pow(2, i);
+    binaryComp[index] = pow(2, i);
+    index++;
   }
+  printf("binComp\n");
+  for (int i = 0; i < 8; i ++) {
+    printf("%d  ", binaryComp[i]);
+  }
+  printf("binComp\n");
+
   for (int i = 7; i >= 0; i--) {
     if (decimal >= binaryComp[i]) {
       decimal = decimal - binaryComp[i];
@@ -68,6 +71,11 @@ int Rule::toBinary(bool binary[], int decimal) {
       binary[i] = 0;
     }
   }
-
   return SUCCESS;
+}
+
+void Rule::printRule() {
+  for (int i = 0; i < 8; i++) {
+    printf("%d  ", this->ruleSet[i]);
+  }
 }
