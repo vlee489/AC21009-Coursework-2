@@ -3,15 +3,12 @@
 // Note to self: grid starts at top left
 //
 
-#include <iostream>
 #include <string>
-#include <vector>
 #include <cstdlib>
 #include "gameOfLife.hpp"
 
 #include "error.hpp"
 #include "inputOutput.hpp"
-#include "rule.hpp"
 #include "table.hpp"
 
 //Variables
