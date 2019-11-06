@@ -51,7 +51,9 @@ class Table {
   bool* getNeighbourhood(int x, int y);
   // Returns the number of true elements that are around a position
   int getNumAround(int x, int y);
-  // Sets the value of the appropriate index of the table
+  // Vincent's version to get items around a cord.
+  int getNumAroundVin(int x, int y);
+    // Sets the value of the appropriate index of the table
   int setVal(int x, int y, bool val);
 
   // Saves the contents of the table to a file
