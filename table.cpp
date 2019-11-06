@@ -50,7 +50,7 @@ Table::Table(Table& ogTable) {
 
 // Destructor to delete the table
 Table::~Table() {
-  delete (pTable);
+  delete pTable;
 }
 
 // Creates and initialises an array of appropriate length to store the table
@@ -175,16 +175,17 @@ bool Table::getVal(int x, int y) {
     checkValidity(TABLE_NOT_INITIALISED);
     return false;
   }
-  if (x >= arrayWidth) {
-    checkValidity(X_INDEX_OUT_OF_BOUNDS);
-    return false;
-  }
-  if (y >= arrayHeight) {
-    checkValidity(Y_INDEX_OUT_OF_BOUNDS);
-    return false;
-  }
+  // if (x >= arrayWidth || x < 0) {
+  //   checkValidity(X_INDEX_OUT_OF_BOUNDS);
+  //   return false;
+  // }
+  // if (y >= arrayHeight || y < 0) {
+  //   checkValidity(Y_INDEX_OUT_OF_BOUNDS);
+  //   return false;
+  // }
   // Returns the element
-  return pTable[y * arrayWidth + x];
+  // return pTable[y * arrayWidth + x];
+  return pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)];
 }
 
 // Returns the neighbourhood of a position in the table as an array in order of
@@ -237,13 +238,19 @@ int Table::setVal(int x, int y, bool val) {
     return TABLE_NOT_INITIALISED;
   }
 
-  // Checks if the y index is valid
-  if (y > arrayHeight || y < 0) {
-    return Y_INDEX_OUT_OF_BOUNDS;
-  }
+  // // Checks if the x index is valid
+  // if (x >= arrayWidth || x < 0) {
+  //   return X_INDEX_OUT_OF_BOUNDS;
+  // }
 
-  // Sets the appropriate value
-  pTable[y * arrayWidth + x] = val;
+  // // Checks if the y index is valid
+  // if (y >= arrayHeight || y < 0) {
+  //   return Y_INDEX_OUT_OF_BOUNDS;
+  // }
+
+  // // Sets the appropriate value
+  // pTable[y * arrayWidth + x] = val;
+  pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)] = val;
   return SUCCESS;
 }
 
