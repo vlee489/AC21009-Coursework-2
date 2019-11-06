@@ -2,6 +2,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <unistd.h>
 
 // Imports error codes
 #include "error.hpp"
@@ -11,8 +12,10 @@
 #include "inputOutput.hpp"
 // Imports methods to generate rules and convert numbers to binary and decimal
 #include "rule.hpp"
-// Imports merthods for storing a table of values
+// Imports methods for storing a table of values
 #include "table.hpp"
+// Imports game of life
+#include "gameOfLife.hpp"
 
 using namespace std;
 
@@ -28,6 +31,7 @@ bool processMenu(int choice);
 void createAutomaton();
 void loadAutomaton();
 bool processLoad(string filename);
+void startGameOfLife();
 
 // Main Function
 int main() {
@@ -57,12 +61,13 @@ void initObjects(bool erase) {
 void displayMenu() {
   cout << "Cellular Automaton Program" << endl;
   cout << "Module Code: AC210009" << endl;
-  cout << "Authors: Max Kelly, Vincent Lo and Ramsay Sewell" << endl;
+  cout << "Authors: Max Kelly, Vincent Lee and Ramsay Sewell" << endl;
   cout << "Assignment 2";
   cout << endl;
   cout << "" << endl;
   cout << "1. Create your own cellular automaton" << endl;
   cout << "2. Load a cellular automaton from a file" << endl;
+  cout << "3. Run Game of Life" << endl;
   cout << "0. Exit" << endl;
   cout << "Choose an option from the list: ";
 }
@@ -74,6 +79,9 @@ bool processMenu(int choice) {
       break;
     case 2:
       loadAutomaton();
+      break;
+    case 3:
+      startGameOfLife();
       break;
     case 0:
       exit(0);
@@ -131,4 +139,15 @@ bool processLoad(string filename) {
   cout << "Loading file successful" << endl;
   // }
   return valid;
+}
+
+void startGameOfLife(){
+    int width = promptIntRange("Please enter the desired width of the grid", 2, 101);
+    int height = promptIntRange("Please enter the desired height of the grid", 2, 101);
+    setupGameOfLife(width, height);
+    while(true){
+        //If Escape is held, then exits game of life
+        runGameOfLife();
+        usleep(1000000);
+    }
 }
