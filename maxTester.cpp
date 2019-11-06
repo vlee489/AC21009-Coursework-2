@@ -25,15 +25,15 @@ int main() {
   initialisation(&testP);
   neighbourhood(testP);
   file(testP);
-  delete testP;
+  // delete testP;
 
-  testP = new Table();
-  error(&testP);
-  firstGenTest();
+  // testP = new Table();
+  // error(&testP);
+  // firstGenTest();
 
-  customFileTest();
-  numAround(testP);
-  printTest(testP);
+  // customFileTest();
+  // numAround(testP);
+  // printTest(testP);
   return 0;
 }
 
@@ -97,12 +97,13 @@ void neighbourhood(Table* test) {
 }
 
 void file(Table* test) {
-  cout << "Save File Test" << endl;
-  cout << "Pass Conditions: Look at the file if it matches this it's passed"
-       << endl;
   string loc = "files/out.txt";
-  test->saveTable(loc);
-  test->debugTable();
+  
+  // cout << "Save File Test" << endl;
+  // cout << "Pass Conditions: Look at the file if it matches this it's passed"
+  //      << endl;
+  // test->saveTable(loc);
+  // test->debugTable();
 
   cout << "Load File Test" << endl;
   cout << "Pass Conditions: The table matches the table above" << endl;
@@ -134,14 +135,14 @@ vector<bool>* firstGenTest() {
 }
 
 void customFileTest() {
-  vector<bool>* firstGen = firstGenTest();
+  // vector<bool>* firstGen = firstGenTest();
   Table* test = new Table();
-  test->initTable(*firstGen, generations);
+  // test->initTable(*firstGen, generations);
+  string loc = "files/out.txt";
 
   cout << "Save File Test" << endl;
   cout << "Pass Conditions: Look at the file if it matches this it's passed"
        << endl;
-  string loc = "files/out.txt";
   test->saveTable(loc);
   test->debugTable();
 

@@ -76,11 +76,6 @@ bool processMenu(int choice) {
 }
 
 void createAutomaton() {
-  // Creates the objects of the global object pointers
-  fullTable = new Table();
-  ruleObj = new Rule();
-  generationObj = new Generation();
-
   clearScreen();
   // Gets the rule number from the user
   int rule =
@@ -111,14 +106,11 @@ void createAutomaton() {
 }
 
 void loadAutomaton() {
-  // Creates the objects of the global object pointers
-  fullTable = new Table();
-  ruleObj = new Rule();
-  generationObj = new Generation();
-
   clearScreen();
   // Asks the user what file we should load and loads it
   promptStr("What is the path of the file you'd like to load?", processLoad);
+  //
+  fullTable->printTable();
 }
 
 bool processLoad(string filename) {
@@ -127,7 +119,7 @@ bool processLoad(string filename) {
   // if (valid != SUCCESS) {
   //   return false;
   // } else {
-    cout << "Loading file successful";
+  cout << "Loading file successful" << endl;
   // }
-  return true;
+  return valid;
 }

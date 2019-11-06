@@ -317,6 +317,8 @@ int Table::loadTable(string filename) {
   // Creates a stream for the top line
   stringstream lineStream;
 
+  // Clears previous stream
+  loadFile.ignore();
   // Gets the top line from the file
   getline(loadFile, line);
   // Stores the top line in a stream
@@ -343,8 +345,8 @@ int Table::loadTable(string filename) {
     }
   }
 
-  if (valid != SUCCESS) {
-    return valid;
+  if (valid == false) {
+    return INVALID_FILE;
   }
 
   // Calculates the number of generations required from the top line
