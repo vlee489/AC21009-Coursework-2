@@ -49,11 +49,15 @@ int Rule::toBinary(bool binary[], int decimal) {
   }
 
   int binaryComp[8];
-  binaryComp[0] = 0;
+
   int index = 0;
   for (int i = 7; i >= 0; i--) {
     binary[i] = 0;
-    binaryComp[index] = pow(2, i);
+    if (index == 7) {
+      binaryComp[index] = 0;
+    } else {
+      binaryComp[index] = pow(2, i);
+    }
     index++;
   }
   printf("binComp\n");
@@ -62,10 +66,14 @@ int Rule::toBinary(bool binary[], int decimal) {
   }
   printf("binComp\n");
 
-  for (int i = 7; i >= 0; i--) {
+  for (int i = 0; i < 8; i++) {
     if (decimal >= binaryComp[i]) {
+      if (decimal == 0) {
+        binary[i] = 0;
+      } else {
+        binary[i] = 1;
+      }
       decimal = decimal - binaryComp[i];
-      binary[i] = 1;
     } else {
       binary[i] = 0;
     }
