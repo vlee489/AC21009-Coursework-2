@@ -22,7 +22,7 @@ Rule* ruleObj;
 Generation* generationObj;
 
 // Headers for the methods in this file
-void initObjects();
+void initObjects(bool erase);
 void displayMenu();
 bool processMenu(int choice);
 void createAutomaton();
@@ -32,18 +32,26 @@ bool processLoad(string filename);
 // Main Function
 int main() {
   clearScreen();
-  initObjects();
   while (true) {
+    initObjects(false);
     menuInt(displayMenu, processMenu);
   }
   return 0;
 }
 
 // Initialises objects
-void initObjects() {
-  fullTable = new Table();
-  ruleObj = new Rule();
-  generationObj = new Generation();
+void initObjects(bool erase) {
+  if (fullTable == nullptr || erase) {
+    fullTable = new Table();
+  }
+
+  if (ruleObj == nullptr || erase) {
+    ruleObj = new Rule();
+  }
+
+  if (generationObj == nullptr || erase) {
+    generationObj = new Generation();
+  }
 }
 
 void displayMenu() {
@@ -76,6 +84,7 @@ bool processMenu(int choice) {
 }
 
 void createAutomaton() {
+  initObjects(true);
   clearScreen();
   // Gets the rule number from the user
   int rule =
