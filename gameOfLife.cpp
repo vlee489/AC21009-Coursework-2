@@ -17,9 +17,24 @@
 //Variables
 Table* fullTable = nullptr;
 
+/**
+ * Sets up the game of life grid and the location of the random activated squares
+ * @param xSize the size of the X axis
+ * @param ySize the size of the Y axis
+ * @return If the intalisation was susscessful or an error code
+ */
 int setupGameOfLife(int xSize, int ySize){
+    //sets update table and size
     fullTable = new Table();
-    checkValidity(fullTable->initTable(xSize, ySize));
+    // checks if the table is initialised
+    if(fullTable == nullptr)
+        return TABLE_NOT_INITIALISED;
+
+    fullTable->initTable(xSize, ySize);
+    if(fullTable->getArrayWidth() != xSize)
+        return X_INDEX_OUT_OF_BOUNDS;
+    if(fullTable->getArrayHeight() != ySize)
+        return Y_INDEX_OUT_OF_BOUNDS;
 
     // The following sets the initial table with random true values
     // For each item in the grid
@@ -37,6 +52,10 @@ int setupGameOfLife(int xSize, int ySize){
     return SUCCESS;
 }
 
+/**
+ * Runs the game of life calculations and then displays the grid
+ * @return error code
+ */
 int runGameOfLife(){
     Table* workingTable = nullptr;
     if(fullTable == nullptr){
