@@ -13,7 +13,7 @@
 int main(){
     setupGameOfLife(50, 50);
     while(true){
-        runGameOfLife(50, 50);
+        runGameOfLife();
         usleep(500000);
     }
     return 1;

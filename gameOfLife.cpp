@@ -16,10 +16,8 @@
 
 //Variables
 Table* fullTable = nullptr;
-Table* workingTable = nullptr;
 
 int setupGameOfLife(int xSize, int ySize){
-
     fullTable = new Table();
     checkValidity(fullTable->initTable(xSize, ySize));
 
@@ -39,13 +37,22 @@ int setupGameOfLife(int xSize, int ySize){
     return SUCCESS;
 }
 
-void runGameOfLife(int xSize, int ySize){
+int runGameOfLife(){
+    Table* workingTable = nullptr;
+    if(fullTable == nullptr){
+        return TABLE_NOT_INITIALISED;
+    }
+
     clearScreen();
     // Create a table for the working calculations
     workingTable = new Table();
-    checkValidity(workingTable->initTable(xSize, ySize));
     int arrayWidth = fullTable->getArrayWidth();
     int generations = fullTable->getArrayHeight();
+
+    checkValidity(workingTable->initTable(arrayWidth, generations));
+    if(workingTable == nullptr){
+        return TABLE_NOT_INITIALISED;
+    }
 
     // for each x and y value
     for (int row = 1; row < generations; row++) {
@@ -74,6 +81,7 @@ void runGameOfLife(int xSize, int ySize){
     // sets the working table as the new active table.
     fullTable = new Table(*workingTable);
     fullTable->debugTable();
-    free(workingTable);
+    delete(workingTable);
+    return SUCCESS;
 }
 
