@@ -16,6 +16,8 @@
 #include "table.hpp"
 // Imports game of life
 #include "gameOfLife.hpp"
+// Imports Langton's Ant
+#include "LangtonsAnt.hpp"
 
 using namespace std;
 
@@ -33,7 +35,7 @@ void loadAutomaton();
 bool processLoad(string filename);
 void saveAutomaton();
 void gameOfLife();
-void startGameOfLife();
+void LangtonsAnt();
 
 // revert last time and I'm going to work on it offline, please
 
@@ -73,7 +75,7 @@ void displayMenu() {
   cout << "2. Load a cellular automaton from a file" << endl;
   cout << "3. Save a cellular automaton to a file" << endl;
   cout << "4. Conway's Game of Life" << endl;
-  cout << "5. Other 2D Automaton" << endl;
+  cout << "5. Langton's Ant" << endl;
   cout << "0. Exit" << endl;
   cout << "Choose an option from the list: ";
 }
@@ -93,6 +95,7 @@ bool processMenu(int choice) {
       gameOfLife();
       break;
     case 5:
+        LangtonsAnt();
       break;
     case 0:
       exit(0);
@@ -159,11 +162,21 @@ void gameOfLife(){
     int height = promptIntRange("Please enter the desired height of the grid", 2, 101);
     setupGameOfLife(width, height);
     while(true){
-        //If Escape is held, then exits game of life
         runGameOfLife();
         usleep(500000);
     }
 }
+
+void LangtonsAnt(){
+    int width = promptIntRange("Please enter the desired width of the grid", 2, 101);
+    int height = promptIntRange("Please enter the desired height of the grid", 2, 101);
+    setupLangtonsAnt(width, height);
+    while(true){
+        runLangtonsAnt();
+        usleep(100000);
+    }
+}
+
 void saveAutomaton() {
 
 }

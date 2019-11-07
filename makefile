@@ -7,12 +7,12 @@ CFLAGS_LESSER = -Wall -Werror
 CVERSION = -std=c++17
 
 # Main 
-all: maxTester main gameOfLife
+all: maxTester main gameOfLife langstonsAnt
 
 # Compiles main program
-main: main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp
+main: main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp gameOfLife.cpp LangtonsAnt.cpp
 	# Compiles with flags
-	$(CC) $(CVERSION) $(CFLAGS) -o main.o main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp gameOfLife.cpp -lcurses
+	$(CC) $(CVERSION) $(CFLAGS) -o main.o main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp gameOfLife.cpp LangtonsAnt.cpp -lcurses
 
 # Compiles program
 maxTester: maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp
