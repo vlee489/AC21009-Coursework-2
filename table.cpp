@@ -368,6 +368,7 @@ int Table::debugTable() {
   for (int row = 0; row < arrayHeight; row++) {
     // Counts through each column
     for (int col = 0; col < arrayWidth; col++) {
+      // Displays the element
       displayElement(col, row);
     }
     cout << endl;
@@ -398,11 +399,13 @@ int Table::printTable() {
     for (int col = 0; col < arrayWidth; col++) {
       // Checks if the column is within the active fields
       if (col >= (middleIndex - side) && col < (middleIndex + side)) {
+        // Displays the element
         displayElement(col, row);
       }
       // Adds one extra active field if the number of elements we're displaying
       // is odd
       else if (col == (middleIndex + side) && fieldsActive % 2 == 1) {
+        // Displays the element
         displayElement(col, row);
       }
       // Runs if the number is outside the active fields
