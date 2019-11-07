@@ -2,6 +2,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <unistd.h>
 
 // Imports error codes
 #include "error.hpp"
@@ -11,8 +12,10 @@
 #include "inputOutput.hpp"
 // Imports methods to generate rules and convert numbers to binary and decimal
 #include "rule.hpp"
-// Imports merthods for storing a table of values
+// Imports methods for storing a table of values
 #include "table.hpp"
+// Imports game of life
+#include "gameOfLife.hpp"
 
 using namespace std;
 
@@ -61,7 +64,7 @@ void initObjects(bool erase) {
 void displayMenu() {
   cout << "Cellular Automaton Program" << endl;
   cout << "Module Code: AC210009" << endl;
-  cout << "Authors: Max Kelly, Vincent Lo and Ramsay Sewell" << endl;
+  cout << "Authors: Max Kelly, Vincent Lee and Ramsay Sewell" << endl;
   cout << "Assignment 2";
   cout << endl;
   cout << endl;
@@ -149,6 +152,16 @@ bool processLoad(string filename) {
   return true;
 }
 
+void gameOfLife(){
+    int width = promptIntRange("Please enter the desired width of the grid", 2, 101);
+    int height = promptIntRange("Please enter the desired height of the grid", 2, 101);
+    setupGameOfLife(width, height);
+    while(true){
+        //If Escape is held, then exits game of life
+        runGameOfLife();
+        usleep(500000);
+    }
+}
 void saveAutomaton() {
   clearScreen();
   // Asks the user what file we should load and loads it
@@ -160,7 +173,4 @@ bool processSave(string filename) {
   cout << "Saving file successful" << endl;
   return true;
 }
-
-void gameOfLife() {}
-
 void langtonsAnt() {}

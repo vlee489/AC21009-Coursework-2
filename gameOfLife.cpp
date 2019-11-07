@@ -15,7 +15,7 @@
 #include "table.hpp"
 
 //Variables
-Table* fullTable = nullptr;
+Table* GameOfLifeTable = nullptr;
 
 /**
  * Sets up the game of life grid and the location of the random activated squares
@@ -25,15 +25,15 @@ Table* fullTable = nullptr;
  */
 int setupGameOfLife(int xSize, int ySize){
     //sets update table and size
-    fullTable = new Table();
+    GameOfLifeTable = new Table();
     // checks if the table is initialised
-    if(fullTable == nullptr)
+    if(GameOfLifeTable == nullptr)
         return TABLE_NOT_INITIALISED;
 
-    fullTable->initTable(xSize, ySize);
-    if(fullTable->getArrayWidth() != xSize)
+    GameOfLifeTable->initTable(xSize, ySize);
+    if(GameOfLifeTable->getArrayWidth() != xSize)
         return X_INDEX_OUT_OF_BOUNDS;
-    if(fullTable->getArrayHeight() != ySize)
+    if(GameOfLifeTable->getArrayHeight() != ySize)
         return Y_INDEX_OUT_OF_BOUNDS;
 
     // The following sets the initial table with random true values
@@ -45,7 +45,7 @@ int setupGameOfLife(int xSize, int ySize){
             int randomNum = rand() % 2;
             // If number is 1 then turn the box to true
             if(randomNum == 1){
-                fullTable->setVal(col, row, true);
+                GameOfLifeTable->setVal(col, row, true);
             }
         }
     }
@@ -60,7 +60,7 @@ int runGameOfLife(){
     clearScreen();
 
     // checks the table is setup
-    if(fullTable == nullptr){
+    if(GameOfLifeTable == nullptr){
         return TABLE_NOT_INITIALISED;
     }
 
@@ -71,8 +71,8 @@ int runGameOfLife(){
     }
 
     // Sets the size of the grid for the working table based on the main fullTable
-    int arrayWidth = fullTable->getArrayWidth();
-    int generations = fullTable->getArrayHeight();
+    int arrayWidth = GameOfLifeTable->getArrayWidth();
+    int generations = GameOfLifeTable->getArrayHeight();
     checkValidity(workingTable->initTable(arrayWidth, generations));
 
 
@@ -80,9 +80,9 @@ int runGameOfLife(){
     for (int row = 1; row < generations; row++) {
         for (int col = 0; col < arrayWidth; col++) {
             // get the Number of neighbors around the cord
-            int neighbors = fullTable->getNumAround(col, row);
+            int neighbors = GameOfLifeTable->getNumAround(col, row);
             // get it's state
-            bool state = fullTable->getVal(col, row);
+            bool state = GameOfLifeTable->getVal(col, row);
 
             // Cell is born as conditions are right
             if(!state && neighbors  == 3){
@@ -101,9 +101,9 @@ int runGameOfLife(){
         }
     }
     // sets the working table as the new active table.
-    fullTable = new Table(*workingTable);
+    GameOfLifeTable = new Table(*workingTable);
     // Displays table
-    fullTable->debugTable();
+    GameOfLifeTable->debugTable();
     //removes the working table
     delete(workingTable);
     return SUCCESS;
