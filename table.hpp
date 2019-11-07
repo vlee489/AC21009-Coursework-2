@@ -22,6 +22,9 @@ class Table {
   int allocTable();
   // Sets the first generation as a single true element
   void setFirstVal();
+  // Sets the value of a field in the table using a string
+  // Returns true if a field is set in the table
+  bool setElement(int col, int row, std::string str);
   // Makes modulo work for negative numbers
   int properMod(int a, int b);
 
@@ -53,13 +56,15 @@ class Table {
   int getNumAround(int x, int y);
   // Vincent's version to get items around a cord.
   int getNumAroundVin(int x, int y);
-    // Sets the value of the appropriate index of the table
+  // Sets the value of the appropriate index of the table
   int setVal(int x, int y, bool val);
 
   // Saves the contents of the table to a file
   int saveTable(std::string filename);
   // Loads the contents of the table from a file
   int loadTable(std::string filename);
+  // Counts the number of digits in a string
+  int countDigits(std::string str);
 
   // Prints out the values of the table in a basic manner for debugging
   int debugTable();

@@ -162,7 +162,7 @@ void loadAutomaton() {
 bool processLoad(string filename) {
   // Loads the table from the file and displays an error if this is unsuccessful
   checkValidity(fullTable->loadTable(filename));
-  cout << "Loading file successful" << endl;
+  cout << "Loading file successful" << endl << endl;
   // Prints the loaded table to the screen if the table has been initialised
   checkValidity(fullTable->printTable());
   return true;
@@ -193,7 +193,7 @@ void saveAutomaton() {
 bool processSave(string filename) {
   // Saves the table to the file and displays an error if this is unsuccessful
   checkValidity(fullTable->saveTable(filename));
-  cout << "Saving file successful" << endl;
+  cout << "Saving file successful" << endl << endl;
   return true;
 }
 
