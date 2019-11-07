@@ -391,6 +391,54 @@ int Table::debugTable() {
   return SUCCESS;
 }
 
+/**
+ * Prints out the grid to the console with an arrow of where the ant is.
+ * @param x The X location of the ant
+ * @param y The Y location of the ant
+ * @param Direction The Direction of the Ant
+ * @return Success / error code
+ */
+int Table::antTable(int x, int y, int Direction){
+    // Checks if the array has been initialised
+    if (!init) {
+        return TABLE_NOT_INITIALISED;
+    }
+
+    cout << endl;
+    // Counts through each row
+    for (int row = 0; row < arrayHeight; row++) {
+        // Counts through each column
+        for (int col = 0; col < arrayWidth; col++) {
+            if(row == y && col == x){
+                // Works out what arrow to use.
+                if(Direction == 0){
+                    cout << "⇑" << " ";
+                }else if(Direction == 1){
+                    cout << "⇒" << " ";
+                }else if(Direction == 2){
+                    cout << "⇓" << " ";
+                }else if(Direction == 3){
+                    cout << "⇐" << " ";
+                }else{
+                    cout << "X" << " ";
+                }
+            }
+            else if (getVal(col, row)) {
+                // Prints the element to the screen
+                cout << "■" << " ";
+            } else {
+                // Prints the element to the screen
+                cout << "□" << " ";
+            }
+        }
+        cout << endl;
+    }
+    cout << endl;
+
+    return SUCCESS;
+}
+
+
 // Prints out the values of the table in a triangle form
 int Table::printTable() {
   // Checks if the array has been initialised

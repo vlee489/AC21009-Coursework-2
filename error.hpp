@@ -12,6 +12,7 @@
 #define INVALID_TABLE_PARAMETER -101
 #define X_INDEX_OUT_OF_BOUNDS - 102
 #define Y_INDEX_OUT_OF_BOUNDS -103
+#define DIRECTION_OUT_OF_BOUNDS -104
 
 // Saving and loading file errors
 #define INVALID_FILE -200
