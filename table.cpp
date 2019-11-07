@@ -410,7 +410,7 @@ int Table::debugTable() {
   return SUCCESS;
 }
 
-int Table::antTable(int x, int y){
+int Table::antTable(int x, int y, int Direction){
     // Checks if the array has been initialised
     if (!init) {
         return TABLE_NOT_INITIALISED;
@@ -422,7 +422,18 @@ int Table::antTable(int x, int y){
         // Counts through each column
         for (int col = 0; col < arrayWidth; col++) {
             if(row == y && col == x){
-                cout << "X" << " ";
+                // Works out what arrow to use.
+                if(Direction == 0){
+                    cout << "⇑" << " ";
+                }else if(Direction == 1){
+                    cout << "⇒" << " ";
+                }else if(Direction == 2){
+                    cout << "⇓" << " ";
+                }else if(Direction == 3){
+                    cout << "⇐" << " ";
+                }else{
+                    cout << "X" << " ";
+                }
             }
             else if (getVal(col, row)) {
                 // Prints the element to the screen

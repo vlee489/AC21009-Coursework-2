@@ -64,7 +64,7 @@ class Table {
   // Prints out the values of the table in a triangle form
   int printTable();
   // Prints out values of table with an icon for the ant
-  int antTable(int x, int y);
+  int antTable(int x, int y, int Direction);
 
   // Getters
   bool* getPTable();

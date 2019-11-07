@@ -114,7 +114,7 @@ int runLangtonsAnt(){
     }else if(antY < 0){
         antY = generations - 1;
     }
-    
-    LangtonsAntWorld->antTable(antX, antY);
+
+    LangtonsAntWorld->antTable(antX, antY, antPoint);
     return SUCCESS;
 }
