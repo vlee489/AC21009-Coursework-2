@@ -3,17 +3,24 @@
 //
 
 #include <string>
-#include <cstdlib>
+#include <iostream>
 #include "LangtonsAnt.hpp"
 
 #include "error.hpp"
 #include "inputOutput.hpp"
 #include "table.hpp"
+using namespace std;
 
 // Variables
 // Store the location of the ant
 int antX = 0;
 int antY = 0;
+// antPoint is used for the direction the ant is point in
+// 0 = up
+// 1 = left
+// 2 = down
+// 3 = right
+int antPoint = 0;
 // Stores table for the ant world
 Table* LangtonsAntWorld = nullptr;
 
@@ -50,5 +57,64 @@ int setupLangtonsAnt(int xSize, int ySize){
             LangtonsAntWorld->setVal(i, j, true);
         }
     }
+    return SUCCESS;
+}
+
+int runLangtonsAnt(){
+    clearScreen();
+
+    if(LangtonsAntWorld == nullptr){
+        return TABLE_NOT_INITIALISED;
+    }
+
+    bool state = LangtonsAntWorld->getVal(antX, antY);
+
+    //Points the ant in the right direction
+    if(state){
+        antPoint++;
+    }else{
+        antPoint--;
+    }
+
+    // Makes sure antPoint doesn't go out of bounds of the numbers it's allows to go to
+    if(antPoint > 3){
+        antPoint = 0;
+    } else if(antPoint < 0){
+        antPoint = 3;
+    }
+
+    // Flips the state of the cell the ant is on.
+    LangtonsAntWorld->setVal(antX, antY, !state);
+
+    // Moves the ant forward one block
+    if(antPoint == 0){
+        antY--;
+    }else if(antPoint == 1){
+        antX++;
+    }else if(antPoint == 2){
+        antY++;
+    }else if(antPoint == 3){
+        antX--;
+    }else{
+        return DIRECTION_OUT_OF_BOUNDS;
+    }
+
+    // Following does the wrapping for the ant
+    int arrayWidth = LangtonsAntWorld->getArrayWidth();
+    int generations = LangtonsAntWorld->getArrayHeight();
+    // for x axis
+    if(antX >= arrayWidth){
+        antX = 0;
+    }else if(antX < 0){
+        antX = arrayWidth - 1;
+    }
+    // for y axis
+    if(antY >= generations){
+        antY = 0;
+    }else if(antY < 0){
+        antY = generations - 1;
+    }
+    
+    LangtonsAntWorld->antTable(antX, antY);
     return SUCCESS;
 }

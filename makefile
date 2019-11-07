@@ -23,6 +23,8 @@ gameOfLife: gameOfLifeTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.c
 	# Compiles with flags
 	$(CC) $(CVERSION) $(CFLAGS) -o gameOfLife.o gameOfLifeTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp -lcurses
 
+langstonsAnt: LangstonsAntTester.cpp LangtonsAnt.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
+	$(CC) $(CVERSION) $(CFLAGS) -o langstonsAnt.o LangstonsAntTester.cpp LangtonsAnt.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
 # Deletes unused files
 clean:
 	-rm $(objects) *.o
