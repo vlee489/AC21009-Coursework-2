@@ -37,4 +37,4 @@ void gameOfLife();
 // Runs a simulation of Langton's ant
 void langtonsAnt();
 
-#endif MAIN_H
+#endif
