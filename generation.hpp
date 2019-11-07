@@ -35,7 +35,7 @@ class Generation {
  public:
   // Constructor to set values to defaults
   Generation();
-  // Allows the user to set a first generatiom
+  // Allows the user to set a first generation
   void firstGenerator();
   // Returns the generation pointer
   std::vector<bool>* returnGen();

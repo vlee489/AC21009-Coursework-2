@@ -1,7 +1,8 @@
+#include <unistd.h>
+
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <unistd.h>
 #include <vector>
 
 // Imports error codes
@@ -71,31 +72,39 @@ void displayMenu() {
 bool processMenu(int choice) {
   switch (choice) {
     case 1:
+      // Lets the user create and setup their own cellular automaton
       createAutomaton();
       break;
     case 2:
+      // Allows the user to load a previously saved cellular automaton
       loadAutomaton();
       break;
     case 3:
+      // Allows the user to save their cellular automaton to an external file
       saveAutomaton();
       break;
     case 4:
+      // Runs a simulation of Conway's Game of Life
       gameOfLife();
       break;
     case 5:
+      // Runs a simulation of Langton's ant
       langtonsAnt();
       break;
     case 0:
       // Exits the program
       exit(0);
     default:
+      // Runs if the user's input is invalid
       return false;
   }
+  // Runs if the user's input is valid
   return true;
 }
 
 // Lets the user create and setup their own cellular automaton
 void createAutomaton() {
+  // Initialises all objects, clearing previous data
   initObjects(true);
   clearScreen();
   // Gets the rule number from the user
@@ -105,48 +114,61 @@ void createAutomaton() {
   int generations =
       promptIntRange("Please enter the desired generations you want", 0, 100);
 
+  // Allows the user to set a first generation
   generationObj->firstGenerator();
+  // Extracts the first generation the user's set from the generation object
   vector<bool>* firstGen = generationObj->returnGen();
 
-  checkValidity(fullTable->initTable(*firstGen, generations));
-  checkValidity(ruleObj->setRule(rule));
+  // checkValidity: Checks if the operation returns an error code, if it does,
+  // it prints it to the screen and stops the program
 
+  // Initialises the table with the appropriate first generation and size
+  checkValidity(fullTable->initTable(*firstGen, generations));
+  // Sets the rule we are using in the rule object
+  checkValidity(ruleObj->setRule(rule));
+  // Gets the width of the array in the table object
   int arrayWidth = fullTable->getArrayWidth();
+
+  // Counts through each row except the first which already has a first
+  // generation
   for (int row = 1; row < generations; row++) {
+    // Counts through each column
     for (int col = 0; col < arrayWidth; col++) {
+      // Stores the neighbourhood of the current field
       bool* neighbourhood = fullTable->getNeighbourhood(col, row);
+      // Calculates the value of the current field based on the neighbourhood
       bool cell = ruleObj->generateCell(neighbourhood);
+      // Stores the value in the table
       checkValidity(fullTable->setVal(col, row, cell));
+      // Deletes the neighbourhood we extracted
       delete neighbourhood;
     }
   }
   cout << endl;
-  // cout << "Debug Table Check: ";
-  // printArray(fullTable->getPTable(), fullTable->getArraySize());
-  fullTable->printTable();
+  // Displays the finished table to the user
+  checkValidity(fullTable->printTable());
 }
 
-//
+// Allows the user to load a previously saved cellular automaton
 void loadAutomaton() {
+  // Initialises all objects, clearing previous data
+  initObjects(true);
   clearScreen();
   // Asks the user what file we should load and loads it
   promptStr("What is the path of the file you'd like to load?", processLoad);
-  //
-  fullTable->printTable();
 }
 
-//
+// Processes loading a table from a file
 bool processLoad(string filename) {
+  // Loads the table from the file and displays an error if this is unsuccessful
   checkValidity(fullTable->loadTable(filename));
-  // if (valid != SUCCESS) {
-  //   return false;
-  // } else {
   cout << "Loading file successful" << endl;
-  // }
+  // Prints the loaded table to the screen if the table has been initialised
+  checkValidity(fullTable->printTable());
   return true;
 }
 
-//
+// Runs a simulation of Conway's Game of Life
 void gameOfLife() {
   int width =
       promptIntRange("Please enter the desired width of the grid", 2, 101);
@@ -160,18 +182,20 @@ void gameOfLife() {
   }
 }
 
-//
+// Allows the user to save their cellular automaton to an external file
 void saveAutomaton() {
   clearScreen();
   // Asks the user what file we should load and loads it
   promptStr("Where would you like to save?", processSave);
 }
 
-//
+// Processes saving the table to a file
 bool processSave(string filename) {
+  // Saves the table to the file and displays an error if this is unsuccessful
   checkValidity(fullTable->saveTable(filename));
   cout << "Saving file successful" << endl;
   return true;
 }
 
+// Runs a simulation of Langton's ant
 void langtonsAnt() {}

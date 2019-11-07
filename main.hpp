@@ -7,19 +7,29 @@
 // Imports methods which allows the user to set their own generation
 #include "generation.hpp"
 
-// Stores pointers for objects of classes
+// Stores pointers for global objects
 Table* fullTable;
 Rule* ruleObj;
 Generation* generationObj;
 
-// Headers for the methods in this file
+// Initialises global objects for each external class
+// But only does so, if it is yet uninitialised or the erase flag is turned on
 void initObjects(bool erase);
+// Displays the main menu
 void displayMenu();
+// Processes the user's chosen operation
 bool processMenu(int choice);
+// Lets the user create and setup their own cellular automaton
 void createAutomaton();
+// Allows the user to load a previously saved cellular automaton
 void loadAutomaton();
+// Processes loading a table from a file
 bool processLoad(std::string filename);
+// Allows the user to save their cellular automaton to an external file
 void saveAutomaton();
+// Processes saving the table to a file
 bool processSave(std::string filename);
+// Runs a simulation of Conway's Game of Life
 void gameOfLife();
+// Runs a simulation of Langton's ant
 void langtonsAnt();
