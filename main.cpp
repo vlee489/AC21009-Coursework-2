@@ -1,8 +1,9 @@
+#include <unistd.h>
+
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <unistd.h>
 
 // Imports error codes
 #include "error.hpp"
@@ -32,10 +33,9 @@ void createAutomaton();
 void loadAutomaton();
 bool processLoad(string filename);
 void saveAutomaton();
+bool processSave(string filename);
 void gameOfLife();
-void startGameOfLife();
-
-// revert last time and I'm going to work on it offline, please
+void langtonsAnt();
 
 // Main Function
 int main() {
@@ -73,7 +73,7 @@ void displayMenu() {
   cout << "2. Load a cellular automaton from a file" << endl;
   cout << "3. Save a cellular automaton to a file" << endl;
   cout << "4. Conway's Game of Life" << endl;
-  cout << "5. Other 2D Automaton" << endl;
+  cout << "5. Langton's Ant" << endl;
   cout << "0. Exit" << endl;
   cout << "Choose an option from the list: ";
 }
@@ -93,6 +93,7 @@ bool processMenu(int choice) {
       gameOfLife();
       break;
     case 5:
+      langtonsAnt();
       break;
     case 0:
       exit(0);
@@ -118,8 +119,6 @@ void createAutomaton() {
   checkValidity(fullTable->initTable(*firstGen, generations));
   checkValidity(ruleObj->setRule(rule));
 
-  ruleObj->printRule();
-
   int arrayWidth = fullTable->getArrayWidth();
   for (int row = 1; row < generations; row++) {
     for (int col = 0; col < arrayWidth; col++) {
@@ -144,26 +143,37 @@ void loadAutomaton() {
 }
 
 bool processLoad(string filename) {
-  int valid = fullTable->loadTable(filename);
-  checkValidity(valid);
+  checkValidity(fullTable->loadTable(filename));
   // if (valid != SUCCESS) {
   //   return false;
   // } else {
   cout << "Loading file successful" << endl;
   // }
-  return valid;
+  return true;
 }
 
-void gameOfLife(){
-    int width = promptIntRange("Please enter the desired width of the grid", 2, 101);
-    int height = promptIntRange("Please enter the desired height of the grid", 2, 101);
-    setupGameOfLife(width, height);
-    while(true){
-        //If Escape is held, then exits game of life
-        runGameOfLife();
-        usleep(500000);
-    }
+void gameOfLife() {
+  int width =
+      promptIntRange("Please enter the desired width of the grid", 2, 101);
+  int height =
+      promptIntRange("Please enter the desired height of the grid", 2, 101);
+  setupGameOfLife(width, height);
+  while (true) {
+    // If Escape is held, then exits game of life
+    runGameOfLife();
+    usleep(500000);
+  }
 }
 void saveAutomaton() {
-
+  clearScreen();
+  // Asks the user what file we should load and loads it
+  promptStr("Where would you like to save?", processSave);
 }
+
+bool processSave(string filename) {
+  checkValidity(fullTable->saveTable(filename));
+  cout << "Saving file successful" << endl;
+  return true;
+}
+
+void langtonsAnt() {}

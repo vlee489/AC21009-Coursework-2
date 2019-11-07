@@ -1,6 +1,7 @@
 
 #include "rule.hpp"
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 
@@ -8,14 +9,14 @@
 
 using namespace std;
 
-int Rule::toDecimal(bool binary[]) {
+int Rule::toDecimal(bool binary[], int bits) {
   if (binary == NULL) {
     return UNEXPECTED_NULL_POINTER;
   }
   int decimal = 0;
-  for (int i = 7; i >= 0; i--) {
+  for (int i = bits - 1; i >= 0; i--) {
     if (binary[i] == true) {
-      decimal += pow(2, i);
+      decimal += pow(2, bits - 1 - i);
     }
   }
   return decimal;
@@ -33,15 +34,14 @@ int Rule::setRule(int ruleNum) {
 }
 
 bool Rule::generateCell(bool neighbourhood[]) {
-  int index = toDecimal(neighbourhood);
+  int index = toDecimal(neighbourhood, 3);
   if (index == UNEXPECTED_NULL_POINTER) {
     return false;
   }
-  return ruleSet[index];
+  return ruleSet[7-index];
 }
 
 int Rule::toBinary(bool binary[], int decimal) {
-
   if (binary == NULL) {
     return UNEXPECTED_NULL_POINTER;
   }
@@ -49,33 +49,17 @@ int Rule::toBinary(bool binary[], int decimal) {
     return DECIMAL_VAL_OUT_OF_RANGE;
   }
 
-  int binaryComp[8];
-  binaryComp[0] = 0;
-  int index = 0;
-  for (int i = 7; i >= 0; i--) {
-    binary[i] = 0;
-    binaryComp[index] = pow(2, i);
-    index++;
+  for (int i = 0; decimal > 0; i++) {
+    binary[i] = decimal % 2;
+    decimal = decimal/2;
   }
-  printf("binComp\n");
-  for (int i = 0; i < 8; i ++) {
-    printf("%d  ", binaryComp[i]);
-  }
-  printf("binComp\n");
 
-  for (int i = 7; i >= 0; i--) {
-    if (decimal >= binaryComp[i]) {
-      decimal = decimal - binaryComp[i];
-      binary[i] = 1;
-    } else {
-      binary[i] = 0;
-    }
-  }
+  swap(binary, 8);
+
   return SUCCESS;
 }
 
-void Rule::printRule() {
-  for (int i = 0; i < 8; i++) {
-    printf("%d  ", this->ruleSet[i]);
-  }
+// Utility function to reverse elements of an array
+void Rule::swap(bool arr[], int n) {
+  reverse(arr, arr + n);
 }

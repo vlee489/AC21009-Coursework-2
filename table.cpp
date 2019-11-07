@@ -4,8 +4,8 @@
 #include "error.hpp"
 // Used to print to the console
 #include <iostream>
-// Used to check if a file exists
-#include <filesystem>
+// // Used to check if a file exists
+// #include <filesystem>
 // Used to save and load files
 #include <fstream>
 // Used to deal with string streams
@@ -185,6 +185,10 @@ bool Table::getVal(int x, int y) {
   // }
   // Returns the element
   // return pTable[y * arrayWidth + x];
+
+  // Calculates how many fields we are using for processing
+  // int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - y);
+
   return pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)];
 }
 
@@ -194,14 +198,16 @@ bool Table::getVal(int x, int y) {
 bool* Table::getNeighbourhood(int x, int y) {
   // Moves to the row we are getting values for the neighbourhood
   int yPoint = y - 1;
+  // Calculates how many fields we are using for processing
+  // int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - yPoint);
   // Checks if the pointer is initialised and checks if the yPoint is valid
-  if (init == true && yPoint <= arrayHeight && yPoint >= 0) {
+  if (init == true && yPoint < arrayHeight && yPoint >= 0) {
     // Allocates memory for the neighbourhood
     bool* neighbourhood = new bool[3];
     // Runs through each item in the neighbourhood
     for (int i = 0; i < 3; i++) {
       // Calculates the x value we are getting
-      int xPoint = properMod(x + i - 1, arrayWidth);
+      int xPoint = x + i - 1;
       // Gets the current value
       neighbourhood[i] = getVal(xPoint, yPoint);
     }
@@ -250,6 +256,10 @@ int Table::setVal(int x, int y, bool val) {
 
   // // Sets the appropriate value
   // pTable[y * arrayWidth + x] = val;
+
+  // Calculates how many fields we are using for processing
+  // int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - y);
+
   pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)] = val;
   return SUCCESS;
 }
@@ -300,10 +310,10 @@ int Table::loadTable(string filename) {
     return INVALID_FILENAME;
   }
 
-  // Checks if the file exists
-  if (filesystem::exists(filename)) {
-    return FILE_NOT_FOUND;
-  }
+  // // Checks if the file exists
+  // if (filesystem::exists(filename)) {
+  //   return FILE_NOT_FOUND;
+  // }
 
   // Creates the file's object for writing
   ifstream loadFile;
@@ -312,7 +322,7 @@ int Table::loadTable(string filename) {
 
   // Checks if the file is accessible
   if (!loadFile.is_open()) {
-    return FILE_NOT_ACCESSIBLE;
+    return FILE_NOT_FOUND;
   }
 
   // Stores the number of numbers in the top line

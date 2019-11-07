@@ -29,7 +29,7 @@ int getInt() {
       // Clears cin of any input
       cin.ignore();
       cout << endl;
-      cout << "Please enter an interger: ";
+      cout << "Please enter an integer: ";
     }
     // If the user's input is valid
     else {
@@ -140,9 +140,9 @@ void promptStr(string prompt, bool process(string)) {
     // Gets a string from the user and uses a process function pointer to
     // interpret it
     valid = getStr(process);
-  }  
+  }
   // Loops until the user's input is valid
-  while (valid != SUCCESS);
+  while (!valid);
 }
 
 // Defines T as a template to be replaced with the type from the parameter
