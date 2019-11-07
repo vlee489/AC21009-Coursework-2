@@ -33,8 +33,6 @@ bool processSave(string filename);
 void gameOfLife();
 void langtonsAnt();
 
-// revert last time and I'm going to work on it offline, please
-
 // Main Function
 int main() {
   clearScreen();
@@ -117,7 +115,6 @@ void createAutomaton() {
   checkValidity(fullTable->initTable(*firstGen, generations));
   checkValidity(ruleObj->setRule(rule));
 
-  ruleObj->printRule();
 
   int arrayWidth = fullTable->getArrayWidth();
   for (int row = 1; row < generations; row++) {

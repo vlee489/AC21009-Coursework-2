@@ -11,7 +11,6 @@ class Rule {
   int toDecimal(bool binary[]);
   int setRule(int ruleNum);
   bool generateCell(bool neighbourhood[]);
-  void printRule();
 };
 
 #endif

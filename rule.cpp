@@ -48,41 +48,11 @@ int Rule::toBinary(bool binary[], int decimal) {
     return DECIMAL_VAL_OUT_OF_RANGE;
   }
 
-  int binaryComp[8];
+  for (int i = 0; decimal > 0; i++) {
+    binary[i] = decimal % 2;
+    decimal = decimal/2;
+  }
 
-  int index = 0;
-  for (int i = 7; i >= 0; i--) {
-    binary[i] = 0;
-    if (index == 7) {
-      binaryComp[index] = 0;
-    } else {
-      binaryComp[index] = pow(2, i);
-    }
-    index++;
-  }
-  printf("binComp\n");
-  for (int i = 0; i < 8; i++) {
-    printf("%d  ", binaryComp[i]);
-  }
-  printf("binComp\n");
 
-  for (int i = 0; i < 8; i++) {
-    if (decimal >= binaryComp[i]) {
-      if (decimal == 0) {
-        binary[i] = 0;
-      } else {
-        binary[i] = 1;
-      }
-      decimal = decimal - binaryComp[i];
-    } else {
-      binary[i] = 0;
-    }
-  }
   return SUCCESS;
-}
-
-void Rule::printRule() {
-  for (int i = 0; i < 8; i++) {
-    printf("%d  ", this->ruleSet[i]);
-  }
 }

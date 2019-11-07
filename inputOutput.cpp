@@ -29,7 +29,7 @@ int getInt() {
       // Clears cin of any input
       cin.ignore();
       cout << endl;
-      cout << "Please enter an interger: ";
+      cout << "Please enter an integer: ";
     }
     // If the user's input is valid
     else {

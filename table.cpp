@@ -185,8 +185,7 @@ bool Table::getVal(int x, int y) {
   // }
   // Returns the element
   // return pTable[y * arrayWidth + x];
-  return pTable[(properMod(y, arrayHeight) * arrayWidth) +
-                properMod(x, arrayWidth)];
+  return pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)];
 }
 
 // Returns the neighbourhood of a position in the table as an array in order of
