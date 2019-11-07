@@ -1,11 +1,9 @@
-
-#include "rule.hpp"
+#include "rule.hpp" 
+#include "error.hpp"
 
 #include <algorithm>
 #include <cmath>
 #include <iostream>
-
-#include "error.hpp"
 
 using namespace std;
 

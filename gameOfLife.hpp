@@ -10,4 +10,4 @@
 int setupGameOfLife(int xSize, int ySize);
 int runGameOfLife();
 
-#endif //AC21009_COURSEWORK_2_GAMEOFLIFE_H
+#endif 
