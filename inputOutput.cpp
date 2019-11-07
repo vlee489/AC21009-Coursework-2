@@ -10,6 +10,8 @@
 #include <cstdlib>
 // Imports the header file for this individual source file
 #include "inputOutput.hpp"
+// Imports error codes
+#include "error.hpp"
 
 using namespace std;
 
@@ -27,7 +29,7 @@ int getInt() {
       // Clears cin of any input
       cin.ignore();
       cout << endl;
-      cout << "Please enter an interger: ";
+      cout << "Please enter an integer: ";
     }
     // If the user's input is valid
     else {
@@ -50,7 +52,7 @@ bool getInt(bool process(int)) {
 }
 
 // Prompts the user for an integer using a process function pointer and strings
-// for prompt and fail messages
+// for a prompt
 void promptInt(string prompt, bool process(int)) {
   // Assumes the user's input to be false
   bool valid = false;
@@ -110,7 +112,40 @@ void menuInt(void displayPrompt(), bool process(int)) {
   while (!valid);
 }
 
-// Defines T as a template to be replaced with the type from the parameter 
+// Gets input from the user as a string
+string getStr() {
+  // Stores the user's input as a string
+  string input;
+  // Gets input from the user
+  cin >> input;
+  return input;
+}
+
+// Gets a string from the user and uses a process function pointer to
+// interpret it
+bool getStr(bool process(string)) {
+  // Gets input from the user
+  string choice = getStr();
+  // Returns the output of the process function
+  return process(choice);
+}
+
+// Prompts the user for a string using a process function pointer and strings
+// for a prompt
+void promptStr(string prompt, bool process(string)) {
+  int valid;
+  do {
+    // Prints the prompt to the console
+    cout << prompt << ": ";
+    // Gets a string from the user and uses a process function pointer to
+    // interpret it
+    valid = getStr(process);
+  }
+  // Loops until the user's input is valid
+  while (!valid);
+}
+
+// Defines T as a template to be replaced with the type from the parameter
 // e.g. int, string
 template <typename T>
 // Prints an array of any type to the screen
@@ -146,9 +181,8 @@ void printVector(vector<bool>* vector) {
 //   putp(tigetstr("clear"));
 // }
 
-// Clears the terminal screen in a non-OS specific way
+// Clears the terminal screen in an another Unix specific way
 // Source: http://www.cplusplus.com/articles/4z18T05o/
 void clearScreen() {
-  if (system("clear"))
-    system("CLS");
+  system("clear");
 }

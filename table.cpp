@@ -4,12 +4,9 @@
 #include "error.hpp"
 // Used to print to the console
 #include <iostream>
-// Used to check if a file exists
-#include <filesystem>
 // Used to save and load files
 #include <fstream>
-// Used to deal with string streams
-#include <sstream>
+
 #include <string>
 #include <vector>
 
@@ -50,7 +47,7 @@ Table::Table(Table& ogTable) {
 
 // Destructor to delete the table
 Table::~Table() {
-  delete (pTable);
+  delete pTable;
 }
 
 // Creates and initialises an array of appropriate length to store the table
@@ -171,12 +168,14 @@ int Table::initLine(int units) {
 
 // Returns the value of the appropriate index of the table
 bool Table::getVal(int x, int y) {
-  // Checks if the table is initialised and the point is valid
-  if (init && x < arrayWidth && y < arrayHeight) {
-    // Returns the element
-    return pTable[y * arrayWidth + x];
+  // Checks if the array has been initialised
+  if (!init) {
+    // Displays an error message and stops the program
+    checkValidity(TABLE_NOT_INITIALISED);
   }
-  return false;
+  // Returns the appropriate index of the table
+  return pTable[(properMod(y, arrayHeight) * arrayWidth) +
+                properMod(x, arrayWidth)];
 }
 
 // Returns the neighbourhood of a position in the table as an array in order of
@@ -186,13 +185,13 @@ bool* Table::getNeighbourhood(int x, int y) {
   // Moves to the row we are getting values for the neighbourhood
   int yPoint = y - 1;
   // Checks if the pointer is initialised and checks if the yPoint is valid
-  if (init == true && yPoint <= arrayHeight && yPoint >= 0) {
+  if (init == true && yPoint < arrayHeight && yPoint >= 0) {
     // Allocates memory for the neighbourhood
     bool* neighbourhood = new bool[3];
     // Runs through each item in the neighbourhood
     for (int i = 0; i < 3; i++) {
       // Calculates the x value we are getting
-      int xPoint = properMod(x + i - 1, arrayWidth);
+      int xPoint = x + i - 1;
       // Gets the current value
       neighbourhood[i] = getVal(xPoint, yPoint);
     }
@@ -201,13 +200,20 @@ bool* Table::getNeighbourhood(int x, int y) {
   return nullptr;
 }
 
-//
+// Returns the number of true elements that are around a position
 int Table::getNumAround(int x, int y) {
+  // Stores the number of true elements that are around a position
   int counter = 0;
+  // Runs through each element's y co-ordinate
   for (int yPoint = y - 1; yPoint <= y + 1; yPoint++) {
+    // Runs through each element's y co-ordinate
     for (int xPoint = x - 1; xPoint <= x + 1; xPoint++) {
+      // Gets the value of the appropriate point
       bool val = getVal(xPoint, yPoint);
-      if (val && (xPoint != 0 || yPoint != 0)) {
+      // Checks if the value is true and not the value we are getting the
+      // elements for
+      if (val && !(xPoint == x && yPoint == y)) {
+        // Increments the counter
         counter++;
       }
     }
@@ -217,24 +223,19 @@ int Table::getNumAround(int x, int y) {
 
 // Sets the value of the appropriate index of the table
 int Table::setVal(int x, int y, bool val) {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }
-
-  // Checks if the y index is valid
-  if (y > arrayHeight || y < 0) {
-    return Y_INDEX_OUT_OF_BOUNDS;
-  }
-
-  // Sets the appropriate value
-  pTable[y * arrayWidth + x] = val;
+  // Sets the appropriate value of the table
+  pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)] =
+      val;
   return SUCCESS;
 }
 
 // Saves the contents of the table to a file
 int Table::saveTable(string filename) {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }
@@ -254,17 +255,15 @@ int Table::saveTable(string filename) {
     return FILE_NOT_SAVED;
   }
 
-  saveFile << endl;
   // Counts through each row
   for (int row = 0; row < arrayHeight; row++) {
     // Counts through each column
     for (int col = 0; col < arrayWidth; col++) {
-      // Prints the individual value to the file
+      // Prints the element to the file
       saveFile << getVal(col, row) << " ";
     }
     saveFile << endl;
   }
-  saveFile << endl;
   // Saves the file
   saveFile.close();
 
@@ -278,78 +277,76 @@ int Table::loadTable(string filename) {
     return INVALID_FILENAME;
   }
 
-  // Checks if the file exists
-  if (filesystem::exists(filename)) {
-    return FILE_NOT_FOUND;
-  }
-
   // Creates the file's object for writing
   ifstream loadFile;
   // Opens the file
   loadFile.open(filename);
 
-  // Checks if the file is accessible
+  // Checks if the file has been found
   if (!loadFile.is_open()) {
-    return FILE_NOT_ACCESSIBLE;
+    return FILE_NOT_FOUND;
   }
 
-  // Stores the number of numbers in the top line
-  int numbersInLine = 0;
-  //
-  bool valid = false;
-  // Creates strings to store the top line and a number being processed
-  string line, temp;
-  // Creates a stream for the top line
-  stringstream lineStream;
+  // Stores the amount of generations e.g. lines in the file
+  int generations = 0;
+  // Stores the first line of text in the file
+  string firstLine;
+  // Gets the first line of text from the file
+  getline(loadFile, firstLine);
 
-  // Gets the top line from the file
-  getline(loadFile, line);
-  // Stores the top line in a stream
-  lineStream << line;
-  //
-  vector<bool> firstGen;
-
-  // Loops through the numbers in the top line
-  while (!lineStream.eof()) {
-    // Stores the next number as temp
-    lineStream >> temp;
-    // Checks if temp is a valid number
-    if (stringstream(temp)) {
-      //
-      bool tempBool;
-      //
-      stringstream(temp) >> tempBool;
-      //
-      firstGen.push_back(tempBool);
-      // Increments the numbers in the top line
-      numbersInLine++;
-      //
-      valid = true;
-    }
+  // Interates through each line of the file
+  while (!loadFile.eof()) {
+    // Stores a line which don't use
+    string temp;
+    // Used to just move to the next line
+    getline(loadFile, temp);
+    // Increments the number of generations found
+    generations++;
   }
 
+  // Calculates the width of the table
+  arrayWidth = countDigits(firstLine);
+  // Stores the height of the table
+  arrayHeight = generations;
+  // Creates the array to store the table
+  int valid = allocTable();
+
+  // Checks if the array was successfully allocated
   if (valid != SUCCESS) {
     return valid;
   }
 
-  // Calculates the number of generations required from the top line
-  int generations = (numbersInLine / 2) + 1;
-  //
-  initTable(firstGen, generations);
+  // Clears warnings from loadFile object
+  loadFile.clear();
+  // Resets the file position back to the beginning
+  loadFile.seekg(0, ios::beg);
+  // Stores which row we're currently processing
+  int row = 0;
 
-  int x = 0;
-  int y = 0;
-  bool tempBool;
-
-  while (getline(loadFile, line)) {
-    while (!lineStream.eof()) {
-      lineStream >> temp;
-      if (stringstream(temp) >> tempBool) {
-        setVal(x, y, tempBool);
+  // Interates through each line of the file
+  while (!loadFile.eof()) {
+    // Stores the line of text we are currently processing
+    string line;
+    // Stores the column we are at in the table object
+    int col = 0;
+    // Gets the line of text from the file
+    getline(loadFile, line);
+    // Cycles through each character in the line
+    for (int i = 0; i < int(line.size()); i++) {
+      // String to store the character we're processing
+      string element;
+      // Puts the character from the line in the string
+      element.push_back(line.at(i));
+      // Sets the element in the table
+      bool set = setElement(col, row, element);
+      // Checks if an element was set
+      if (set) {
+        // Increments the column
+        col++;
       }
-      y++;
     }
-    x++;
+    // Increments the row
+    row++;
   }
 
   // Closes the file
@@ -357,9 +354,24 @@ int Table::loadTable(string filename) {
   return SUCCESS;
 }
 
+// Counts the number of digits in a string
+int Table::countDigits(string str) {
+  // Stores how many digits we've found
+  int digits = 0;
+  // Counts through each character in the string
+  for (int i = 0; i < int(str.size()); i++) {
+    // Determines if the current character is a digit
+    if (isdigit(str.at(i))) {
+      // Increments the digit counter
+      digits++;
+    }
+  }
+  return digits;
+}
+
 // Prints out the values of the table in a basic manner for debugging
 int Table::debugTable() {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }
@@ -369,8 +381,8 @@ int Table::debugTable() {
   for (int row = 0; row < arrayHeight; row++) {
     // Counts through each column
     for (int col = 0; col < arrayWidth; col++) {
-      // Prints the individual value to the screen
-      cout << getVal(col, row) << " ";
+      // Displays the element
+      displayElement(col, row);
     }
     cout << endl;
   }
@@ -379,9 +391,57 @@ int Table::debugTable() {
   return SUCCESS;
 }
 
+/**
+ * Prints out the grid to the console with an arrow of where the ant is.
+ * @param x The X location of the ant
+ * @param y The Y location of the ant
+ * @param Direction The Direction of the Ant
+ * @return Success / error code
+ */
+int Table::antTable(int x, int y, int Direction){
+    // Checks if the array has been initialised
+    if (!init) {
+        return TABLE_NOT_INITIALISED;
+    }
+
+    cout << endl;
+    // Counts through each row
+    for (int row = 0; row < arrayHeight; row++) {
+        // Counts through each column
+        for (int col = 0; col < arrayWidth; col++) {
+            if(row == y && col == x){
+                // Works out what arrow to use.
+                if(Direction == 0){
+                    cout << "⇑" << " ";
+                }else if(Direction == 1){
+                    cout << "⇒" << " ";
+                }else if(Direction == 2){
+                    cout << "⇓" << " ";
+                }else if(Direction == 3){
+                    cout << "⇐" << " ";
+                }else{
+                    cout << "X" << " ";
+                }
+            }
+            else if (getVal(col, row)) {
+                // Prints the element to the screen
+                cout << "■" << " ";
+            } else {
+                // Prints the element to the screen
+                cout << "□" << " ";
+            }
+        }
+        cout << endl;
+    }
+    cout << endl;
+
+    return SUCCESS;
+}
+
+
 // Prints out the values of the table in a triangle form
 int Table::printTable() {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }
@@ -400,14 +460,14 @@ int Table::printTable() {
     for (int col = 0; col < arrayWidth; col++) {
       // Checks if the column is within the active fields
       if (col >= (middleIndex - side) && col < (middleIndex + side)) {
-        // Prints the element to the screen
-        cout << getVal(col, row) << " ";
+        // Displays the element
+        displayElement(col, row);
       }
-      // Adds one extra active field if the number of elements we're displaying
-      // is odd
+      // Adds one extra active field if the number of elements we're
+      // displaying is odd
       else if (col == (middleIndex + side) && fieldsActive % 2 == 1) {
-        // Prints the element to the screen
-        cout << getVal(col, row) << " ";
+        // Displays the element
+        displayElement(col, row);
       }
       // Runs if the number is outside the active fields
       else {
@@ -421,8 +481,39 @@ int Table::printTable() {
   return SUCCESS;
 }
 
+// Prints an element to the screen
+void Table::displayElement(int col, int row) {
+  if (getVal(col, row)) {
+    // Prints the element to the screen
+    cout << "■"
+         << " ";
+  } else {
+    // Prints the element to the screen
+    cout << "□"
+         << " ";
+  }
+}
+
+// Sets the value of a field in the table using a string
+// Returns true if a field is set in the table
+bool Table::setElement(int col, int row, string str) {
+  // Checks if the string is a 1
+  if (!str.compare("1")) {
+    // Sets the value in the table
+    setVal(col, row, true);
+    return true;
+  }
+  // Checks if the string is a 0
+  else if (!str.compare("0")) {
+    // Sets the value in the table
+    setVal(col, row, false);
+    return true;
+  }
+  return false;
+}
+
 // x86 has a design flaw where the mod operator doesn't work for negative
-// numbers This method addresses that to make it akin to what's found in  other
+// numbers This method addresses that to make it akin to what's found in other
 // higher level languages like Java or Python
 int Table::properMod(int a, int b) {
   return (b + (a % b)) % b;

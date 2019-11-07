@@ -22,6 +22,9 @@ class Table {
   int allocTable();
   // Sets the first generation as a single true element
   void setFirstVal();
+  // Sets the value of a field in the table using a string
+  // Returns true if a field is set in the table
+  bool setElement(int col, int row, std::string str);
   // Makes modulo work for negative numbers
   int properMod(int a, int b);
 
@@ -49,20 +52,26 @@ class Table {
   // of Left, Centre and Right with the point we are getting the position for
   // being the position x, y passed in as parameters
   bool* getNeighbourhood(int x, int y);
-  //
+  // Returns the number of true elements that are around a position
   int getNumAround(int x, int y);
-  // Sets the value of the appropriate index of the table
+    // Sets the value of the appropriate index of the table
   int setVal(int x, int y, bool val);
 
   // Saves the contents of the table to a file
   int saveTable(std::string filename);
   // Loads the contents of the table from a file
   int loadTable(std::string filename);
+  // Counts the number of digits in a string
+  int countDigits(std::string str);
 
   // Prints out the values of the table in a basic manner for debugging
   int debugTable();
   // Prints out the values of the table in a triangle form
   int printTable();
+  // Prints an element to the screen
+  void displayElement(int row, int col);
+  // Prints out values of table with an icon for the ant
+  int antTable(int x, int y, int Direction);
 
   // Getters
   bool* getPTable();
