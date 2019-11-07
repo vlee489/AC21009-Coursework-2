@@ -1,12 +1,13 @@
-#include <unistd.h>
-
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <unistd.h>
 #include <vector>
 
 // Imports error codes
 #include "error.hpp"
+// Imports the header file for this individual source file
+#include "main.hpp"
 // Imports methods which allows the user to set their own generation
 #include "generation.hpp"
 // Imports methods to handle user input and output
@@ -20,34 +21,21 @@
 
 using namespace std;
 
-// Stores pointers for objects of classes
-Table* fullTable;
-Rule* ruleObj;
-Generation* generationObj;
-
-// Headers for the methods in this file
-void initObjects(bool erase);
-void displayMenu();
-bool processMenu(int choice);
-void createAutomaton();
-void loadAutomaton();
-bool processLoad(string filename);
-void saveAutomaton();
-bool processSave(string filename);
-void gameOfLife();
-void langtonsAnt();
-
 // Main Function
 int main() {
   clearScreen();
+  // Keeps running
   while (true) {
+    // Initialises objects that are not already initialised
     initObjects(false);
+    // Displays the main menu and processes user input
     menuInt(displayMenu, processMenu);
   }
   return 0;
 }
 
-// Initialises objects
+// Initialises global objects for each external class
+// But only does so, if it is yet uninitialised or the erase flag is turned on
 void initObjects(bool erase) {
   if (fullTable == nullptr || erase) {
     fullTable = new Table();
@@ -62,6 +50,7 @@ void initObjects(bool erase) {
   }
 }
 
+// Displays the main menu
 void displayMenu() {
   cout << "Cellular Automaton Program" << endl;
   cout << "Module Code: AC210009" << endl;
@@ -78,6 +67,7 @@ void displayMenu() {
   cout << "Choose an option from the list: ";
 }
 
+// Processes the user's chosen operation
 bool processMenu(int choice) {
   switch (choice) {
     case 1:
@@ -96,6 +86,7 @@ bool processMenu(int choice) {
       langtonsAnt();
       break;
     case 0:
+      // Exits the program
       exit(0);
     default:
       return false;
@@ -103,6 +94,7 @@ bool processMenu(int choice) {
   return true;
 }
 
+// Lets the user create and setup their own cellular automaton
 void createAutomaton() {
   initObjects(true);
   clearScreen();
@@ -134,6 +126,7 @@ void createAutomaton() {
   fullTable->printTable();
 }
 
+//
 void loadAutomaton() {
   clearScreen();
   // Asks the user what file we should load and loads it
@@ -142,6 +135,7 @@ void loadAutomaton() {
   fullTable->printTable();
 }
 
+//
 bool processLoad(string filename) {
   checkValidity(fullTable->loadTable(filename));
   // if (valid != SUCCESS) {
@@ -152,6 +146,7 @@ bool processLoad(string filename) {
   return true;
 }
 
+//
 void gameOfLife() {
   int width =
       promptIntRange("Please enter the desired width of the grid", 2, 101);
@@ -164,12 +159,15 @@ void gameOfLife() {
     usleep(500000);
   }
 }
+
+//
 void saveAutomaton() {
   clearScreen();
   // Asks the user what file we should load and loads it
   promptStr("Where would you like to save?", processSave);
 }
 
+//
 bool processSave(string filename) {
   checkValidity(fullTable->saveTable(filename));
   cout << "Saving file successful" << endl;
