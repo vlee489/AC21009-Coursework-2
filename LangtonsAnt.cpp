@@ -60,6 +60,10 @@ int setupLangtonsAnt(int xSize, int ySize){
     return SUCCESS;
 }
 
+/**
+ * Runs the Langton's Ant calculations and displays grid
+ * @return Success/Error Code
+ */
 int runLangtonsAnt(){
     clearScreen();
 
@@ -67,6 +71,7 @@ int runLangtonsAnt(){
         return TABLE_NOT_INITIALISED;
     }
 
+    // Get the state of block the ant is on.
     bool state = LangtonsAntWorld->getVal(antX, antY);
 
     //Points the ant in the right direction
@@ -87,19 +92,20 @@ int runLangtonsAnt(){
     LangtonsAntWorld->setVal(antX, antY, !state);
 
     // Moves the ant forward one block
-    if(antPoint == 0){
+    if(antPoint == 0){ // up
         antY--;
-    }else if(antPoint == 1){
+    }else if(antPoint == 1){ // Left
         antX++;
-    }else if(antPoint == 2){
+    }else if(antPoint == 2){ // Down
         antY++;
-    }else if(antPoint == 3){
+    }else if(antPoint == 3){ // Right
         antX--;
-    }else{
+    }else{ // Not Valid direction
         return DIRECTION_OUT_OF_BOUNDS;
     }
 
     // Following does the wrapping for the ant
+    // Get Size of grid
     int arrayWidth = LangtonsAntWorld->getArrayWidth();
     int generations = LangtonsAntWorld->getArrayHeight();
     // for x axis
@@ -115,6 +121,7 @@ int runLangtonsAnt(){
         antY = generations - 1;
     }
 
+    // Display grid
     LangtonsAntWorld->antTable(antX, antY, antPoint);
     return SUCCESS;
 }

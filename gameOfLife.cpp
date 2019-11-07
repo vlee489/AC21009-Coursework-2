@@ -53,7 +53,7 @@ int setupGameOfLife(int xSize, int ySize){
 
 /**
  * Runs the game of life calculations and then displays the grid
- * @return error code
+ * @return Success / error code
  */
 int runGameOfLife(){
     clearScreen();

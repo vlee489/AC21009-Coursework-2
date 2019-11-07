@@ -157,6 +157,9 @@ bool processLoad(string filename) {
   return valid;
 }
 
+/**
+ * Runs the game of life
+ */
 void gameOfLife(){
     int width = promptIntRange("Please enter the desired width of the grid", 2, 101);
     int height = promptIntRange("Please enter the desired height of the grid", 2, 101);
@@ -167,6 +170,9 @@ void gameOfLife(){
     }
 }
 
+/**
+ * Runs Langton's Ant
+ */
 void LangtonsAnt(){
     int width = promptIntRange("Please enter the desired width of the grid", 2, 101);
     int height = promptIntRange("Please enter the desired height of the grid", 2, 101);

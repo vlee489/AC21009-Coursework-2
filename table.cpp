@@ -410,6 +410,13 @@ int Table::debugTable() {
   return SUCCESS;
 }
 
+/**
+ * Prints out the grid to the console with an arrow of where the ant is.
+ * @param x The X location of the ant
+ * @param y The Y location of the ant
+ * @param Direction The Direction of the Ant
+ * @return Success / error code
+ */
 int Table::antTable(int x, int y, int Direction){
     // Checks if the array has been initialised
     if (!init) {
