@@ -1,3 +1,6 @@
+#ifndef MAIN_H
+#define MAIN_H
+
 #include <string>
 
 // Imports methods to generate rules and convert numbers to binary and decimal
@@ -33,3 +36,5 @@ bool processSave(std::string filename);
 void gameOfLife();
 // Runs a simulation of Langton's ant
 void langtonsAnt();
+
+#endif MAIN_H

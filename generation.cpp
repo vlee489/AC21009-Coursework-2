@@ -133,6 +133,7 @@ bool Generation::processCustom(int choice) {
         return true;
       }
     case 0:
+      // Exits the program
       exit(0);
     default:
       cout << "Invalid Input entered" << endl
