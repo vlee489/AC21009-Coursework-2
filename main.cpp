@@ -8,18 +8,18 @@
 #include "generation.hpp"
 // Imports methods to handle user input and output
 #include "inputOutput.hpp"
-// Imports methods to generate rules and convert numbers to binary and decimal
-#include "rule.hpp"
-// Imports methods for storing a table of values
-#include "table.hpp"
 // Imports Langton's Ant
 #include "LangtonsAnt.hpp"
+// Imports methods to generate rules and convert numbers to binary and decimal
+#include "rule.hpp"
+// Imports table class to handle storage of data
+#include "table.hpp"
+// Used for sleeping
+#include <unistd.h>
 
 #include <iostream>
 #include <string>
 #include <vector>
-// Used for sleeping
-#include <unistd.h>
 
 using namespace std;
 
@@ -89,7 +89,7 @@ bool processMenu(int choice) {
       gameOfLife();
       break;
     case 5:
-        LangtonsAnt();
+      LangtonsAnt();
       break;
     case 0:
       // Exits the program
@@ -168,34 +168,6 @@ bool processLoad(string filename) {
   return true;
 }
 
-// Runs a simulation of Conway's Game of Life
-void gameOfLife() {
-  int width =
-      promptIntRange("Please enter the desired width of the grid", 2, 101);
-  int height =
-      promptIntRange("Please enter the desired height of the grid", 2, 101);
-  setupGameOfLife(width, height);
-  while (true) {
-    // If Escape is held, then exits game of life
-    runGameOfLife();
-    usleep(500000);
-  }
-}
-
-/**
- * Runs a simulation of Langton's ant
- */
-void LangtonsAnt(){
-    int width = promptIntRange("Please enter the desired width of the grid", 2, 101);
-    int height = promptIntRange("Please enter the desired height of the grid", 2, 101);
-    setupLangtonsAnt(width, height);
-    while(true){
-        runLangtonsAnt();
-        usleep(500000);
-    }
-}
-
-
 // Allows the user to save their cellular automaton to an external file
 void saveAutomaton() {
   clearScreen();
@@ -209,4 +181,41 @@ bool processSave(string filename) {
   checkValidity(fullTable->saveTable(filename));
   cout << "Saving file successful" << endl << endl;
   return true;
+}
+
+// Runs a simulation of Conway's Game of Life
+void gameOfLife() {
+  // Gets the width from the user
+  int width =
+      promptIntRange("Please enter the desired width of the grid", 2, 101);
+  // Gets the height from the user
+  int height =
+      promptIntRange("Please enter the desired height of the grid", 2, 101);
+  // Sets up Game of Life to be used with user's values
+  checkValidity(setupGameOfLife(width, height));
+  while (true) {
+    // If Escape is held, then exits game of life
+    checkValidity(runGameOfLife());
+    // Refreshes every half second
+    usleep(500000);
+  }
+}
+
+// Runs a simulation of Langton's ant
+void LangtonsAnt() {
+  // Gets the width from the user
+  int width =
+      promptIntRange("Please enter the desired width of the grid", 2, 101);
+  // Gets the height from the user
+  int height =
+      promptIntRange("Please enter the desired height of the grid", 2, 101);
+  // Sets up Langton's ant to be used with user's values
+  checkValidity(setupLangtonsAnt(width, height));
+  // Keeps running
+  while (true) {
+    // Runs the langton's ant simulation
+    checkValidity(runLangtonsAnt());
+    // Refreshes every half second
+    usleep(500000);
+  }
 }

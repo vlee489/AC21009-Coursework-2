@@ -5,8 +5,9 @@
 #include "generation.hpp"
 // Imports methods to generate rules and convert numbers to binary and decimal
 #include "rule.hpp"
-// Imports methods for storing a table of values
+// Imports table class to handle storage of data
 #include "table.hpp"
+
 #include <string>
 
 // Stores pointers for global objects
