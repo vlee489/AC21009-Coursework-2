@@ -239,7 +239,7 @@ int Table::getNumAround(int x, int y) {
 
 // Sets the value of the appropriate index of the table
 int Table::setVal(int x, int y, bool val) {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }
@@ -266,7 +266,7 @@ int Table::setVal(int x, int y, bool val) {
 
 // Saves the contents of the table to a file
 int Table::saveTable(string filename) {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }
@@ -393,7 +393,7 @@ int Table::loadTable(string filename) {
 
 // Prints out the values of the table in a basic manner for debugging
 int Table::debugTable() {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }
@@ -422,7 +422,7 @@ int Table::debugTable() {
 
 // Prints out the values of the table in a triangle form
 int Table::printTable() {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }

@@ -14,9 +14,9 @@ using namespace std;
 
 // Constructor to set values to defaults
 Generation::Generation() {
-  // Inititalises a generation pointer
+  // Initialises a generation pointer
   gen = new vector<bool>();
-  // Inititalises an error buffer which will be used to store a message to the
+  // Initialises an error buffer which will be used to store a message to the
   // user if an error occurs
   errorBuffer = "";
 }
