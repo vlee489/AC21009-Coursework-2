@@ -12,14 +12,14 @@
 #include "LangtonsAnt.hpp"
 // Imports methods to generate rules and convert numbers to binary and decimal
 #include "rule.hpp"
-// Imports methods for storing a table of values
-#include <iostream>
-#include <string>
-#include <vector>
-
+// Imports table class to handle storage of data
 #include "table.hpp"
 // Used for sleeping
 #include <unistd.h>
+
+#include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
