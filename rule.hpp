@@ -8,10 +8,10 @@ class Rule {
 
  public:
   int toBinary(bool binary[], int decimal);
-  int toDecimal(bool binary[]);
+  int toDecimal(bool binary[], int bits);
   int setRule(int ruleNum);
   bool generateCell(bool neighbourhood[]);
-  void printRule();
+  void swap(bool arr[], int n);
 };
 
 #endif

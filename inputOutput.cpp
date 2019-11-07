@@ -29,7 +29,7 @@ int getInt() {
       // Clears cin of any input
       cin.ignore();
       cout << endl;
-      cout << "Please enter an interger: ";
+      cout << "Please enter an integer: ";
     }
     // If the user's input is valid
     else {
@@ -52,7 +52,7 @@ bool getInt(bool process(int)) {
 }
 
 // Prompts the user for an integer using a process function pointer and strings
-// for prompt and fail messages
+// for a prompt
 void promptInt(string prompt, bool process(int)) {
   // Assumes the user's input to be false
   bool valid = false;
@@ -116,9 +116,8 @@ void menuInt(void displayPrompt(), bool process(int)) {
 string getStr() {
   // Stores the user's input as a string
   string input;
-  //
+  // Gets input from the user
   cin >> input;
-  //
   return input;
 }
 
@@ -131,7 +130,8 @@ bool getStr(bool process(string)) {
   return process(choice);
 }
 
-//
+// Prompts the user for a string using a process function pointer and strings
+// for a prompt
 void promptStr(string prompt, bool process(string)) {
   int valid;
   do {
@@ -140,9 +140,9 @@ void promptStr(string prompt, bool process(string)) {
     // Gets a string from the user and uses a process function pointer to
     // interpret it
     valid = getStr(process);
-  }  
+  }
   // Loops until the user's input is valid
-  while (valid != SUCCESS);
+  while (!valid);
 }
 
 // Defines T as a template to be replaced with the type from the parameter
