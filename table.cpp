@@ -8,6 +8,9 @@
 #include <fstream>
 // Used to deal with string streams
 #include <sstream>
+// Used to determine if a character contains a digit
+#include <ctype.h>
+
 #include <string>
 #include <vector>
 
@@ -256,17 +259,15 @@ int Table::saveTable(string filename) {
     return FILE_NOT_SAVED;
   }
 
-  saveFile << endl;
   // Counts through each row
   for (int row = 0; row < arrayHeight; row++) {
     // Counts through each column
     for (int col = 0; col < arrayWidth; col++) {
-      // Prints the individual value to the file
+      // Prints the element to the file
       saveFile << getVal(col, row) << " ";
     }
     saveFile << endl;
   }
-  saveFile << endl;
   // Saves the file
   saveFile.close();
 
@@ -290,70 +291,86 @@ int Table::loadTable(string filename) {
     return FILE_NOT_FOUND;
   }
 
-  // Stores the number of numbers in the top line
-  int numbersInLine = 0;
-  //
-  bool valid = false;
-  // Creates strings to store the top line and a number being processed
-  string line, temp;
-  // Creates a stream for the top line
-  stringstream lineStream;
+  // Stores the amount of generations e.g. lines in the file
+  int generations = 0;
+  // Stores the first line of text in the file
+  string firstLine;
+  // Gets the first line of text from the file
+  getline(loadFile, firstLine);
 
-  // Clears previous stream
-  loadFile.ignore();
-  // Gets the top line from the file
-  getline(loadFile, line);
-  // Stores the top line in a stream
-  lineStream << line;
-  //
-  vector<bool> firstGen;
-
-  // Loops through the numbers in the top line
-  while (!lineStream.eof()) {
-    // Stores the next number as temp
-    lineStream >> temp;
-    // Checks if temp is a valid number
-    if (stringstream(temp)) {
-      //
-      bool tempBool;
-      //
-      stringstream(temp) >> tempBool;
-      //
-      firstGen.push_back(tempBool);
-      // Increments the numbers in the top line
-      numbersInLine++;
-      //
-      valid = true;
-    }
+  // Interates through each line of the file
+  while (!loadFile.eof()) {
+    // Stores a line which don't use
+    string temp;
+    // Used to just move to the next line
+    getline(loadFile, temp);
+    // Increments the number of generations found
+    generations++;
   }
 
-  if (valid == false) {
-    return INVALID_FILE;
+  // Calculates the width of the table
+  arrayWidth = countDigits(firstLine);
+  // Stores the height of the table
+  arrayHeight = generations;
+  // Creates the array to store the table
+  int valid = allocTable();
+
+  // Checks if the array was successfully allocated
+  if (valid != SUCCESS) {
+    return valid;
   }
 
-  // Calculates the number of generations required from the top line
-  int generations = (numbersInLine / 2) + 1;
-  //
-  initTable(firstGen, generations);
+  // Clears warnings from loadFile object
+  loadFile.clear();
+  // Resets the file position back to the beginning
+  loadFile.seekg(0, ios::beg);
+  // Stores which row we're currently processing
+  int row = 0;
 
-  int x = 0;
-  int y = 0;
-  bool tempBool;
-
-  while (getline(loadFile, line)) {
-    while (!lineStream.eof()) {
-      lineStream >> temp;
-      if (stringstream(temp) >> tempBool) {
-        setVal(x, y, tempBool);
+  // Interates through each line of the file
+  while (!loadFile.eof()) {
+    // Stores the line of text we are currently processing
+    string line;
+    // Stores the column we are at in the table object
+    int col = 0;
+    // Gets the line of text from the file
+    getline(loadFile, line);
+    // Cycles through each character in the line
+    for (int i = 0; i < int(line.size()); i++) {
+      // String to store the character we're processing
+      string element;
+      // Puts the character from the line in the string
+      element.push_back(line.at(i));
+      // Sets the element in the table
+      bool set = setElement(col, row, element);
+      // Checks if an element was set
+      if (set) {
+        // Increments the column
+        col++;
       }
-      y++;
     }
-    x++;
+    // Increments the row
+    row++;
   }
 
   // Closes the file
   loadFile.close();
   return SUCCESS;
+}
+
+// Counts the number of digits in a string
+int Table::countDigits(string str) {
+  // Stores how many digits we've found
+  int digits = 0;
+  // Counts through each character in the string
+  for (int i = 0; i < int(str.size()); i++) {
+    // Determines if the current character is a digit
+    if (isdigit(str.at(i))) {
+      // Increments the digit counter
+      digits++;
+    }
+  }
+  return digits;
 }
 
 // Prints out the values of the table in a basic manner for debugging
@@ -402,8 +419,8 @@ int Table::printTable() {
         // Displays the element
         displayElement(col, row);
       }
-      // Adds one extra active field if the number of elements we're displaying
-      // is odd
+      // Adds one extra active field if the number of elements we're
+      // displaying is odd
       else if (col == (middleIndex + side) && fieldsActive % 2 == 1) {
         // Displays the element
         displayElement(col, row);
@@ -433,8 +450,26 @@ void Table::displayElement(int col, int row) {
   }
 }
 
+// Sets the value of a field in the table using a string
+// Returns true if a field is set in the table
+bool Table::setElement(int col, int row, string str) {
+  // Checks if the string is a 1
+  if (!str.compare("1")) {
+    // Sets the value in the table
+    setVal(col, row, true);
+    return true;
+  }
+  // Checks if the string is a 0
+  else if (!str.compare("0")) {
+    // Sets the value in the table
+    setVal(col, row, false);
+    return true;
+  }
+  return false;
+}
+
 // x86 has a design flaw where the mod operator doesn't work for negative
-// numbers This method addresses that to make it akin to what's found in  other
+// numbers This method addresses that to make it akin to what's found in other
 // higher level languages like Java or Python
 int Table::properMod(int a, int b) {
   return (b + (a % b)) % b;
