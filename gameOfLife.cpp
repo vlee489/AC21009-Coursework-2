@@ -44,7 +44,7 @@ int setupGameOfLife(int xSize, int ySize){
             int randomNum = rand() % 2;
             // If number is 1 then turn the box to true
             if(randomNum == 1){
-                checkValidity(GameOfLifeTable->setVal(col, row, true));
+                checkValidity(gameOfLifeGrid->setVal(col, row, true));
             }
         }
     }

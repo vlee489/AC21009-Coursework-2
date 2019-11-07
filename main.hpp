@@ -35,6 +35,6 @@ bool processSave(std::string filename);
 // Runs a simulation of Conway's Game of Life
 void gameOfLife();
 // Runs a simulation of Langton's ant
-void langtonsAnt();
+void LangtonsAnt();
 
 #endif
