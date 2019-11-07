@@ -1,14 +1,13 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <string>
-
+// Imports methods which allows the user to set their own generation
+#include "generation.hpp"
 // Imports methods to generate rules and convert numbers to binary and decimal
 #include "rule.hpp"
 // Imports methods for storing a table of values
 #include "table.hpp"
-// Imports methods which allows the user to set their own generation
-#include "generation.hpp"
+#include <string>
 
 // Stores pointers for global objects
 Table* fullTable;

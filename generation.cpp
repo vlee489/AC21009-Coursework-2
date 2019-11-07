@@ -5,7 +5,6 @@
 // Imports methods to handle user input and output
 #include "inputOutput.hpp"
 
-// Used to print to the console
 #include <iostream>
 #include <string>
 #include <vector>

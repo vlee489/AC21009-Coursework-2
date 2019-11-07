@@ -6,10 +6,6 @@
 #include <iostream>
 // Used to save and load files
 #include <fstream>
-// Used to deal with string streams
-#include <sstream>
-// Used to determine if a character contains a digit
-#include <ctype.h>
 
 #include <string>
 #include <vector>
