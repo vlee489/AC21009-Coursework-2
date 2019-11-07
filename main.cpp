@@ -1,14 +1,9 @@
-#include <unistd.h>
-
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <vector>
-
-// Imports error codes
-#include "error.hpp"
 // Imports the header file for this individual source file
 #include "main.hpp"
+// Imports error codes
+#include "error.hpp"
+// Imports game of life
+#include "gameOfLife.hpp"
 // Imports methods which allows the user to set their own generation
 #include "generation.hpp"
 // Imports methods to handle user input and output
@@ -17,10 +12,14 @@
 #include "rule.hpp"
 // Imports methods for storing a table of values
 #include "table.hpp"
-// Imports game of life
-#include "gameOfLife.hpp"
 // Imports Langton's Ant
 #include "LangtonsAnt.hpp"
+
+#include <iostream>
+#include <string>
+#include <vector>
+// Used for sleeping
+#include <unistd.h>
 
 using namespace std;
 
