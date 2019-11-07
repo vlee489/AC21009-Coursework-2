@@ -185,6 +185,10 @@ bool Table::getVal(int x, int y) {
   // }
   // Returns the element
   // return pTable[y * arrayWidth + x];
+
+  // Calculates how many fields we are using for processing
+  // int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - y);
+
   return pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)];
 }
 
@@ -194,14 +198,16 @@ bool Table::getVal(int x, int y) {
 bool* Table::getNeighbourhood(int x, int y) {
   // Moves to the row we are getting values for the neighbourhood
   int yPoint = y - 1;
+  // Calculates how many fields we are using for processing
+  // int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - yPoint);
   // Checks if the pointer is initialised and checks if the yPoint is valid
-  if (init == true && yPoint <= arrayHeight && yPoint >= 0) {
+  if (init == true && yPoint < arrayHeight && yPoint >= 0) {
     // Allocates memory for the neighbourhood
     bool* neighbourhood = new bool[3];
     // Runs through each item in the neighbourhood
     for (int i = 0; i < 3; i++) {
       // Calculates the x value we are getting
-      int xPoint = properMod(x + i - 1, arrayWidth);
+      int xPoint = x + i - 1;
       // Gets the current value
       neighbourhood[i] = getVal(xPoint, yPoint);
     }
@@ -250,8 +256,11 @@ int Table::setVal(int x, int y, bool val) {
 
   // // Sets the appropriate value
   // pTable[y * arrayWidth + x] = val;
-  pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)] =
-      val;
+
+  // Calculates how many fields we are using for processing
+  // int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - y);
+
+  pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)] = val;
   return SUCCESS;
 }
 

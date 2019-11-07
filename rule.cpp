@@ -1,6 +1,7 @@
 
 #include "rule.hpp"
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 
@@ -8,14 +9,14 @@
 
 using namespace std;
 
-int Rule::toDecimal(bool binary[]) {
+int Rule::toDecimal(bool binary[], int bits) {
   if (binary == NULL) {
     return UNEXPECTED_NULL_POINTER;
   }
   int decimal = 0;
-  for (int i = 7; i >= 0; i--) {
+  for (int i = bits - 1; i >= 0; i--) {
     if (binary[i] == true) {
-      decimal += pow(2, i);
+      decimal += pow(2, bits - 1 - i);
     }
   }
   return decimal;
@@ -33,11 +34,11 @@ int Rule::setRule(int ruleNum) {
 }
 
 bool Rule::generateCell(bool neighbourhood[]) {
-  int index = toDecimal(neighbourhood);
+  int index = toDecimal(neighbourhood, 3);
   if (index == UNEXPECTED_NULL_POINTER) {
     return false;
   }
-  return ruleSet[index];
+  return ruleSet[7-index];
 }
 
 int Rule::toBinary(bool binary[], int decimal) {
@@ -53,6 +54,12 @@ int Rule::toBinary(bool binary[], int decimal) {
     decimal = decimal/2;
   }
 
+  swap(binary, 8);
 
   return SUCCESS;
+}
+
+// Utility function to reverse elements of an array
+void Rule::swap(bool arr[], int n) {
+  reverse(arr, arr + n);
 }

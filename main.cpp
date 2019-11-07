@@ -1,8 +1,9 @@
+#include <unistd.h>
+
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <unistd.h>
 
 // Imports error codes
 #include "error.hpp"
@@ -118,7 +119,6 @@ void createAutomaton() {
   checkValidity(fullTable->initTable(*firstGen, generations));
   checkValidity(ruleObj->setRule(rule));
 
-
   int arrayWidth = fullTable->getArrayWidth();
   for (int row = 1; row < generations; row++) {
     for (int col = 0; col < arrayWidth; col++) {
@@ -152,15 +152,17 @@ bool processLoad(string filename) {
   return true;
 }
 
-void gameOfLife(){
-    int width = promptIntRange("Please enter the desired width of the grid", 2, 101);
-    int height = promptIntRange("Please enter the desired height of the grid", 2, 101);
-    setupGameOfLife(width, height);
-    while(true){
-        //If Escape is held, then exits game of life
-        runGameOfLife();
-        usleep(500000);
-    }
+void gameOfLife() {
+  int width =
+      promptIntRange("Please enter the desired width of the grid", 2, 101);
+  int height =
+      promptIntRange("Please enter the desired height of the grid", 2, 101);
+  setupGameOfLife(width, height);
+  while (true) {
+    // If Escape is held, then exits game of life
+    runGameOfLife();
+    usleep(500000);
+  }
 }
 void saveAutomaton() {
   clearScreen();
@@ -173,4 +175,5 @@ bool processSave(string filename) {
   cout << "Saving file successful" << endl;
   return true;
 }
+
 void langtonsAnt() {}

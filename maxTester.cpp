@@ -4,6 +4,7 @@
 #include "error.hpp"
 #include "generation.hpp"
 #include "inputOutput.hpp"
+#include "rule.hpp"
 #include "table.hpp"
 
 using namespace std;
@@ -19,6 +20,7 @@ vector<bool>* firstGenTest();
 void customFileTest();
 void numAround(Table* test);
 void printTest(Table* test);
+void advancedNeighbourhood(Table* test);
 
 int main() {
   Table* testP = new Table();
@@ -34,6 +36,7 @@ int main() {
   customFileTest();
   numAround(testP);
   printTest(testP);
+  advancedNeighbourhood(testP);
   return 0;
 }
 
@@ -182,4 +185,24 @@ void printTest(Table* test) {
   cout << "Pass Conditions: Both Table Methods have similar output" << endl;
   test->debugTable();
   test->printTable();
+}
+
+void advancedNeighbourhood(Table* test) {
+  cout << "Advanced Neighbourhood Test" << endl;
+  cout << "Pass Conditions: Both Table Methods have similar output" << endl;
+  Rule* ruleObj = new Rule();
+  test = new Table();
+  test->initTable(3);
+  ruleObj->setRule(30);
+  int arrayWidth = test->getArrayWidth();
+  for (int row = 1; row < generations; row++) {
+    for (int col = 0; col < arrayWidth; col++) {
+      bool* neighbourhood = test->getNeighbourhood(col, row);
+      bool cell = ruleObj->generateCell(neighbourhood);
+      checkValidity(test->setVal(col, row, cell));
+      delete neighbourhood;
+    }
+  }
+  cout << endl;
+  test->debugTable();
 }

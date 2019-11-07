@@ -7,7 +7,7 @@ CFLAGS_LESSER = -Wall -Werror
 CVERSION = -std=c++17
 
 # Main 
-all: maxTester main gameOfLife
+all: main maxTester gameOfLife
 
 # Compiles main program
 main: main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp
@@ -15,9 +15,9 @@ main: main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp
 	$(CC) $(CVERSION) $(CFLAGS) -o main.o main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp gameOfLife.cpp -lcurses
 
 # Compiles max's tester
-maxTester: maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp
+maxTester: maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp rule.cpp
 	# Compiles with flags
-	$(CC) $(CVERSION) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp -lcurses
+	$(CC) $(CVERSION) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp rule.cpp -lcurses
 
 # Compiles vincent's tester
 gameOfLife: vincentTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
