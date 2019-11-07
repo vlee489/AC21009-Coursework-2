@@ -383,7 +383,7 @@ int Table::loadTable(string filename) {
 
 // Prints out the values of the table in a basic manner for debugging
 int Table::debugTable() {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }

@@ -4,4 +4,5 @@ cmake_minimum_required(VERSION 3.10)
 project(AC21009Asignment2)
 
 # add the executable
-add_executable(VincentTester vincentTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp)
+add_executable(GameOfLife gameOfLifeTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp)
+add_executable(Langtonsant LangtonsAnt.cpp inputOutput.cpp error.cpp rule.cpp table.cpp)

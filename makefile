@@ -14,15 +14,14 @@ main: main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp
 	# Compiles with flags
 	$(CC) $(CVERSION) $(CFLAGS) -o main.o main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp gameOfLife.cpp -lcurses
 
-
 # Compiles program
 maxTester: maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp
 	# Compiles with flags
 	$(CC) $(CVERSION) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp -lcurses
 
-gameOfLife: vincentTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
+gameOfLife: gameOfLifeTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
 	# Compiles with flags
-	$(CC) $(CVERSION) $(CFLAGS) -o vincentTester.o vincentTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp -lcurses
+	$(CC) $(CVERSION) $(CFLAGS) -o gameOfLife.o gameOfLifeTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp -lcurses
 
 # Deletes unused files
 clean:
