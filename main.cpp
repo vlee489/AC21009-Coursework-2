@@ -184,7 +184,7 @@ void gameOfLife() {
 }
 
 /**
- * Runs Langton's Ant
+ * Runs a simulation of Langton's ant
  */
 void LangtonsAnt(){
     int width = promptIntRange("Please enter the desired width of the grid", 2, 101);
@@ -192,7 +192,7 @@ void LangtonsAnt(){
     setupLangtonsAnt(width, height);
     while(true){
         runLangtonsAnt();
-        usleep(100000);
+        usleep(500000);
     }
 }
 
@@ -211,6 +211,3 @@ bool processSave(string filename) {
   cout << "Saving file successful" << endl << endl;
   return true;
 }
-
-// Runs a simulation of Langton's ant
-void langtonsAnt() {}
