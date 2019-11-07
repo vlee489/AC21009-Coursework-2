@@ -4,8 +4,6 @@
 #include "error.hpp"
 // Used to print to the console
 #include <iostream>
-// // Used to check if a file exists
-// #include <filesystem>
 // Used to save and load files
 #include <fstream>
 // Used to deal with string streams
@@ -171,25 +169,14 @@ int Table::initLine(int units) {
 
 // Returns the value of the appropriate index of the table
 bool Table::getVal(int x, int y) {
+  // Checks if the array has been initialised
   if (!init) {
+    // Displays an error message and stops the program
     checkValidity(TABLE_NOT_INITIALISED);
-    return false;
   }
-  // if (x >= arrayWidth || x < 0) {
-  //   checkValidity(X_INDEX_OUT_OF_BOUNDS);
-  //   return false;
-  // }
-  // if (y >= arrayHeight || y < 0) {
-  //   checkValidity(Y_INDEX_OUT_OF_BOUNDS);
-  //   return false;
-  // }
-  // Returns the element
-  // return pTable[y * arrayWidth + x];
-
-  // Calculates how many fields we are using for processing
-  // int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - y);
-
-  return pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)];
+  // Returns the appropriate index of the table
+  return pTable[(properMod(y, arrayHeight) * arrayWidth) +
+                properMod(x, arrayWidth)];
 }
 
 // Returns the neighbourhood of a position in the table as an array in order of
@@ -198,8 +185,6 @@ bool Table::getVal(int x, int y) {
 bool* Table::getNeighbourhood(int x, int y) {
   // Moves to the row we are getting values for the neighbourhood
   int yPoint = y - 1;
-  // Calculates how many fields we are using for processing
-  // int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - yPoint);
   // Checks if the pointer is initialised and checks if the yPoint is valid
   if (init == true && yPoint < arrayHeight && yPoint >= 0) {
     // Allocates memory for the neighbourhood
@@ -239,34 +224,19 @@ int Table::getNumAround(int x, int y) {
 
 // Sets the value of the appropriate index of the table
 int Table::setVal(int x, int y, bool val) {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }
-
-  // // Checks if the x index is valid
-  // if (x >= arrayWidth || x < 0) {
-  //   return X_INDEX_OUT_OF_BOUNDS;
-  // }
-
-  // // Checks if the y index is valid
-  // if (y >= arrayHeight || y < 0) {
-  //   return Y_INDEX_OUT_OF_BOUNDS;
-  // }
-
-  // // Sets the appropriate value
-  // pTable[y * arrayWidth + x] = val;
-
-  // Calculates how many fields we are using for processing
-  // int fieldsActive = arrayWidth - 2 * (arrayHeight - 1 - y);
-
-  pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)] = val;
+  // Sets the appropriate value of the table
+  pTable[(properMod(y, arrayHeight) * arrayWidth) + properMod(x, arrayWidth)] =
+      val;
   return SUCCESS;
 }
 
 // Saves the contents of the table to a file
 int Table::saveTable(string filename) {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }
@@ -310,17 +280,12 @@ int Table::loadTable(string filename) {
     return INVALID_FILENAME;
   }
 
-  // // Checks if the file exists
-  // if (filesystem::exists(filename)) {
-  //   return FILE_NOT_FOUND;
-  // }
-
   // Creates the file's object for writing
   ifstream loadFile;
   // Opens the file
   loadFile.open(filename);
 
-  // Checks if the file is accessible
+  // Checks if the file has been found
   if (!loadFile.is_open()) {
     return FILE_NOT_FOUND;
   }
@@ -393,7 +358,7 @@ int Table::loadTable(string filename) {
 
 // Prints out the values of the table in a basic manner for debugging
 int Table::debugTable() {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }
@@ -403,15 +368,7 @@ int Table::debugTable() {
   for (int row = 0; row < arrayHeight; row++) {
     // Counts through each column
     for (int col = 0; col < arrayWidth; col++) {
-      if (getVal(col, row)) {
-        // Prints the element to the screen
-        cout << "■"
-             << " ";
-      } else {
-        // Prints the element to the screen
-        cout << "□"
-             << " ";
-      }
+      displayElement(col, row);
     }
     cout << endl;
   }
@@ -422,7 +379,7 @@ int Table::debugTable() {
 
 // Prints out the values of the table in a triangle form
 int Table::printTable() {
-  // Checks if the array has been inititialised
+  // Checks if the array has been initialised
   if (!init) {
     return TABLE_NOT_INITIALISED;
   }
@@ -441,28 +398,12 @@ int Table::printTable() {
     for (int col = 0; col < arrayWidth; col++) {
       // Checks if the column is within the active fields
       if (col >= (middleIndex - side) && col < (middleIndex + side)) {
-        if (getVal(col, row)) {
-          // Prints the element to the screen
-          cout << "■"
-               << " ";
-        } else {
-          // Prints the element to the screen
-          cout << "□"
-               << " ";
-        }
+        displayElement(col, row);
       }
       // Adds one extra active field if the number of elements we're displaying
       // is odd
       else if (col == (middleIndex + side) && fieldsActive % 2 == 1) {
-        if (getVal(col, row)) {
-          // Prints the element to the screen
-          cout << "■"
-               << " ";
-        } else {
-          // Prints the element to the screen
-          cout << "□"
-               << " ";
-        }
+        displayElement(col, row);
       }
       // Runs if the number is outside the active fields
       else {
@@ -474,6 +415,19 @@ int Table::printTable() {
   cout << endl;
 
   return SUCCESS;
+}
+
+// Prints an element to the screen
+void Table::displayElement(int col, int row) {
+  if (getVal(col, row)) {
+    // Prints the element to the screen
+    cout << "■"
+         << " ";
+  } else {
+    // Prints the element to the screen
+    cout << "□"
+         << " ";
+  }
 }
 
 // x86 has a design flaw where the mod operator doesn't work for negative

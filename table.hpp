@@ -65,6 +65,8 @@ class Table {
   int debugTable();
   // Prints out the values of the table in a triangle form
   int printTable();
+  // Prints an element to the screen
+  void displayElement(int row, int col);
 
   // Getters
   bool* getPTable();
