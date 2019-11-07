@@ -12,6 +12,8 @@
 #include "rule.hpp"
 // Imports methods for storing a table of values
 #include "table.hpp"
+// Imports Langton's Ant
+#include "LangtonsAnt.hpp"
 
 #include <iostream>
 #include <string>
@@ -87,8 +89,7 @@ bool processMenu(int choice) {
       gameOfLife();
       break;
     case 5:
-      // Runs a simulation of Langton's ant
-      langtonsAnt();
+        LangtonsAnt();
       break;
     case 0:
       // Exits the program
@@ -181,6 +182,20 @@ void gameOfLife() {
   }
 }
 
+/**
+ * Runs a simulation of Langton's ant
+ */
+void LangtonsAnt(){
+    int width = promptIntRange("Please enter the desired width of the grid", 2, 101);
+    int height = promptIntRange("Please enter the desired height of the grid", 2, 101);
+    setupLangtonsAnt(width, height);
+    while(true){
+        runLangtonsAnt();
+        usleep(500000);
+    }
+}
+
+
 // Allows the user to save their cellular automaton to an external file
 void saveAutomaton() {
   clearScreen();
@@ -195,6 +210,3 @@ bool processSave(string filename) {
   cout << "Saving file successful" << endl << endl;
   return true;
 }
-
-// Runs a simulation of Langton's ant
-void langtonsAnt() {}

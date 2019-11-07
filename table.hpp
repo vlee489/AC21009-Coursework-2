@@ -54,9 +54,7 @@ class Table {
   bool* getNeighbourhood(int x, int y);
   // Returns the number of true elements that are around a position
   int getNumAround(int x, int y);
-  // Vincent's version to get items around a cord.
-  int getNumAroundVin(int x, int y);
-  // Sets the value of the appropriate index of the table
+    // Sets the value of the appropriate index of the table
   int setVal(int x, int y, bool val);
 
   // Saves the contents of the table to a file
@@ -72,6 +70,8 @@ class Table {
   int printTable();
   // Prints an element to the screen
   void displayElement(int row, int col);
+  // Prints out values of table with an icon for the ant
+  int antTable(int x, int y, int Direction);
 
   // Getters
   bool* getPTable();
