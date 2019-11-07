@@ -410,6 +410,36 @@ int Table::debugTable() {
   return SUCCESS;
 }
 
+int Table::antTable(int x, int y){
+    // Checks if the array has been initialised
+    if (!init) {
+        return TABLE_NOT_INITIALISED;
+    }
+
+    cout << endl;
+    // Counts through each row
+    for (int row = 0; row < arrayHeight; row++) {
+        // Counts through each column
+        for (int col = 0; col < arrayWidth; col++) {
+            if(row == y && col == x){
+                cout << "X" << " ";
+            }
+            else if (getVal(col, row)) {
+                // Prints the element to the screen
+                cout << "■" << " ";
+            } else {
+                // Prints the element to the screen
+                cout << "□" << " ";
+            }
+        }
+        cout << endl;
+    }
+    cout << endl;
+
+    return SUCCESS;
+}
+
+
 // Prints out the values of the table in a triangle form
 int Table::printTable() {
   // Checks if the array has been inititialised
