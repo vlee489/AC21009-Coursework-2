@@ -9,22 +9,21 @@ CVERSION = -std=c++17
 # Main 
 all: maxTester main gameOfLife langstonsAnt
 
-# Compiles main program
 main: main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp gameOfLife.cpp LangtonsAnt.cpp
-	# Compiles with flags
+	# Compiles main program
 	$(CC) $(CVERSION) $(CFLAGS) -o main.o main.cpp table.cpp rule.cpp inputOutput.cpp generation.cpp error.cpp gameOfLife.cpp LangtonsAnt.cpp
 
-# Compiles max's tester
 maxTester: maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp rule.cpp
-	# Compiles with flags
+	# Compiles max's tester
 	$(CC) $(CVERSION) $(CFLAGS) -o maxTester.o maxTester.cpp table.cpp generation.cpp inputOutput.cpp error.cpp rule.cpp
 
 gameOfLife: gameOfLifeTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
-	# Compiles with flags
+	# Compiles game of life tester
 	$(CC) $(CVERSION) $(CFLAGS) -o gameOfLife.o gameOfLifeTester.cpp gameOfLife.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
 
 langstonsAnt: LangstonsAntTester.cpp LangtonsAnt.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
+	# Compiles langton's ant tester
 	$(CC) $(CVERSION) $(CFLAGS) -o langstonsAnt.o LangstonsAntTester.cpp LangtonsAnt.cpp inputOutput.cpp error.cpp rule.cpp table.cpp
-# Deletes unused files
 clean:
+	# Deletes binary files
 	-rm $(objects) *.o
