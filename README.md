@@ -1,7 +1,10 @@
 # AC21009-Coursework-2
 AC21009 Coursework 2 - Cellular Automaton
 
-By:
+## Github Link
+https://github.com/vlee489/AC21009-Coursework-2
+
+## Authors
 - Ramsay Sewell - 170012517 - CS
 - Max will Kelly - 180004073  - CS
 - Pui-Hin Vincent Lee - 180006178  - AC
