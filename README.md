@@ -3,7 +3,7 @@ AC21009 Coursework 2 - Cellular Automaton
 
 By:
 - Ramsay Sewell - 170012517 - CS
-- Maxwill Kelly - 180004073  - CS
+- Max will Kelly - 180004073  - CS
 - Pui-Hin Vincent Lee - 180006178  - AC
 
 
@@ -27,6 +27,7 @@ run the following command
 
 ### Run project (UNIX)
 To run the main project you can do the following command
+
 *You may need to `chmod` the file with the executable flag*
 
 `./main.o`
