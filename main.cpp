@@ -187,10 +187,10 @@ bool processSave(string filename) {
 void gameOfLife() {
   // Gets the width from the user
   int width =
-      promptIntRange("Please enter the desired width of the grid", 2, 101);
+      promptIntRange("Please enter the desired width of the grid", 15, 101);
   // Gets the height from the user
   int height =
-      promptIntRange("Please enter the desired height of the grid", 2, 101);
+      promptIntRange("Please enter the desired height of the grid", 15, 101);
   // Sets up Game of Life to be used with user's values
   checkValidity(setupGameOfLife(width, height));
   while (true) {
@@ -205,17 +205,17 @@ void gameOfLife() {
 void LangtonsAnt() {
   // Gets the width from the user
   int width =
-      promptIntRange("Please enter the desired width of the grid", 2, 101);
+      promptIntRange("Please enter the desired width of the grid", 10, 101);
   // Gets the height from the user
   int height =
-      promptIntRange("Please enter the desired height of the grid", 2, 101);
+      promptIntRange("Please enter the desired height of the grid", 10, 101);
   // Sets up Langton's ant to be used with user's values
   checkValidity(setupLangtonsAnt(width, height));
   // Keeps running
   while (true) {
     // Runs the langton's ant simulation
     checkValidity(runLangtonsAnt());
-    // Refreshes every half second
-    usleep(500000);
+    // Refreshes every quarter second
+    usleep(250000);
   }
 }
